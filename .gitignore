@@ -113,3 +113,6 @@ dist
 .yarn/unplugged
 .yarn/build-state.yml
 .pnp.*
+
+# use yarn as a package manager
+package-lock.json
