@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "",
-		"lint": "npm run lint:eslint && npm run lint:format",
+		"lint": "yarn lint:eslint && yarn lint:format",
 		"lint:eslint": "eslint . --ext .ts,.js --fix --ignore-pattern node_modules/",
 		"lint:format": "prettier --write '**/*.{js,json,md,yml}'"
 	},
