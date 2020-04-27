@@ -1,7 +1,12 @@
 {
-	"eslint.autoFixOnSave": true,
-	"eslint.validate": [
-		"javascript",
-		{ "language": "typescript", "autoFix": true }
-	]
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true
+	},
+	"eslint.validate": ["javascript", "typescript"],
+	"azureFunctions.deploySubpath": ".",
+	"azureFunctions.postDeployTask": "npm install",
+	"azureFunctions.projectLanguage": "TypeScript",
+	"azureFunctions.projectRuntime": "~2",
+	"debug.internalConsoleOptions": "neverOpen",
+	"azureFunctions.preDeployTask": "npm prune"
 }

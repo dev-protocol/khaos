@@ -5,8 +5,12 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "",
+		"build": "tsc",
+		"watch": "tsc -w",
+		"prestart": "yarn build",
+		"start": "func start",
 		"lint": "yarn lint:eslint && yarn lint:format",
-		"lint:eslint": "eslint . --ext .ts,.js --fix --ignore-pattern node_modules/",
+		"lint:eslint": "eslint . --ext .ts,.js --fix",
 		"lint:format": "prettier --write '**/*.{js,json,md,yml}'"
 	},
 	"author": "",
