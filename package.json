@@ -39,7 +39,9 @@
 		"typescript": "3.8.3"
 	},
 	"ava": {
-		"files": ["**/*.test.ts"],
+		"files": [
+			"**/*.test.ts"
+		],
 		"typescript": {
 			"rewritePaths": {
 				"/": "dist/"
