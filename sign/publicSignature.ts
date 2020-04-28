@@ -4,4 +4,4 @@ export const publicSignature = (
 	message: string,
 	account: string,
 	key: string
-): string => sign(`${message}-${account}`, key)
+): string => sign(`%${message}%-%${account}%`, key)

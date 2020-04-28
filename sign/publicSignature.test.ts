@@ -6,7 +6,7 @@ test('Returns signature from the passed message, address and sign method name', 
 	const message = 'A'
 	const address = 'B'
 	const id = 'C'
-	const expected = sign(`${message}-${address}`, id)
+	const expected = sign(`%${message}%-%${address}%`, id)
 	const result = publicSignature(message, address, id)
 	t.is(result, expected)
 })
@@ -17,7 +17,7 @@ test('Returns the same result when the same arguments', (t) => {
 	const message = random()
 	const address = random()
 	const id = random()
-	const expected = sign(`${message}-${address}`, id)
+	const expected = sign(`%${message}%-%${address}%`, id)
 	const result1 = publicSignature(message, address, id)
 	const result2 = publicSignature(message, address, id)
 	const result3 = publicSignature(message, address, id)
@@ -32,7 +32,7 @@ test('Returns the different result when the different arguments', (t) => {
 	const message = random()
 	const address = random()
 	const id = random()
-	const sig = sign(`${message}-${address}`, id)
+	const sig = sign(`%${message}%-%${address}%`, id)
 	const result1 = publicSignature(`${message}_`, address, id)
 	const result2 = publicSignature(message, `${address}_`, id)
 	const result3 = publicSignature(message, address, `${id}_`)
