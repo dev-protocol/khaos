@@ -2,26 +2,22 @@ import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { always, F } from 'ramda'
 import { recover } from './recover'
 
-export type SignResult = {
+export type SignFunction = (props: {
 	readonly message: string
 	readonly secret: string
-}
-
-export type SignFunction = (
-	context: Context,
-	req: HttpRequest
-) => Promise<SignResult>
+	readonly req: HttpRequest
+}) => Promise<boolean>
 
 const sign: AzureFunction = async (
 	context: Context,
 	req: HttpRequest
 ): Promise<void> => {
-	const id = req.params.id
-	const { message, signature } = req.body
+	const { id = '' } = req.params
+	const { message = '', secret = '', signature = '' } = req.body
 	const fn = await import(`../functions/sign/${id}`)
 		.then((e: { readonly default: SignFunction }) => e.default)
 		.catch(always(F))
-	const result = await fn(context, req)
+	const result = await fn({ message, secret, req })
 	const account = recover(message, signature)
 	const publicSignature = `${account}${Math.random().toString()}`
 
