@@ -3,7 +3,7 @@ import { always, F } from 'ramda'
 import { recover } from './recover'
 import { publicSignature as pubSig } from './publicSignature'
 
-export type SignFunction = (props: {
+export type Authenticator = (props: {
 	readonly message: string
 	readonly secret: string
 	readonly req: HttpRequest
@@ -15,8 +15,8 @@ const sign: AzureFunction = async (
 ): Promise<void> => {
 	const { id = '' } = req.params
 	const { message = '', secret = '', signature = '' } = req.body
-	const fn = await import(`../functions/sign/${id}`)
-		.then((e: { readonly default: SignFunction }) => e.default)
+	const fn = await import(`../functions/authenticate/${id}`)
+		.then((e: { readonly default: Authenticator }) => e.default)
 		.catch(always(F))
 	const result = await fn({ message, secret, req })
 	const account = recover(message, signature)

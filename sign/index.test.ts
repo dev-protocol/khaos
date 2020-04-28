@@ -51,7 +51,7 @@ test.todo('The response code is 400 when calling does not exist method')
 
 test('All sign methods succeed', (t) =>
 	Promise.all(
-		readdirSync(join(__dirname, '../functions/sign'), {
+		readdirSync(join(__dirname, '../functions/authenticate'), {
 			withFileTypes: true,
 		})
 			.filter((dirent) => dirent.isDirectory())
