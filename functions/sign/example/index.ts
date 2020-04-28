@@ -8,4 +8,4 @@ const fn: SignFunction = async (_, req: HttpRequest) => {
 	}
 }
 
-export = fn
+export default fn
