@@ -42,12 +42,12 @@ test.todo('Returns a new public signature')
 test.todo('Returns account as `undefined` when fail to recover address')
 
 test.todo(
-	'returns a new public signature as `undefined` when fail to recover address'
+	'Returns a new public signature as `undefined` when fail to recover address'
 )
 
-test.todo(`It's a response with 200 when calling with existing method`)
+test.todo('The response code is 200 when calling with an existing method')
 
-test.todo(`It's a response with 400 when calling does not exist method`)
+test.todo('The response code is 400 when calling does not exist method')
 
 test('All sign methods succeed', (t) =>
 	Promise.all(
