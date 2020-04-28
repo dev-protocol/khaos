@@ -24,7 +24,10 @@ const sign: AzureFunction = async (
 	// eslint-disable-next-line functional/immutable-data, functional/no-expression-statement
 	context.res = {
 		status: result ? 200 : 400,
-		body: publicSignature,
+		body: {
+			account,
+			publicSignature,
+		},
 	}
 }
 
