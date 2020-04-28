@@ -6,7 +6,7 @@
 			"direction": "in",
 			"name": "req",
 			"methods": ["get", "post"],
-			"route": "auth/{id}"
+			"route": "sign/{id}"
 		},
 		{
 			"type": "http",
@@ -14,5 +14,5 @@
 			"name": "res"
 		}
 	],
-	"scriptFile": "../dist/auth/index.js"
+	"scriptFile": "../dist/sign/index.js"
 }

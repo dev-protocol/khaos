@@ -1,23 +1,23 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { always, F } from 'ramda'
 
-export type AuthResult = {
+export type SignResult = {
 	readonly message: string
 	readonly secret: string
 }
 
-export type AuthFunction = (
+export type SignFunction = (
 	context: Context,
 	req: HttpRequest
-) => Promise<AuthResult>
+) => Promise<SignResult>
 
-const httpTrigger: AzureFunction = async (
+const sign: AzureFunction = async (
 	context: Context,
 	req: HttpRequest
 ): Promise<void> => {
 	const id = req.params.id
-	const fn = await import(`../functions/auth/${id}`)
-		.then((fn: AuthFunction) => fn)
+	const fn = await import(`../functions/sign/${id}`)
+		.then((fn: SignFunction) => fn)
 		.catch(always(F))
 	const result = await fn(context, req)
 	const publicSignature = Math.random().toString()
@@ -29,4 +29,4 @@ const httpTrigger: AzureFunction = async (
 	}
 }
 
-export default httpTrigger
+export default sign
