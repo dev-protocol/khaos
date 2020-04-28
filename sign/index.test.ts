@@ -6,6 +6,7 @@ import { stub } from 'sinon'
 import * as recover from './recover'
 import { sign as fakeSignature } from 'jsonwebtoken'
 import sign from './index'
+import { publicSignature } from './publicSignature'
 
 const TEST_MESSAGE = 'TEST_MESSAGE'
 const TEST_SECRET = 'TEST_SECRET'
@@ -72,6 +73,13 @@ test('All sign methods succeed', (t) =>
 				result.context.res?.body.account,
 				fakeRecover(result.message, result.signature)
 			)
-			t.true(typeof result.context.res?.body.publicSignature === 'string')
+			t.is(
+				result.context.res?.body.publicSignature,
+				publicSignature(
+					result.message,
+					result.context.res?.body.account,
+					result.id
+				)
+			)
 		})
 	}))
