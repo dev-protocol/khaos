@@ -1,6 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { always, F } from 'ramda'
 import { recover } from './recover'
+import { publicSignature as pubSig } from './publicSignature'
 
 export type SignFunction = (props: {
 	readonly message: string
@@ -19,7 +20,7 @@ const sign: AzureFunction = async (
 		.catch(always(F))
 	const result = await fn({ message, secret, req })
 	const account = recover(message, signature)
-	const publicSignature = `${account}${Math.random().toString()}`
+	const publicSignature = account ? pubSig(message, account, id) : undefined
 
 	// eslint-disable-next-line functional/immutable-data, functional/no-expression-statement
 	context.res = {

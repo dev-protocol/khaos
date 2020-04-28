@@ -1,11 +1,11 @@
 import test from 'ava'
-import Web3 from 'web3'
-import { Sign } from 'web3-core/types'
 import { join } from 'path'
 import { readdirSync } from 'fs'
 import { HttpRequest, Context } from '@azure/functions'
+import { stub } from 'sinon'
+import * as recover from './recover'
+import { sign as fakeSignature } from 'jsonwebtoken'
 import sign from './index'
-import { recover } from './recover'
 
 const TEST_MESSAGE = 'TEST_MESSAGE'
 const TEST_SECRET = 'TEST_SECRET'
@@ -30,13 +30,9 @@ const createReq = (
 			signature,
 		},
 	} as unknown) as HttpRequest)
-const createSignature = (): Sign => {
-	const web3 = new Web3()
-	const message =
-		'!*&H8sw$xz1FsYzcpy6TS^8geyT^M!hTjW%b!!gZZd$H%&XVS/9LStj$aH1mVJZHLp0njOui*7zXog$kNgH!nn2iUekAWXeVfDHh'
-	const account = web3.eth.accounts.create()
-	return web3.eth.accounts.sign(message, account.privateKey)
-}
+const fakeRecover = (message: string, signature: string): string =>
+	`${message}-${signature}`
+stub(recover, 'recover').callsFake(fakeRecover)
 
 test.todo('Returns the account that sign')
 
@@ -53,8 +49,7 @@ test('All sign methods succeed', (t) =>
 				(async () => {
 					t.log(`signing method: ${id}`)
 					const context = createContext()
-					const { signature } = createSignature()
-					const account = recover(TEST_MESSAGE, signature)
+					const signature = fakeSignature(Math.random().toString(), id)
 					await sign(
 						context,
 						createReq(id, TEST_MESSAGE, TEST_SECRET, signature)
@@ -62,7 +57,7 @@ test('All sign methods succeed', (t) =>
 					return {
 						id,
 						context,
-						account,
+						signature,
 						message: TEST_MESSAGE,
 						secret: TEST_SECRET,
 					}
@@ -73,7 +68,10 @@ test('All sign methods succeed', (t) =>
 			t.log(result)
 			t.log(result.context)
 			t.is(result.context.res?.status, 200)
-			t.is(result.context.res?.body.account, result.account)
+			t.is(
+				result.context.res?.body.account,
+				fakeRecover(result.message, result.signature)
+			)
 			t.true(typeof result.context.res?.body.publicSignature === 'string')
 		})
 	}))
