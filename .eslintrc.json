@@ -18,5 +18,14 @@
 	],
 	"rules": {
 		"prettier/prettier": "error"
-	}
+	},
+	"overrides": [
+		{
+			"files": ["**/*.test.ts"],
+			"rules": {
+				"functional/no-expression-statement": "off",
+				"functional/functional-parameters": "off"
+			}
+		}
+	]
 }
