@@ -1,4 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import { always, F } from 'ramda'
 
 export type AuthResult = {
 	readonly message: string
@@ -15,15 +16,15 @@ const httpTrigger: AzureFunction = async (
 	req: HttpRequest
 ): Promise<void> => {
 	const id = req.params.id
-	const fn: AuthFunction | Error = await import(
-		`../functions/auth/${id}`
-	).catch((err: Error) => err)
-	const result = await (fn instanceof Error ? undefined : fn(context, req))
+	const fn = await import(`../functions/auth/${id}`)
+		.then((fn: AuthFunction) => fn)
+		.catch(always(F))
+	const result = await fn(context, req)
 	const publicSignature = Math.random().toString()
 
 	// eslint-disable-next-line functional/immutable-data, functional/no-expression-statement
 	context.res = {
-		status: result === undefined ? 400 : 200,
+		status: result ? 200 : 400,
 		body: publicSignature,
 	}
 }
