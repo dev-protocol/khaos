@@ -30,6 +30,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@types/bent@^7.0.2":
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/@types/bent/-/bent-7.0.2.tgz#ff3ab6d2112e08b6b22b2e1582ca182c5de090bf"
+  integrity sha512-ppRvU9y5oD33ylKNnLEeQx7PNizULq9XUwZT7tMZKZ5e5MYoNruP92poHv3zCsJtWFwB8pGgntHI6YbyOAZB0Q==
+  dependencies:
+    "@types/node" "*"
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -51,6 +58,11 @@
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
   integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
+
+"@types/node@*":
+  version "13.13.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.4.tgz#1581d6c16e3d4803eb079c87d4ac893ee7501c2c"
+  integrity sha512-x26ur3dSXgv5AwKS0lNfbjpCakGIduWU1DU91Zz58ONRWrIKGunmZBNv4P7N+e27sJkiGDsw/3fT4AtsqQBrBA==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -185,6 +197,15 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
+bent@^7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/bent/-/bent-7.3.0.tgz#80dc46b7cfcae335214f51004c8783a344114085"
+  integrity sha512-ROfdGmcW1shnkiV/PZhj2Gw0+TiIfBYYs40QBBFYszdd2f2D07zLOTDQm5D411srCacR3Wt5mjLstv0OMmtmFQ==
+  dependencies:
+    bytesish "^0.4.1"
+    caseless "~0.12.0"
+    is-stream "^2.0.0"
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
@@ -193,10 +214,20 @@ brace-expansion@^1.1.7:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
 
+bytesish@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/bytesish/-/bytesish-0.4.1.tgz#5fe19b076037ffdfb63e083a53495b1d1c063f6f"
+  integrity sha512-j3l5QmnAbpOfcN/Z2Jcv4poQYfefs8rDdcbc6iEKm+OolvUXAE2APodpWj+DOzqX6Bl5Ys1cQkcIV2/doGvQxg==
+
 callsites@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
+
+caseless@~0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
+  integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
 chalk@^2.0.0, chalk@^2.1.0:
   version "2.4.2"
@@ -783,6 +814,11 @@ is-regex@^1.0.5:
   integrity sha512-vlKW17SNq44owv5AQR3Cq0bQPEb8+kF3UKZ2fiZNOWtztYE5i0CzCZxFDwO58qAOWtxdBRVO/V5Qin1wjCqFYQ==
   dependencies:
     has "^1.0.3"
+
+is-stream@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-2.0.0.tgz#bde9c32680d6fae04129d6ac9d921ce7815f78e3"
+  integrity sha512-XCoy+WlUr7d1+Z8GgSuXmpuUFC9fOhRXglJMx+dwLKTkL44Cjd4W1Z5P+BQZpr+cR93aGP4S/s7Ftw6Nd/kiEw==
 
 is-symbol@^1.0.2:
   version "1.0.3"
