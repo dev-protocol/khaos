@@ -2,6 +2,8 @@ import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { always, F } from 'ramda'
 import { recover } from './recover'
 import { publicSignature as pubSig } from './publicSignature'
+import { writer } from './db'
+import { CosmosClient } from '@azure/cosmos'
 
 export type Authorizer = (props: {
 	readonly message: string
@@ -18,13 +20,17 @@ const sign: AzureFunction = async (
 	const fn = await import(`../functions/authorizer/${id}`)
 		.then((e: { readonly default: Authorizer }) => e.default)
 		.catch(always(F))
-	const result = await fn({ message, secret, req })
+	const auth = await fn({ message, secret, req })
 	const account = recover(message, signature)
 	const publicSignature = account ? pubSig(message, account, id) : undefined
+	const wrote = await (publicSignature
+		? writer(CosmosClient)({ id: publicSignature, secret })
+		: undefined)
+	const status = auth && wrote ? 200 : auth ? 500 : 400
 
 	// eslint-disable-next-line functional/immutable-data, functional/no-expression-statement
 	context.res = {
-		status: result ? 200 : 400,
+		status,
 		body: {
 			account,
 			publicSignature,
