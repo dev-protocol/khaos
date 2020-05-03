@@ -37,7 +37,8 @@ export const writer = (client: typeof CosmosClient) => async (
 ): Promise<ItemResponse<Secret>> => {
 	const db = await createDBInstance(client, SECRETS, process.env)
 	const create = await db.items.create(data).catch((err: Error) => err)
-	return create instanceof Error ? db.item(data.id).replace(data) : create
+	const { id } = data
+	return create instanceof Error ? db.item(id, id).replace(data) : create
 }
 
 export const reader = (client: typeof CosmosClient) => async (
