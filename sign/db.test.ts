@@ -1,8 +1,9 @@
+/* eslint-disable functional/no-return-void */
 /* eslint-disable functional/no-throw-statement */
 /* eslint-disable functional/no-conditional-statement */
 /* eslint-disable functional/no-class */
 import test from 'ava'
-import { writer, reader } from './db'
+import { writer, reader, Secret } from './db'
 import { CosmosClient } from '@azure/cosmos'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -25,7 +26,7 @@ const createStub = (
 								items: {
 									create: async (options: any) => {
 										if (createCallback) {
-											createCallback()
+											createCallback(options)
 										}
 										return {
 											item: {
@@ -64,7 +65,7 @@ const createStub = (
 									},
 									replace: async (options: any) => {
 										if (replaceCallback) {
-											replaceCallback()
+											replaceCallback(options)
 										}
 										return {
 											item: {
@@ -107,18 +108,20 @@ test('write; insert new data to `Authentication.Secrets`', async (t) => {
 
 test('write; override the data when passed data already exists', async (t) => {
 	t.plan(7)
-	await writer((createStub() as unknown) as typeof CosmosClient)({
+	const store = new Map()
+	const fake = (opts: Secret): void => {
+		if (store.has(opts.id)) {
+			throw new Error()
+		}
+		store.set(opts.id, opts.secret)
+	}
+	await writer((createStub(fake) as unknown) as typeof CosmosClient)({
 		id: 'test',
 		secret: 'data',
 	})
 	const res = await writer(
-		(createStub(
-			() => {
-				// Throw the error to executes replace.
-				throw new Error()
-			},
-			undefined,
-			() => t.pass()
+		(createStub(fake, undefined, () =>
+			t.pass()
 		) as unknown) as typeof CosmosClient
 	)({
 		id: 'test',
