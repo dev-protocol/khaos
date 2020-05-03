@@ -63,7 +63,7 @@ test('Save passed secret to CosmosDB with a new public signature as the key', as
 	const message = `${Math.random().toString()}${TEST_MESSAGE}`
 	await sign(context, createReq(id, message, secret, signature))
 	const fakeAccount = fakeRecover(message, signature)
-	const expectedPubSig = publicSignature(message, fakeAccount, id)
+	const expectedPubSig = publicSignature(message, id, fakeAccount)
 	const data = fakeStore.get(expectedPubSig)
 	t.is(data, secret)
 })
@@ -106,8 +106,8 @@ test('All sign methods succeed', (t) =>
 				result.context.res?.body.publicSignature,
 				publicSignature(
 					result.message,
-					result.context.res?.body.account,
-					result.id
+					result.id,
+					result.context.res?.body.account
 				)
 			)
 		})

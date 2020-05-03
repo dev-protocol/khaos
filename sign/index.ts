@@ -22,7 +22,7 @@ const sign: AzureFunction = async (
 		.catch(always(F))
 	const auth = await fn({ message, secret, req })
 	const account = recover(message, signature)
-	const publicSignature = account ? pubSig(message, account, id) : undefined
+	const publicSignature = account ? pubSig(message, id, account) : undefined
 	const wrote = await (publicSignature
 		? writer(CosmosClient)({ id: publicSignature, secret })
 		: undefined)
