@@ -39,9 +39,12 @@ const createReq = (
 const fakeRecover = (message: string, signature: string): string =>
 	`${message}-${signature}`
 stub(recover, 'recover').callsFake(fakeRecover)
-stub(db, 'writer').callsFake(() => async (data: db.Secret) =>
+stub(db, 'writer').callsFake(() => async (data: db.Secret) => {
 	fakeStore.set(data.id, data.secret) as any
-)
+	return {
+		statusCode: 200,
+	} as any
+})
 
 test.todo('Returns the signed account')
 
