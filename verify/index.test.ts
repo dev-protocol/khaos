@@ -13,6 +13,7 @@ test.serial(
 		const pubSigAsId = jwt.sign(message, account)
 		const stubbedReader = stub(db, 'reader').callsFake(() => async () =>
 			({
+				statusCode: 200,
 				resource: { secret: '' },
 			} as any)
 		)
@@ -30,6 +31,7 @@ test.serial(
 		const pubSigAsId = jwt.sign(message, account)
 		const stubbedReader = stub(db, 'reader').callsFake(() => async () =>
 			({
+				statusCode: 200,
 				resource: { secret: '' },
 			} as any)
 		)
@@ -45,11 +47,25 @@ test.serial(
 		const account = 'S1zxiLd8jb4u@KKz7IDNlfz4&OPR@&j&EZkX'
 		const message = '6q7#kbquJA%PradxeMA9wtkNY$M5F%nd1P55'
 		const pubSigAsId = jwt.sign(message, account)
-		const stubbedReader = stub(db, 'reader').callsFake(() => async () => {
-			throw new Error()
-		})
+		const stubbedReader = stub(db, 'reader').callsFake(() => async () =>
+			({
+				statusCode: 404,
+			} as any)
+		)
 		const result = await verify(pubSigAsId, account)
 		t.is(result, false)
 		stubbedReader.restore()
 	}
 )
+
+test.serial('Returns false when thrown by DB', async (t) => {
+	const account = 'S1zxiLd8jb4u@KKz7IDNlfz4&OPR@&j&EZkX'
+	const message = '6q7#kbquJA%PradxeMA9wtkNY$M5F%nd1P55'
+	const pubSigAsId = jwt.sign(message, account)
+	const stubbedReader = stub(db, 'reader').callsFake(() => async () => {
+		throw new Error()
+	})
+	const result = await verify(pubSigAsId, account)
+	t.is(result, false)
+	stubbedReader.restore()
+})

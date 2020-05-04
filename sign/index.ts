@@ -24,7 +24,7 @@ const sign: AzureFunction = async (
 	const wrote = await (auth && publicSignature
 		? writer(CosmosClient)({ id: publicSignature, secret })
 		: undefined)
-	const status = auth && wrote ? 200 : auth ? 500 : 400
+	const status = auth && wrote?.statusCode === 200 ? 200 : auth ? 500 : 400
 
 	// eslint-disable-next-line functional/immutable-data, functional/no-expression-statement
 	context.res = {
