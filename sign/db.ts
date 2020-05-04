@@ -1,5 +1,5 @@
 import { CosmosClient, Container, ItemResponse } from '@azure/cosmos'
-import { tryCatch, always } from 'ramda'
+import { always } from 'ramda'
 
 export type Secret = {
 	readonly id: string
