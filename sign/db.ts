@@ -1,4 +1,5 @@
 import { CosmosClient, Container, ItemResponse } from '@azure/cosmos'
+import { tryCatch, always } from 'ramda'
 
 export type Secret = {
 	readonly id: string
@@ -35,15 +36,15 @@ const createDBInstance = async (
 export const writer = (client: typeof CosmosClient) => async (
 	data: Secret
 ): Promise<ItemResponse<Secret>> => {
-	const db = await createDBInstance(client, SECRETS, process.env)
-	const create = await db.items.create(data).catch((err: Error) => err)
-	const { id } = data
-	return create instanceof Error ? db.item(id, id).replace(data) : create
+	const container = await createDBInstance(client, SECRETS, process.env)
+	return container.items
+		.create(data)
+		.catch(always(((id) => container.item(id, id).replace(data))(data.id)))
 }
 
 export const reader = (client: typeof CosmosClient) => async (
 	id: string
-): Promise<ItemResponse<Secret>> =>
-	createDBInstance(client, SECRETS, process.env).then((container) =>
-		container.item(id, id).read()
-	)
+): Promise<ItemResponse<Secret>> => {
+	const container = await createDBInstance(client, SECRETS, process.env)
+	return container.item(id, id).read()
+}
