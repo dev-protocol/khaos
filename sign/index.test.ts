@@ -5,6 +5,7 @@ import { HttpRequest, Context } from '@azure/functions'
 import { stub } from 'sinon'
 import * as recover from './recover'
 import * as db from './db'
+import * as importAuthorizer from './importAuthorizer'
 import { sign as fakeSignature } from 'jsonwebtoken'
 import sign from './index'
 import { publicSignature } from './publicSignature'
@@ -14,6 +15,7 @@ const TEST_SECRET = 'TEST_SECRET'
 
 // eslint-disable-next-line functional/prefer-readonly-type
 const fakeStore: Map<string, string> = new Map()
+const random = (): string => Math.random().toString()
 const createContext = (): Context =>
 	(({
 		res: {},
@@ -55,18 +57,55 @@ test.todo('The response code is 200 when calling with an existing method')
 
 test.todo('The response code is 400 when calling does not exist method')
 
-test('Save passed secret to CosmosDB with a new public signature as the key', async (t) => {
-	const id = 'xxx'
-	const context = createContext()
-	const signature = fakeSignature(Math.random().toString(), id)
-	const secret = `${Math.random().toString()}${TEST_SECRET}`
-	const message = `${Math.random().toString()}${TEST_MESSAGE}`
-	await sign(context, createReq(id, message, secret, signature))
-	const fakeAccount = fakeRecover(message, signature)
-	const expectedPubSig = publicSignature({ message, id, account: fakeAccount })
-	const data = fakeStore.get(expectedPubSig)
-	t.is(data, secret)
-})
+test.serial(
+	'Save passed secret to CosmosDB with a new public signature as the key',
+	async (t) => {
+		const id = 'xxx'
+		const stubbed = stub(
+			importAuthorizer,
+			'importAuthorizer'
+		).callsFake(async () => () => true)
+		const context = createContext()
+		const signature = fakeSignature(random(), id)
+		const secret = random()
+		const message = random()
+		await sign(context, createReq(id, message, secret, signature))
+		const fakeAccount = fakeRecover(message, signature)
+		const expectedPubSig = publicSignature({
+			message,
+			id,
+			account: fakeAccount,
+		})
+		const data = fakeStore.get(expectedPubSig)
+		stubbed.restore()
+		t.is(data, secret)
+	}
+)
+
+test.serial(
+	`When failed authentication doesn't save the secret to CosmosDB`,
+	async (t) => {
+		const id = 'xxx'
+		const stubbed = stub(
+			importAuthorizer,
+			'importAuthorizer'
+		).callsFake(async () => () => false)
+		const context = createContext()
+		const signature = fakeSignature(random(), id)
+		const secret = random()
+		const message = random()
+		await sign(context, createReq(id, message, secret, signature))
+		const fakeAccount = fakeRecover(message, signature)
+		const expectedPubSig = publicSignature({
+			message,
+			id,
+			account: fakeAccount,
+		})
+		const data = fakeStore.get(expectedPubSig)
+		stubbed.restore()
+		t.is(data, undefined)
+	}
+)
 
 test('All sign methods succeed', (t) =>
 	Promise.all(
