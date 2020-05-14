@@ -1,5 +1,5 @@
 import { always, F } from 'ramda'
-import { Authorizer } from '.'
+import { Authorizer } from '../../functions/authorizer/authorizer'
 
 export const importAuthorizer = async (
 	id: string

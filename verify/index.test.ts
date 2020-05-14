@@ -1,6 +1,6 @@
 /* eslint-disable functional/no-throw-statement */
 import test from 'ava'
-import * as db from '../sign/db'
+import * as db from '../sign/db/db'
 import * as jwt from 'jsonwebtoken'
 import { stub } from 'sinon'
 import { verify } from '.'

@@ -1,4 +1,4 @@
-import { reader } from '../sign/db'
+import { reader } from '../sign/db/db'
 import { CosmosClient } from '@azure/cosmos'
 import { verify as _verify } from 'jsonwebtoken'
 import { tryCatch, F } from 'ramda'

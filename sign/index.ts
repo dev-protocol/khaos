@@ -1,15 +1,9 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import { recover } from './recover'
-import { publicSignature as pubSig } from './publicSignature'
-import { writer } from './db'
+import { recover } from './recover/recover'
+import { publicSignature as pubSig } from './publicSignature/publicSignature'
+import { writer } from './db/db'
 import { CosmosClient } from '@azure/cosmos'
-import { importAuthorizer } from './importAuthorizer'
-
-export type Authorizer = (props: {
-	readonly message: string
-	readonly secret: string
-	readonly req: HttpRequest
-}) => Promise<boolean>
+import { importAuthorizer } from './importAuthorizer/importAuthorizer'
 
 const sign: AzureFunction = async (
 	context: Context,

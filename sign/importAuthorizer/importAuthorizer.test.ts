@@ -1,5 +1,5 @@
 import test from 'ava'
-import example from '../functions/authorizer/example'
+import example from '../../functions/authorizer/example'
 import { importAuthorizer } from './importAuthorizer'
 import { always, F } from 'ramda'
 
