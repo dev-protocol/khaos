@@ -50,7 +50,7 @@ jobs:
           path: |
             node_modules
             */*/*/node_modules
-        key: ${{ runner.os }}-${ GITHUB_SHA }
+          key: ${{ runner.os }}-${ GITHUB_SHA }
 
       - name: Build
         run: yarn build
