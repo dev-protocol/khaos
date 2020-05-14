@@ -1,0 +1,67 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: cache deps
+        uses: actions/cache@master
+        with:
+          path: |
+            node_modules
+            */*/*/node_modules
+          key: ${{ runner.os }}-${ GITHUB_SHA }
+
+      - name: install deps
+        run: yarn
+
+      - name: lint
+        run: yarn lint
+
+      - name: test
+        run: yarn test
+
+  deploy:
+    needs: build
+    if: ${{ github.event_name != 'pull_request' && contains(github.ref, 'master') }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: restore cache deps
+        uses: actions/cache@master
+        with:
+          path: |
+            node_modules
+            */*/*/node_modules
+        key: ${{ runner.os }}-${ GITHUB_SHA }
+
+      - name: Build
+        run: yarn build
+
+      - name: Login via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Functions
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: khaos-oracle
