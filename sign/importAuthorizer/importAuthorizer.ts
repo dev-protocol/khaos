@@ -1,9 +1,9 @@
 import { always, F } from 'ramda'
-import { Authorizer } from '../../functions/authorizer/authorizer'
+import { Authorizer } from '../../functions/authorizer'
 
 export const importAuthorizer = async (
 	id: string
 ): Promise<Authorizer | (() => boolean)> =>
-	import(`../../functions/authorizer/${id}`)
+	import(`../../functions/${id}/authorizer`)
 		.then((e: { readonly default: Authorizer }) => e.default)
 		.catch(always(F))

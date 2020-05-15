@@ -48,7 +48,7 @@
 		"typescript": "3.9.2"
 	},
 	"workspaces": [
-		"functions/*/*"
+		"functions/*"
 	],
 	"ava": {
 		"files": [

@@ -112,7 +112,7 @@ test.serial(
 
 test('All sign methods succeed', (t) =>
 	Promise.all(
-		readdirSync(join(__dirname, '../functions/authorizer'), {
+		readdirSync(join(__dirname, '../functions'), {
 			withFileTypes: true,
 		})
 			.filter((dirent) => dirent.isDirectory())
