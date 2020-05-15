@@ -30,7 +30,6 @@ cp -r functions/example functions/YOUR_METHODS
 
 Please change `package.json`, `authorizer.ts`, and `query.ts` under the new directory.
 
-
 ## How to start development for fix issues?
 
 First as follows:
