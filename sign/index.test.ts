@@ -1,6 +1,4 @@
 import test from 'ava'
-import { join } from 'path'
-import { readdirSync } from 'fs'
 import { HttpRequest, Context } from '@azure/functions'
 import { stub } from 'sinon'
 import * as recover from './recover/recover'
@@ -9,9 +7,6 @@ import * as importAuthorizer from './importAuthorizer/importAuthorizer'
 import { sign as fakeSignature } from 'jsonwebtoken'
 import sign from './index'
 import { publicSignature } from './publicSignature/publicSignature'
-
-const TEST_MESSAGE = 'TEST_MESSAGE'
-const TEST_SECRET = 'TEST_SECRET'
 
 // eslint-disable-next-line functional/prefer-readonly-type
 const fakeStore: Map<string, string> = new Map()
@@ -109,48 +104,3 @@ test.serial(
 		t.is(data, undefined)
 	}
 )
-
-test('All sign methods succeed', (t) =>
-	Promise.all(
-		readdirSync(join(__dirname, '../functions'), {
-			withFileTypes: true,
-		})
-			.filter((dirent) => dirent.isDirectory())
-			.map((dirent) => dirent.name)
-			.map((id) =>
-				(async () => {
-					t.log(`signing method: ${id}`)
-					const context = createContext()
-					const signature = fakeSignature(Math.random().toString(), id)
-					await sign(
-						context,
-						createReq(id, TEST_MESSAGE, TEST_SECRET, signature)
-					)
-					return {
-						id,
-						context,
-						signature,
-						message: TEST_MESSAGE,
-						secret: TEST_SECRET,
-					}
-				})()
-			)
-	).then((results) => {
-		results.map((result) => {
-			t.log(result)
-			t.log(result.context)
-			t.is(result.context.res?.status, 200)
-			t.is(
-				result.context.res?.body.account,
-				fakeRecover(result.message, result.signature)
-			)
-			t.is(
-				result.context.res?.body.publicSignature,
-				publicSignature({
-					message: result.message,
-					id: result.id,
-					account: result.context.res?.body.account,
-				})
-			)
-		})
-	}))
