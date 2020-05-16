@@ -41,7 +41,21 @@ stub(db, 'writer').callsFake(() => async (data: db.Secret) => {
 	} as any
 })
 
-test.todo('Returns the signed account')
+test.serial('Returns the signed account', async (t) => {
+	const id = 'xxx'
+	const stubbed = stub(
+		importAuthorizer,
+		'importAuthorizer'
+	).callsFake(async () => () => true)
+	const context = createContext()
+	const signature = fakeSignature(random(), id)
+	const secret = random()
+	const message = random()
+	await sign(context, createReq(id, message, secret, signature))
+	const fakeAccount = fakeRecover(message, signature)
+	stubbed.restore()
+	t.is(context.res?.body?.account, fakeAccount)
+})
 
 test.todo('Returns a new public signature')
 
@@ -63,11 +77,10 @@ test.serial(
 			importAuthorizer,
 			'importAuthorizer'
 		).callsFake(async () => () => true)
-		const context = createContext()
 		const signature = fakeSignature(random(), id)
 		const secret = random()
 		const message = random()
-		await sign(context, createReq(id, message, secret, signature))
+		await sign(createContext(), createReq(id, message, secret, signature))
 		const fakeAccount = fakeRecover(message, signature)
 		const expectedPubSig = publicSignature({
 			message,
@@ -88,11 +101,10 @@ test.serial(
 			importAuthorizer,
 			'importAuthorizer'
 		).callsFake(async () => () => false)
-		const context = createContext()
 		const signature = fakeSignature(random(), id)
 		const secret = random()
 		const message = random()
-		await sign(context, createReq(id, message, secret, signature))
+		await sign(createContext(), createReq(id, message, secret, signature))
 		const fakeAccount = fakeRecover(message, signature)
 		const expectedPubSig = publicSignature({
 			message,
