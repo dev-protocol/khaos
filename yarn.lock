@@ -231,10 +231,10 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/ramda@0.27.5":
-  version "0.27.5"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.27.5.tgz#2ecb00b8a1ff6bf7c6a6ac3160725cab3ee81f68"
-  integrity sha512-aXzK/jrjZ4mJAunSNMLucAScAqrxy4TesnG1cGVBmcvrtUtLJjTYaEl2b2ynhir4G+OSu6r9tqb/GoR/uSZlPg==
+"@types/ramda@0.27.6":
+  version "0.27.6"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.27.6.tgz#5b914266cb73ea61fe3778949ef9b0aa455804b4"
+  integrity sha512-ephagb0ZIAJSoS5I/qMS4Mqo1b/Nd50pWM+o1QO/dz8NF//GsCGPTLDVRqgXlVncy74KShfHzE5rPZXTeek4PA==
   dependencies:
     ts-toolbelt "^6.3.3"
 
