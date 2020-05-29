@@ -52,7 +52,7 @@ const timerTrigger: AzureFunction = async function (
 		)
 		const resultArgs = []
 		for (const event of events) {
-			const data = event.returnValues.data
+			const data = event.get('returnValues').get('data')
 			const jsonData = JSON.parse(data)
 			const secret = await readSecret(CosmosClient)(jsonData.s)
 			if (typeof secret.resource === 'undefined') {
