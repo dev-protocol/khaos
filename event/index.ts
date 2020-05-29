@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable functional/immutable-data */
 /* eslint-disable functional/no-loop-statement */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable functional/no-throw-statement */
 /* eslint-disable functional/no-expression-statement */
 /* eslint-disable functional/no-conditional-statement */
@@ -58,7 +56,7 @@ const timerTrigger: AzureFunction = async function (
 			if (typeof secret.resource === 'undefined') {
 				throw new Error('illigal public signature')
 			}
-			const result = await oraclize(secret.resource?.secret!, jsonData)
+			const result = await oraclize(secret.resource.secret, jsonData)
 			resultArgs.push(result)
 		}
 		for (const resultArg of resultArgs) {
