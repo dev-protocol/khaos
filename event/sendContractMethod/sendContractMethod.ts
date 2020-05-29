@@ -1,19 +1,23 @@
-import { importAddress } from '../importAddress/importAddress'
 import { sendInfo } from '../executeOraclize/executeOraclize'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Web3 = require('web3')
+import Web3 from 'web3'
+import { AbiItem } from 'web3-utils'
 
-const CALLBACK_ABI =
-	'[{"constant":false,"inputs":[{"internalType":"string","name":"_data","type":"string"}],"name":"khaosCallback","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]'
+const CALLBACK_ABI = [
+	{
+		constant: false,
+		inputs: [{ internalType: 'string', name: '_data', type: 'string' }],
+		name: 'khaosCallback',
+		outputs: [],
+		payable: false,
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+] as readonly AbiItem[]
 
-export const sendContractMethod = async (info: sendInfo): Promise<void> => {
-	const fn = await importAddress(info.khaosId)
-	const address = await fn()
-	const web3 = new Web3(new Web3.providers.HttpProvider(process.env.WEB3_URL))
-	const callbackInstance = await new web3.eth.Contract(
-		JSON.parse(CALLBACK_ABI),
-		address
-	)
-	// eslint-disable-next-line functional/no-expression-statement
-	await callbackInstance.methds.khaosCallBack().send(info.result)
+export const sendContractMethod = (web3: Web3, address: string) => async (
+	info: sendInfo
+): Promise<boolean> => {
+	const callbackInstance = new web3.eth.Contract([...CALLBACK_ABI], address)
+	const sent = callbackInstance.methods.khaosCallBack().send(info.result)
+	return sent instanceof Promise
 }

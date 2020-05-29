@@ -16,12 +16,12 @@ const timerTrigger: AzureFunction = async function (
 	}
 
 	const dirs = getIds('../../functions')
+	const endpoint = process.env.WEB3_URL || ''
+	const oraclizer = idProcess(endpoint)
+	const results = await Promise.all(dirs.map(oraclizer))
 
 	// eslint-disable-next-line functional/no-expression-statement
-	await Promise.all(dirs.map(idProcess))
-
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info('event batch is finished.')
+	context.log.info('event batch is finished.', results)
 }
 
 export default timerTrigger

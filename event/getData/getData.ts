@@ -1,4 +1,6 @@
-export const getData = function (event: ReadonlyMap<string, any>): any {
-	const data = event.get('returnValues').get('data')
+import { EventData } from 'web3-eth-contract'
+
+export const getData = function (event: EventData): any {
+	const data = event.returnValues._data
 	return JSON.parse(data)
 }

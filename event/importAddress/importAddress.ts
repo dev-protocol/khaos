@@ -1,9 +1,9 @@
-import { always, F } from 'ramda'
+import { always } from 'ramda'
 import { Address } from '../../functions/address'
 
 export const importAddress = async (
 	id: string
-): Promise<Address | (() => boolean)> =>
+): Promise<Address | (() => undefined)> =>
 	import(`../../functions/${id}/address`)
 		.then((e: { readonly default: Address }) => e.default)
-		.catch(always(F))
+		.catch(always(always(undefined)))

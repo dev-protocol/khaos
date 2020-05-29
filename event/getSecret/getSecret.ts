@@ -8,9 +8,8 @@ export type oracleArgInfo = {
 
 export const getSecret = async (json: any): Promise<oracleArgInfo> => {
 	const secret = await readSecret(CosmosClient)(json.s)
-	const result: oracleArgInfo = {
-		secret: secret,
-		json: json,
+	return {
+		secret,
+		json,
 	}
-	return result
 }
