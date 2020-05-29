@@ -6,8 +6,7 @@ import { getSecret } from '../getSecret/getSecret'
 import { targetFilter } from '../targetFilter/targetFilter'
 import { executeOraclize } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Web3 = require('web3')
+import Web3 from 'web3'
 
 export const idProcess = async function (id: string): Promise<void> {
 	const web3 = new Web3(new Web3.providers.HttpProvider(process.env.WEB3_URL))
