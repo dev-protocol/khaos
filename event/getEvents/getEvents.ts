@@ -1,5 +1,6 @@
-// TODO 環境変数とかにする
-const ABI = '[]'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const ABI =
+	'[{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"_data","type":"string"}],"name":"Query","type":"event"}]'
 
 export const getEvents = async (
 	web3: any,

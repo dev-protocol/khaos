@@ -1,37 +1,37 @@
-/* eslint-disable functional/no-conditional-statement */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable functional/immutable-data */
+/* eslint-disable functional/no-loop-statement */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable functional/no-throw-statement */
 /* eslint-disable functional/no-expression-statement */
+/* eslint-disable functional/no-conditional-statement */
 import { AzureFunction, Context } from '@azure/functions'
-import { getDirectoryList, getApprovedBlock } from './utils'
+import { getIds } from './getIds/gitIds'
 import { importAddress } from './importAddress/importAddress'
 import { getLastBlock } from './getLastBlock/getLastBlock'
 import { getEvents } from './getEvents/getEvents'
 import { importOraclize } from './importOraclize/importOraclize'
 import { CosmosClient } from '@azure/cosmos'
-import { readSecret } from './db/db'
+import { readSecret } from './../common/db/secret'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3')
 
-// TODO 環境変数にする
-const WEB3_URL = 'https://mainnet.jsjsjs'
-const CALLBACK_ABI = ''
+const CALLBACK_ABI =
+	'[{"constant":false,"inputs":[{"internalType":"string","name":"_data","type":"string"}],"name":"khaosCallback","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]'
 
 const timerTrigger: AzureFunction = async function (
 	context: Context,
 	myTimer: any
 ): Promise<void> {
-	// eslint-disable-next-line functional/no-let
-	let timeStamp = new Date().toISOString()
-
-	context.log.info('event batch is started.', timeStamp)
+	context.log.info('event batch is started.')
 
 	if (myTimer.IsPastDue) {
 		context.log.warn('Timer function is running late!')
 	}
-	const web3 = new Web3(new Web3.providers.HttpProvider(WEB3_URL))
-	const approvedBlock = await getApprovedBlock(web3)
+	const web3 = new Web3(new Web3.providers.HttpProvider(process.env.WEB3_URL))
+	const currentBlockNumber = await web3.eth.getBlockNumber()
 
-	const dirs = getDirectoryList('../functions')
-	// eslint-disable-next-line functional/no-loop-statement
+	const dirs = getIds('../../functions')
 	for (const dir of dirs) {
 		const fn = await importAddress(dir)
 		const address = await fn()
@@ -40,7 +40,7 @@ const timerTrigger: AzureFunction = async function (
 			web3,
 			address.toString(),
 			lastBlock,
-			approvedBlock
+			currentBlockNumber
 		)
 		if (events.length === 0) {
 			continue
@@ -50,17 +50,22 @@ const timerTrigger: AzureFunction = async function (
 			JSON.parse(CALLBACK_ABI),
 			address
 		)
-		// eslint-disable-next-line functional/no-loop-statement
+		const resultArgs = []
 		for (const event of events) {
 			const data = event.returnValues.data
 			const jsonData = JSON.parse(data)
 			const secret = await readSecret(CosmosClient)(jsonData.s)
+			if (typeof secret.resource === 'undefined') {
+				throw new Error('illigal public signature')
+			}
 			const result = await oraclize(secret.resource?.secret!, jsonData)
-			await callbackInstance.methds.khaosCallBack().send(result)
+			resultArgs.push(result)
+		}
+		for (const resultArg of resultArgs) {
+			await callbackInstance.methds.khaosCallBack().send(resultArg)
 		}
 	}
-	timeStamp = new Date().toISOString()
-	context.log.info('event batch is finished.', timeStamp)
+	context.log.info('event batch is finished.')
 }
 
 export default timerTrigger
