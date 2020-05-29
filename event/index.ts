@@ -17,6 +17,55 @@ const Web3 = require('web3')
 const CALLBACK_ABI =
 	'[{"constant":false,"inputs":[{"internalType":"string","name":"_data","type":"string"}],"name":"khaosCallback","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]'
 
+// const getData = async function (event: ReadonlyMap<string, any>): Promise<any> {
+// 	const data = event.get('returnValues').get('data')
+// 	return JSON.parse(data)
+// }
+
+// const getSecret = async function (json: any): Promise<any> {
+// 	return await readSecret(CosmosClient)(json.s)
+// }
+
+const idProcess = async function (id: string): Promise<void> {
+	const web3 = new Web3(new Web3.providers.HttpProvider(process.env.WEB3_URL))
+	const currentBlockNumber = await web3.eth.getBlockNumber()
+	const fn = await importAddress(id)
+	const address = await fn()
+	const lastBlock = await getLastBlock(id)
+	const events = await getEvents(
+		web3,
+		address.toString(),
+		lastBlock,
+		currentBlockNumber
+	)
+	if (events.length === 0) {
+		return
+	}
+	const oraclize = await importOraclize(id)
+	const callbackInstance = await new web3.eth.Contract(
+		JSON.parse(CALLBACK_ABI),
+		address
+	)
+	// const jsonData = events.map(getData)
+	// const secrets = jsonData.map(getSecret)
+
+	//const resultArgs = events.map(getResults(id))
+	const resultArgs = []
+	for (const event of events) {
+		const data = event.get('returnValues').get('data')
+		const jsonData = JSON.parse(data)
+		const secret = await readSecret(CosmosClient)(jsonData.s)
+		if (typeof secret.resource === 'undefined') {
+			throw new Error('illigal public signature')
+		}
+		const result = await oraclize(secret.resource.secret, jsonData)
+		resultArgs.push(result)
+	}
+	for (const resultArg of resultArgs) {
+		await callbackInstance.methds.khaosCallBack().send(resultArg)
+	}
+}
+
 const timerTrigger: AzureFunction = async function (
 	context: Context,
 	myTimer: any
@@ -26,43 +75,9 @@ const timerTrigger: AzureFunction = async function (
 	if (myTimer.IsPastDue) {
 		context.log.warn('Timer function is running late!')
 	}
-	const web3 = new Web3(new Web3.providers.HttpProvider(process.env.WEB3_URL))
-	const currentBlockNumber = await web3.eth.getBlockNumber()
 
 	const dirs = getIds('../../functions')
-	for (const dir of dirs) {
-		const fn = await importAddress(dir)
-		const address = await fn()
-		const lastBlock = await getLastBlock(dir)
-		const events = await getEvents(
-			web3,
-			address.toString(),
-			lastBlock,
-			currentBlockNumber
-		)
-		if (events.length === 0) {
-			continue
-		}
-		const oraclize = await importOraclize(dir)
-		const callbackInstance = await new web3.eth.Contract(
-			JSON.parse(CALLBACK_ABI),
-			address
-		)
-		const resultArgs = []
-		for (const event of events) {
-			const data = event.get('returnValues').get('data')
-			const jsonData = JSON.parse(data)
-			const secret = await readSecret(CosmosClient)(jsonData.s)
-			if (typeof secret.resource === 'undefined') {
-				throw new Error('illigal public signature')
-			}
-			const result = await oraclize(secret.resource.secret, jsonData)
-			resultArgs.push(result)
-		}
-		for (const resultArg of resultArgs) {
-			await callbackInstance.methds.khaosCallBack().send(resultArg)
-		}
-	}
+	dirs.map(await idProcess)
 	context.log.info('event batch is finished.')
 }
 
