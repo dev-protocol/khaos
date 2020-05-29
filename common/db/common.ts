@@ -1,4 +1,4 @@
-import { CosmosClient, Container, ItemResponse } from '@azure/cosmos'
+import { CosmosClient, Container } from '@azure/cosmos'
 
 export const createDBInstance = async (
 	Client: typeof CosmosClient,

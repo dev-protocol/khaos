@@ -1,4 +1,4 @@
-import { CosmosClient, Container, ItemResponse } from '@azure/cosmos'
+import { CosmosClient, ItemResponse } from '@azure/cosmos'
 import { createDBInstance } from './common'
 
 export type Secret = {
