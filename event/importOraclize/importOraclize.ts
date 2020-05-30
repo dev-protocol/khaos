@@ -1,4 +1,4 @@
-import { always, F } from 'ramda'
+import { always } from 'ramda'
 import { Oraclize } from '../../functions/oraclize'
 
 export const importOraclize = async (
