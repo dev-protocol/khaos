@@ -1,5 +1,5 @@
 import { AzureFunction, Context } from '@azure/functions'
-import { getIds } from './getIds/gitIds'
+import { getIds } from './getIds/getIds'
 import { idProcess } from './idProcess/idProcess'
 
 const timerTrigger: AzureFunction = async function (
