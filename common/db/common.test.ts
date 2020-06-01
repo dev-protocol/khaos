@@ -6,7 +6,7 @@ import { CosmosClient, Container } from '@azure/cosmos'
 import { createDBInstance } from './common'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const createStub = (readCallback?: Function) =>
+const createStub = (createCallback?: Function) =>
 	class Stub {
 		public readonly databases = {
 			createIfNotExists: async ({ id: database }: { readonly id: string }) => ({
@@ -18,19 +18,24 @@ const createStub = (readCallback?: Function) =>
 							readonly id: string
 						}) => ({
 							container: {
-								item: (id: string, partitionKey: string) => ({
-									read: async () => {
-										if (readCallback) {
-											readCallback()
+								items: {
+									create: async (options: any) => {
+										if (createCallback) {
+											createCallback(options)
 										}
 										return {
-											resource: {
-												id,
-												secret: 'data',
+											item: {
+												container: {
+													database: {
+														id: database,
+													},
+													id: container,
+												},
 											},
+											options,
 										}
 									},
-								}),
+								},
 							},
 						}),
 					},
@@ -39,7 +44,7 @@ const createStub = (readCallback?: Function) =>
 		}
 	}
 
-test('write; insert new data to `Authentication.Secrets`', async (t) => {
+test('An instance of the database is created (albeit a dummy)', async (t) => {
 	const instance = await createDBInstance(
 		(createStub(() => t.pass()) as unknown) as typeof CosmosClient,
 		{
@@ -48,6 +53,6 @@ test('write; insert new data to `Authentication.Secrets`', async (t) => {
 		},
 		process.env
 	)
-	const result = await instance.item('test', 'test').read()
-	t.is(result.resource?.id, 'test')
+	const result = await instance.items.create({ key: 'value' })
+	t.is(result.item.container.database.id, 'dummy-database')
 })
