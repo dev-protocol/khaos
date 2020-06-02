@@ -1,13 +1,20 @@
-// import test from 'ava'
-// import { ItemResponse } from '@azure/cosmos'
-// import { executeOraclize } from './executeOraclize'
-// import { oracleArgInfo } from './../getSecret/getSecret'
-// import { Secret } from './../../common/db/secret'
+import test from 'ava'
+import { executeOraclize } from './executeOraclize'
 
-// test('write; insert new data to `Authentication.LastBlock`', async (t) => {
-// const arg: oracleArgInfo = {
-// 	secret: new ItemResponse<Secret>(),
-// 	json: {},
-// }
-// await executeOraclize(arg)
-//})
+test('Execute the oraclize function if the khaos id exists.', async (t) => {
+	const result = await executeOraclize({
+		json: { i: 'example' },
+		secret: { resource: { secret: 'dummy-secret' } },
+	} as any)
+	t.is(result.khaosId, 'example')
+	t.is(result.result, '')
+})
+
+test('If the khaos id does not exist, the oraclize function is not executed and undefined is returned.', async (t) => {
+	const result = await executeOraclize({
+		json: { i: 'example2' },
+		secret: { resource: { secret: 'dummy-secret2' } },
+	} as any)
+	t.is(result.khaosId, 'example2')
+	t.is(result.result, undefined)
+})
