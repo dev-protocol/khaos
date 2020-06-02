@@ -2,7 +2,7 @@
 /* eslint-disable functional/no-conditional-statement */
 /* eslint-disable functional/no-class */
 import test from 'ava'
-import { CosmosClient, Container } from '@azure/cosmos'
+import { CosmosClient } from '@azure/cosmos'
 import { createDBInstance } from './common'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
