@@ -1,6 +1,7 @@
 import { AzureFunction, Context } from '@azure/functions'
 import { getIds } from './getIds/getIds'
 import { idProcess } from './idProcess/idProcess'
+import path from 'path'
 
 const timerTrigger: AzureFunction = async function (
 	context: Context,
@@ -15,7 +16,8 @@ const timerTrigger: AzureFunction = async function (
 		context.log.warn('Timer function is running late!')
 	}
 
-	const dirs = getIds('../../functions')
+	const dirPath = path.join(__dirname, '..', 'functions')
+	const dirs = getIds(dirPath)
 	const endpoint = process.env.WEB3_URL || ''
 	const oraclizer = idProcess(endpoint)
 	const results = await Promise.all(dirs.map(oraclizer))
