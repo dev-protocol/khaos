@@ -82,29 +82,25 @@ class Web3EventMock {
 	}
 }
 
-test.serial(
-	'If the call is not delayed, there is no warning message.',
-	async (t) => {
-		const stubbedReader = stub(lastBlock, 'reader').callsFake(() => async () =>
-			({
-				statusCode: 200,
-				resource: { lastBlock: 100 },
-			} as any)
-		)
-		const stubbedSecretReader = stub(secret, 'reader').callsFake(
-			() => async () =>
-				({
-					statusCode: 200,
-					resource: { secret: 'dummy-secret' },
-				} as any)
-		)
-		const web3 = new Web3EventMock('http://hogehoge')
-		const result = await idProcess(web3 as any)('example')
-		stubbedReader.restore()
-		stubbedSecretReader.restore()
-		t.is((result as readonly Results[])[0].address, '0x00......')
-		t.is((result as readonly Results[])[1].address, '0x00......')
-		t.is((result as readonly Results[])[0].sent, true)
-		t.is((result as readonly Results[])[1].sent, true)
-	}
-)
+test.serial('The process is executed successfully.', async (t) => {
+	const stubbedReader = stub(lastBlock, 'reader').callsFake(() => async () =>
+		({
+			statusCode: 200,
+			resource: { lastBlock: 100 },
+		} as any)
+	)
+	const stubbedSecretReader = stub(secret, 'reader').callsFake(() => async () =>
+		({
+			statusCode: 200,
+			resource: { secret: 'dummy-secret' },
+		} as any)
+	)
+	const web3 = new Web3EventMock('http://hogehoge')
+	const result = await idProcess(web3 as any)('example')
+	stubbedReader.restore()
+	stubbedSecretReader.restore()
+	t.is((result as readonly Results[])[0].address, '0x00......')
+	t.is((result as readonly Results[])[1].address, '0x00......')
+	t.is((result as readonly Results[])[0].sent, true)
+	t.is((result as readonly Results[])[1].sent, true)
+})
