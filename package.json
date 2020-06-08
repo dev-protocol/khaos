@@ -18,7 +18,7 @@
 	"author": "",
 	"license": "MPL-2.0",
 	"dependencies": {
-		"@azure/cosmos": "3.6.3",
+		"@azure/cosmos": "3.7.0",
 		"@azure/functions": "1.2.2",
 		"bent": "7.3.2",
 		"jsonwebtoken": "8.5.1",
