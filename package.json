@@ -23,7 +23,7 @@
 		"bent": "7.3.2",
 		"jsonwebtoken": "8.5.1",
 		"ramda": "0.27.0",
-		"web3": "1.2.8"
+		"web3": "1.2.9"
 	},
 	"devDependencies": {
 		"@ava/typescript": "1.1.1",
