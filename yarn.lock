@@ -9,10 +9,10 @@
   dependencies:
     escape-string-regexp "^2.0.0"
 
-"@azure/cosmos@3.7.0":
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/@azure/cosmos/-/cosmos-3.7.0.tgz#ef3d9608891a85da698c88e3b15f352a5f888bfc"
-  integrity sha512-3SRxnmy6NncdX5eYqGuRTack52hloS9YhQ0aOKwWJ8Z4dDSrVH3XB2Mcp/WokoIpVm0Bq5nUC8FsvLBZKfRkyg==
+"@azure/cosmos@3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@azure/cosmos/-/cosmos-3.7.1.tgz#1d9c13774f0fbdd22113e33d61ca7f702574ee66"
+  integrity sha512-P/80gz4c6gAjdilOTT7TofU3Vl1Wh21+U+/d/MAIdaXhsSspL44diyl0qfLRxXiosL4yT12SGHOE9w0n3U57yA==
   dependencies:
     "@types/debug" "^4.1.4"
     debug "^4.1.1"
@@ -22,7 +22,7 @@
     os-name "^3.1.0"
     priorityqueuejs "^1.0.0"
     semaphore "^1.0.5"
-    tslib "^1.10.0"
+    tslib "^2.0.0"
     uuid "^8.1.0"
 
 "@azure/functions@1.2.2":
@@ -4581,10 +4581,15 @@ ts-toolbelt@^6.3.3:
   resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.7.7.tgz#4d7f34cafd519bf0f1d6da5a4b07889db6ba0184"
   integrity sha512-GrgXML3KOnYymiyFNEohhizPtO+ZgTwEN9oIR+SvP6EPP5cj4qH1Xi5CU4iobgMUNYMEVhXqnBLY1tSonXwE+g==
 
-tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.8.1, tslib@^1.9.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+
+tslib@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.0.tgz#18d13fc2dce04051e20f074cc8387fd8089ce4f3"
+  integrity sha512-lTqkx847PI7xEDYJntxZH89L2/aXInsyF2luSafe/+0fHOMjlBNXdH6th7f70qxLDhul7KZK0zC8V5ZIyHl0/g==
 
 tsutils@^3.17.1:
   version "3.17.1"
