@@ -20,7 +20,7 @@
 	"dependencies": {
 		"@azure/cosmos": "3.7.1",
 		"@azure/functions": "1.2.2",
-		"bent": "7.3.3",
+		"bent": "7.3.4",
 		"jsonwebtoken": "8.5.1",
 		"ramda": "0.27.0",
 		"web3": "1.2.9"
