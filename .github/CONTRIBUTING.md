@@ -10,7 +10,7 @@ Basic Pull Request steps:
 1. Create your feature branch: `git checkout -b awesome-feature`
 1. Commit your changes: `git commit -am "Add awesome feature"`
 1. Push to the branch: `git push origin awesome-feature`
-1. Submit a pull request to master branch in this repository
+1. Submit a pull request to main branch in this repository
 
 ## How to start development for a new authorize and query method?
 
