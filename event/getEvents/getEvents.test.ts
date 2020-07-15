@@ -19,7 +19,7 @@ class Web3EventMock {
 
 				public async getPastEvents(
 					_: string,
-					__: object
+					__: Record<string, unknown>
 				): Promise<readonly EventData[]> {
 					const event1: EventData = {
 						returnValues: {

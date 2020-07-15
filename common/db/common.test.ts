@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-return-void */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable functional/no-conditional-statement */
 /* eslint-disable functional/no-class */
@@ -6,7 +7,7 @@ import { CosmosClient } from '@azure/cosmos'
 import { createDBInstance } from './common'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const createStub = (createCallback?: Function) =>
+const createStub = (createCallback?: (options?: any) => void) =>
 	class Stub {
 		public readonly databases = {
 			createIfNotExists: async ({ id: database }: { readonly id: string }) => ({
