@@ -19,7 +19,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: cache deps
-        uses: actions/cache@master
+        uses: actions/cache@main
         with:
           path: |
             node_modules
@@ -37,7 +37,7 @@ jobs:
 
   deploy:
     needs: build
-    if: ${{ github.event_name != 'pull_request' && contains(github.ref, 'master') }}
+    if: ${{ github.event_name != 'pull_request' && contains(github.ref, 'main') }}
 
     runs-on: ubuntu-latest
 
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: restore cache deps
-        uses: actions/cache@master
+        uses: actions/cache@main
         with:
           path: |
             node_modules
