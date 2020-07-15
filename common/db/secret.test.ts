@@ -8,9 +8,9 @@ import { CosmosClient } from '@azure/cosmos'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const createStub = (
-	createCallback?: Function,
-	readCallback?: Function,
-	replaceCallback?: Function
+	createCallback?: (arg?: any) => void,
+	readCallback?: (arg?: any) => void,
+	replaceCallback?: (arg?: any) => void
 ) =>
 	class Stub {
 		public readonly databases = {
