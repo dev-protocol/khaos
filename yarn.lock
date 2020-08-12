@@ -9,10 +9,10 @@
   dependencies:
     escape-string-regexp "^2.0.0"
 
-"@azure/cosmos@3.8.0":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@azure/cosmos/-/cosmos-3.8.0.tgz#b6e34693c8c75abab55dbe60273bfa43e4a71526"
-  integrity sha512-LVOXoREW2NI+CKxsEi3sRpUcGqddT2aisiNZv14XhWQbvp/JYlcqtzlawoNG32VGMGuPD4vd3LkPNxzlT7wDRQ==
+"@azure/cosmos@3.8.1":
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/@azure/cosmos/-/cosmos-3.8.1.tgz#d54ebbc96b9cb876f050bcbb430004868aa52c75"
+  integrity sha512-nnydidKZBNaQvqkN0k4EntjEEglGWnfNi/4Cbcj+Ypvvd3H0hNbx0bwU1cBNBWQEzHiWzU3k44BgNrhayCpiSw==
   dependencies:
     "@types/debug" "^4.1.4"
     debug "^4.1.1"
