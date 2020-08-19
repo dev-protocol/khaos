@@ -6,7 +6,29 @@ const ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: false, internalType: 'string', name: '_data', type: 'string' },
+			{
+				components: [
+					{
+						internalType: 'bytes32',
+						name: 'key',
+						type: 'bytes32',
+					},
+					{
+						internalType: 'string',
+						name: 'publicSignature',
+						type: 'string',
+					},
+					{
+						internalType: 'string',
+						name: 'additionalData',
+						type: 'string',
+					},
+				],
+				indexed: false,
+				//internalType: 'struct GitHubMarket.QueryData',  ここ消したらあかんかも。。。
+				name: '_data',
+				type: 'tuple',
+			},
 		],
 		name: 'Query',
 		type: 'event',
@@ -20,7 +42,7 @@ export const getEvents = async (
 	lastBlock: number
 ): Promise<readonly EventData[]> => {
 	const contract = new web3.eth.Contract([...ABI], address)
-	return contract.getPastEvents('query', {
+	return contract.getPastEvents('Query', {
 		fromBlock: firstBlock,
 		toBlock: lastBlock,
 	})

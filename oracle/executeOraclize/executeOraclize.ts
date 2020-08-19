@@ -7,15 +7,15 @@ export type sendInfo = {
 	readonly result?: string
 }
 
-export const executeOraclize = async (
+export const executeOraclize = (id: string) => async (
 	info: oracleArgInfo
 ): Promise<sendInfo> => {
-	const oraclize = await importOraclize(info.json.i)
+	const oraclize = await importOraclize(id)
 	const result = await when(info.secret.resource, ({ secret }) =>
 		oraclize(secret, info.json)
 	)
 	return {
-		khaosId: info.json.i,
+		khaosId: id,
 		result: typeof result === 'string' ? result : undefined,
 	}
 }

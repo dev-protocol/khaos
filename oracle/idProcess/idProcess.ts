@@ -29,7 +29,7 @@ export const idProcess = (web3: Web3, network: NetworkName) => async (
 	const state = when(events, (x) => x.map(getData))
 	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))
 	const results = await when(oracleArgList, (x) =>
-		Promise.all(x.map(executeOraclize))
+		Promise.all(x.map(executeOraclize(id)))
 	)
 	return when(address, (x) =>
 		when(results, (y) =>
