@@ -1,5 +1,5 @@
 {
-	"scriptFile": "../dist/event/index.js",
+	"scriptFile": "../dist/timer/mainnet/index.js",
 	"bindings": [
 		{
 			"name": "myTimer",

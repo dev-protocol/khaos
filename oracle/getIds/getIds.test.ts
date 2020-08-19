@@ -2,7 +2,7 @@ import test from 'ava'
 import { getIds } from './getIds'
 
 test('get a directory listing just under the path', async (t) => {
-	const result = await getIds('./event')
+	const result = getIds('./oracle')
 	t.is(result.length, 11)
 	t.true(result.includes('db'))
 	t.true(result.includes('executeOraclize'))
