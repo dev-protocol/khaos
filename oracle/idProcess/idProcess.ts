@@ -7,6 +7,7 @@ import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { when } from '../../common/util/when'
 import Web3 from 'web3'
+import { NetworkName } from '../../functions/address'
 
 export type Results = {
 	readonly sent: boolean
@@ -15,12 +16,12 @@ export type Results = {
 	readonly state?: readonly any[]
 }
 
-export const idProcess = (web3: Web3) => async (
+export const idProcess = (web3: Web3, network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
 	const currentBlockNumber = await web3.eth.getBlockNumber()
 	const fn = await importAddress(id)
-	const address = fn()
+	const address = fn(network)
 	const lastBlock = await getLastBlock(id)
 	const events = await when(address, (adr) =>
 		getEvents(web3, adr, lastBlock, currentBlockNumber)

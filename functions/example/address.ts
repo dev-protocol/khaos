@@ -1,8 +1,7 @@
 import { Address } from '../address'
 
-// eslint-disable-next-line functional/functional-parameters
-const fn: Address = () => {
-	return '0x00......'
+const fn: Address = (network) => {
+	return network === 'mainnet' ? '0x10......' : '0x20......'
 }
 
 export default fn
