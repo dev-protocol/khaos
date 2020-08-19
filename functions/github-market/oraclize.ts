@@ -49,7 +49,7 @@ function getResult(
 	}
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.encode(
-		["tuple(bytes32, string)"],
+		['tuple(bytes32, string)'],
 		[[data.key, JSON.stringify(resultAdditionalData)]]
 	)
 	return result
@@ -80,11 +80,11 @@ async function post(
 	const res = await axios.post(
 		'https://api.github.com/graphql',
 		{
-			query: queryStr
+			query: queryStr,
 		},
 		{
 			headers: {
-				'Authorization': authorization,
+				Authorization: authorization,
 			},
 			responseType: 'json',
 		}
