@@ -18,7 +18,7 @@ export const handleTimer = (network: NetworkName): AzureFunction =>
 
 		const dirPath = path.join(__dirname, '..', '..', '..', 'functions')
 		const dirs = getIds(dirPath)
-		const endpoint = process.env.WEB3_URL || ''
+		const endpoint = `https://${network}.infura.io/v3/${process.env.INFURA_ID}`
 		const web3 = new Web3(new Web3.providers.HttpProvider(endpoint))
 		const oraclizer = idProcess(web3, network)
 		const results = await Promise.all(dirs.map(oraclizer))
