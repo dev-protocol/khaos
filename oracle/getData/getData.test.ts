@@ -2,10 +2,15 @@ import test from 'ava'
 import { getData } from './getData'
 
 test('Returning the contents of _data as a json object', async (t) => {
+	const data = {
+		publicSignature: 'dummy-public-signature',
+		key: '0eewifdnqw823nrqe9ad',
+		additionalData:
+			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "user/repo_name"}',
+	}
 	const testData = {
 		returnValues: {
-			_data:
-				'{"s": "public-signature", "a": "dummy-address", "k": "unique-key", "i": "khaos-id"}',
+			_data: JSON.stringify(data),
 		},
 		raw: {
 			data: 'dummy-data',
@@ -21,8 +26,9 @@ test('Returning the contents of _data as a json object', async (t) => {
 		address: 'dummy-address',
 	}
 	const result = await getData(testData)
-	t.is(result.s, 'public-signature')
-	t.is(result.a, 'dummy-address')
-	t.is(result.k, 'unique-key')
-	t.is(result.i, 'khaos-id')
+	t.is(result.key, '0eewifdnqw823nrqe9ad')
+	t.is(result.publicSignature, 'dummy-public-signature')
+	const additionalData = JSON.parse(result.additionalData)
+	t.is(additionalData.property, '0x1D415aa39D647834786EB9B5a333A50e9935b796')
+	t.is(additionalData.repository, 'user/repo_name')
 })

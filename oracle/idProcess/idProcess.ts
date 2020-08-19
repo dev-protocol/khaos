@@ -24,7 +24,7 @@ export const idProcess = (web3: Web3, network: NetworkName) => async (
 	const address = fn(network)
 	const lastBlock = await getLastBlock(id)
 	const events = await when(address, (adr) =>
-		getEvents(web3, adr, lastBlock, currentBlockNumber)
+		getEvents(web3, adr, lastBlock + 1, currentBlockNumber)
 	)
 	const state = when(events, (x) => x.map(getData))
 	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))

@@ -12,7 +12,7 @@ export const executeOraclize = (id: string) => async (
 ): Promise<sendInfo> => {
 	const oraclize = await importOraclize(id)
 	const result = await when(info.secret.resource, ({ secret }) =>
-		oraclize(secret, info.json)
+		oraclize(secret, info.eventData)
 	)
 	return {
 		khaosId: id,
