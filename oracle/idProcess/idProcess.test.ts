@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable functional/no-this-expression */
 /* eslint-disable functional/no-class */
+/* eslint-disable functional/immutable-data */
+
 import test from 'ava'
 import { idProcess, Results } from './idProcess'
 import { stub } from 'sinon'
@@ -41,7 +43,8 @@ class Web3EventMock {
 				): Promise<readonly EventData[]> {
 					const event1: EventData = {
 						returnValues: {
-							_data: '{"key1":"value1"}',
+							_data:
+								'0x000000000000000000000000000000000000000000000000000000000000002073e80616ae5068075389222a2795a4ccfb2bb512687fd72c49a95c500755236c000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000001664756d6d792d7075626c69632d7369676e617475726500000000000000000000000000000000000000000000000000000000000000000000000000000000005a7b2270726f7065727479223a2022307831443431356161333944363437383334373836454239423561333333413530653939333562373936222c20227265706f7369746f7279223a2022757365722f7265706f5f6e616d65227d000000000000',
 						},
 						raw: {
 							data: 'dummy-raw1',
@@ -58,7 +61,8 @@ class Web3EventMock {
 					}
 					const event2: EventData = {
 						returnValues: {
-							_data: '{"key2":"value2"}',
+							_data:
+								'0x000000000000000000000000000000000000000000000000000000000000002073e80616ae5068075389222a2795a4ccfb2bb512687fd72c49a95c500755236c000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000001664756d6d792d7075626c69632d7369676e617475726500000000000000000000000000000000000000000000000000000000000000000000000000000000005a7b2270726f7065727479223a2022307831443431356161333944363437383334373836454239423561333333413530653939333562373936222c20227265706f7369746f7279223a2022757365722f7265706f5f6e616d65227d000000000000',
 						},
 						raw: {
 							data: 'dummy-raw2',
@@ -96,11 +100,13 @@ test.serial('The process is executed successfully.', async (t) => {
 		} as any)
 	)
 	const web3 = new Web3EventMock('http://hogehoge')
-	const result = await idProcess(web3 as any, 'mainnet')('example')
+	process.env.MNEMONIC =
+		'size wish volume lecture dinner drastic easy assume pledge ribbon bunker stand drill grunt dutch'
+	const result = await idProcess(web3 as any, 'ropsten')('example')
 	stubbedReader.restore()
 	stubbedSecretReader.restore()
-	t.is((result as readonly Results[])[0].address, '0x10......')
-	t.is((result as readonly Results[])[1].address, '0x10......')
+	t.is((result as readonly Results[])[0].address, '0x20......')
+	t.is((result as readonly Results[])[1].address, '0x20......')
 	t.is((result as readonly Results[])[0].sent, true)
 	t.is((result as readonly Results[])[1].sent, true)
 })

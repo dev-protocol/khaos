@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"description": "Template repository for using TypeScript",
 	"scripts": {
-		"test": "ava ./functions/github-market/oraclize.test.ts",
+		"test": "ava oracle/sendContractMethod/sendContractMethod.test.ts",
 		"build": "tsc",
 		"watch": "tsc -w",
 		"prestart": "yarn build",
@@ -22,6 +22,7 @@
 		"@azure/functions": "1.2.2",
 		"axios": "^0.19.2",
 		"bent": "7.3.10",
+		"discord-webhook-ts": "^3.0.3",
 		"ethers": "^5.0.8",
 		"jsonwebtoken": "8.5.1",
 		"ramda": "0.27.0",

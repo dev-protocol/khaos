@@ -8,6 +8,8 @@ import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { when } from '../../common/util/when'
 import Web3 from 'web3'
 import { NetworkName } from '../../functions/address'
+import { writer, LastBlock } from '../db/db'
+import { CosmosClient } from '@azure/cosmos'
 
 export type Results = {
 	readonly sent: boolean
@@ -19,6 +21,7 @@ export type Results = {
 export const idProcess = (web3: Web3, network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
+	// TODO replace ethers....
 	const currentBlockNumber = await web3.eth.getBlockNumber()
 	const fn = await importAddress(id)
 	const address = fn(network)
@@ -31,9 +34,15 @@ export const idProcess = (web3: Web3, network: NetworkName) => async (
 	const results = await when(oracleArgList, (x) =>
 		Promise.all(x.map(executeOraclize(id)))
 	)
+	const writerInfo: LastBlock = {
+		address: address!,
+		lastBlock: currentBlockNumber,
+	}
+	// eslint-disable-next-line functional/no-expression-statement
+	await writer(CosmosClient)(writerInfo)
 	return when(address, (x) =>
 		when(results, (y) =>
-			Promise.all(y.map(sendContractMethod(web3, x))).then((res) =>
+			Promise.all(y.map(sendContractMethod(web3, x, network))).then((res) =>
 				res.map((sent) => ({
 					address: x,
 					results: y,

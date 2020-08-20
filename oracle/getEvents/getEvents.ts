@@ -7,27 +7,10 @@ const ABI = [
 		anonymous: false,
 		inputs: [
 			{
-				components: [
-					{
-						internalType: 'bytes32',
-						name: 'key',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'string',
-						name: 'publicSignature',
-						type: 'string',
-					},
-					{
-						internalType: 'string',
-						name: 'additionalData',
-						type: 'string',
-					},
-				],
 				indexed: false,
-				//internalType: 'struct GitHubMarket.QueryData',  ここ消したらあかんかも。。。
+				internalType: 'bytes',
 				name: '_data',
-				type: 'tuple',
+				type: 'bytes',
 			},
 		],
 		name: 'Query',
@@ -41,6 +24,7 @@ export const getEvents = async (
 	firstBlock: number,
 	lastBlock: number
 ): Promise<readonly EventData[]> => {
+	// TODO replace ethers....
 	const contract = new web3.eth.Contract([...ABI], address)
 	return contract.getPastEvents('Query', {
 		fromBlock: firstBlock,

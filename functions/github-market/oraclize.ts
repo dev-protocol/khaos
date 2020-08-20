@@ -26,7 +26,6 @@ const fn: Oraclize = async (secret, data) => {
 		)
 		return getResult(data, status, message)
 	} catch (e) {
-		console.log(e)
 		return getResult(data, 2, e.message)
 	}
 }
