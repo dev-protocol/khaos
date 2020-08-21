@@ -1045,6 +1045,13 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha512-wMHVg2EOHaMRxbzgFJ9gtjOOCrI80OHLG14rxi28XwOW8ux6IiEbRCGGGqCtdAIg4FQCbW20k9RsT4y3gJlFug==
 
+axios@0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+  integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
+  dependencies:
+    follow-redirects "1.5.10"
+
 axios@^0.18.0:
   version "0.18.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
@@ -1052,13 +1059,6 @@ axios@^0.18.0:
   dependencies:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
-
-axios@^0.19.2:
-  version "0.19.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
-  integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
-  dependencies:
-    follow-redirects "1.5.10"
 
 balanced-match@^1.0.0:
   version "1.0.0"
@@ -1847,7 +1847,7 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-discord-webhook-ts@^3.0.3:
+discord-webhook-ts@3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/discord-webhook-ts/-/discord-webhook-ts-3.0.3.tgz#adaea066665a390ad46c394e82b0995640cffde2"
   integrity sha512-u4WcAZrmEUFA/wrJsZjmaYw8DnM1hXVhuM8UJ14VbHH5YY1t6lG21UlXGnoXaHmYUBnhAn9xnWeC+L/40JhVLQ==
@@ -2277,7 +2277,7 @@ ethereumjs-util@^6.0.0:
     rlp "^2.2.3"
     secp256k1 "^3.0.1"
 
-ethers@^5.0.8:
+ethers@5.0.8:
   version "5.0.8"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.0.8.tgz#c13d0fdf5e66db8085e2036d3309ed2f8a17ed89"
   integrity sha512-of/rPgJ7E3yyBADUv5A7Gtkd7EB8ta/T9NS5CCG9tj9cifnXcI3KIdYQ7d8AS+9vm38pR1g6S5I+Q/mRnlQZlg==
