@@ -49,12 +49,14 @@ function getResult(
 			always(undefined)
 		)
 	)
-	const resultAdditionalData = when(additionalData, (adata) => ({
-		repository: adata.repository,
-		property: Web3.utils.toChecksumAddress(adata.property),
+	const resultAdditionalData = {
+		repository: when(additionalData, ({ repository }) => repository),
+		property: when(additionalData, ({ property }) =>
+			Web3.utils.toChecksumAddress(property)
+		),
 		status: status,
 		message: message,
-	}))
+	}
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.encode(
 		['tuple(bytes32, string)'],
