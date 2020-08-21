@@ -25,7 +25,7 @@ const createContext = () => {
 	}
 }
 const stubbedReader = stub(process, 'idProcess').callsFake(
-	(_, network) => async () =>
+	(network) => async () =>
 		new Promise((resolve) => {
 			passedNetwork = network
 			resolve(undefined)

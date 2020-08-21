@@ -2,7 +2,6 @@ import { AzureFunction, Context } from '@azure/functions'
 import { getIds } from '../../../oracle/getIds/getIds'
 import { idProcess } from '../../../oracle/idProcess/idProcess'
 import path from 'path'
-import Web3 from 'web3'
 import { NetworkName } from '../../../functions/address'
 import { notification } from '../../../oracle/notification/notification'
 
@@ -19,9 +18,7 @@ export const handleTimer = (network: NetworkName): AzureFunction =>
 
 		const dirPath = path.join(__dirname, '..', '..', '..', 'functions')
 		const dirs = getIds(dirPath)
-		const endpoint = `https://${network}.infura.io/v3/${process.env.INFURA_ID}`
-		const web3 = new Web3(new Web3.providers.HttpProvider(endpoint))
-		const oraclizer = idProcess(web3, network)
+		const oraclizer = idProcess(network)
 		const results = await Promise.all(dirs.map(oraclizer))
 		// eslint-disable-next-line functional/no-expression-statement
 		await Promise.all(results.map(notification))

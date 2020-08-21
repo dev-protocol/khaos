@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 import bent from 'bent'
-import Web3 from 'web3'
 
 type EGSResponse = {
 	readonly fast: number
@@ -25,11 +24,9 @@ const createEGSFetcher = (
 
 export const createFastestGasPriceFetcher = (
 	fetcher: bent.RequestFunction<bent.ValidResponse>,
-	libWeb3: Web3
 ) =>
 	((egs) => async () =>
-		// TODO replace ethers...
-		egs().then((res) => libWeb3.utils.toWei(`${res.fastest / 10}`, 'Gwei')))(
+		egs().then((res) => res.fastest / 10 * 1000000000))(
 		createEGSFetcher(fetcher)
 	)
 

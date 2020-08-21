@@ -15,24 +15,19 @@ test('Returning the contents of _data as a json object', async (t) => {
 		['tuple(bytes32, string, string)'],
 		[[data.key, data.publicSignature, data.additionalData]]
 	)
+
 	const testData = {
-		returnValues: {
-			_data: encoded,
-		},
-		raw: {
-			data: 'dummy-data',
-			topics: [],
-		},
-		event: 'Query',
-		signature: 'dummy-signature',
-		logIndex: 5,
-		transactionIndex: 10,
-		transactionHash: 'dummy-transactin-hash',
+		blockNumber: 1500000,
 		blockHash: 'dummy-block-hash',
-		blockNumber: 100,
+		transactionIndex: 18,
+		removed: false,
 		address: 'dummy-address',
+		data: '{"key": "value"}',
+		topics: ["topics1"],
+		transactionHash: 'dumy-transaction-hash',
+		logIndex: 5
 	}
-	const result = await getData(testData)
+	const result = await getData(testData as any)
 	t.is(result.key, key)
 	t.is(result.publicSignature, 'dummy-public-signature')
 	const additionalData = JSON.parse(result.additionalData)

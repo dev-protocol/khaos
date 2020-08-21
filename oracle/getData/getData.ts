@@ -1,4 +1,3 @@
-import { EventData } from 'web3-eth-contract'
 import { ethers } from 'ethers'
 
 export type KhaosEventData = {
@@ -7,8 +6,8 @@ export type KhaosEventData = {
 	readonly additionalData: string
 }
 
-export const getData = function (event: EventData): KhaosEventData {
-	const data: string = event.returnValues._data
+export const getData = function (event: ethers.Event): KhaosEventData {
+	const data: string = event.data
 	const abi = new ethers.utils.AbiCoder()
 	const encoded = abi.decode(['tuple(bytes32, string, string)'], data)
 	const result: KhaosEventData = {

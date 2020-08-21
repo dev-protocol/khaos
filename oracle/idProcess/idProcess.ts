@@ -6,10 +6,10 @@ import { getSecret } from '../getSecret/getSecret'
 import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { when } from '../../common/util/when'
-import Web3 from 'web3'
 import { NetworkName } from '../../functions/address'
 import { writer, LastBlock } from '../db/db'
 import { CosmosClient } from '@azure/cosmos'
+import { ethers } from 'ethers'
 
 export type Results = {
 	readonly sent: boolean
@@ -18,17 +18,28 @@ export type Results = {
 	readonly state?: readonly any[]
 }
 
-export const idProcess = (web3: Web3, network: NetworkName) => async (
+export const idProcess = (network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
-	// TODO replace ethers....
-	const currentBlockNumber = await web3.eth.getBlockNumber()
 	const fn = await importAddress(id)
 	const address = fn(network)
-	const lastBlock = await getLastBlock(id)
-	const events = await when(address, (adr) =>
-		getEvents(web3, adr, lastBlock + 1, currentBlockNumber)
+	const provider = ethers.getDefaultProvider(network, {
+		infura: process.env.INFURA_ID,
+	})
+	const currentBlockNumber = provider.blockNumber
+	const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC!).connect(
+		provider
 	)
+	const marketBehavior = new ethers.Contract(
+		address!,
+		[
+			'function khaosCallback(bytes memory _data) external',
+			'event Query(bytes _data)'
+		],
+		wallet
+	)
+	const lastBlock = await getLastBlock(id)
+	const events = await getEvents(marketBehavior, lastBlock + 1, currentBlockNumber)
 	const state = when(events, (x) => x.map(getData))
 	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))
 	const results = await when(oracleArgList, (x) =>
@@ -42,7 +53,7 @@ export const idProcess = (web3: Web3, network: NetworkName) => async (
 	await writer(CosmosClient)(writerInfo)
 	return when(address, (x) =>
 		when(results, (y) =>
-			Promise.all(y.map(sendContractMethod(web3, x, network))).then((res) =>
+			Promise.all(y.map(sendContractMethod(marketBehavior))).then((res) =>
 				res.map((sent) => ({
 					address: x,
 					results: y,
