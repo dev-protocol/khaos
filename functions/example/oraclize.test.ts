@@ -10,6 +10,9 @@ test('oraclize is executed.', async (t) => {
 		publicSignature: 'dummy-signature',
 		additionalData: 'dummy-data',
 	}
-	const res = await oraclize('', data)
+	const res = await oraclize(
+		{ address: 'account', id: 'signature', message: 'data' },
+		data
+	)
 	t.is(res, '')
 })

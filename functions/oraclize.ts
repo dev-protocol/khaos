@@ -1,3 +1,7 @@
 import { KhaosEventData } from './../oracle/getData/getData'
+import { PublicSignatureOptions } from '../sign/publicSignature/publicSignature'
 
-export type Oraclize = (secret: string, data: KhaosEventData) => Promise<string>
+export type Oraclize = (
+	signedOptions: PublicSignatureOptions,
+	data: KhaosEventData
+) => Promise<string>
