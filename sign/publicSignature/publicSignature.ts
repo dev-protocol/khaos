@@ -3,11 +3,11 @@ import { sign } from 'jsonwebtoken'
 export type PublicSignatureOptions = {
 	readonly message: string
 	readonly id: string
-	readonly account: string
+	readonly address: string
 }
 
 export const publicSignature = ({
 	message,
 	id,
-	account,
-}: PublicSignatureOptions): string => sign(`%${message}%-%${id}%`, account)
+	address,
+}: PublicSignatureOptions): string => sign(`%${message}%-%${id}%`, address)

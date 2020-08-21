@@ -9,7 +9,7 @@ import sign from './index'
 import { publicSignature } from './publicSignature/publicSignature'
 
 // eslint-disable-next-line functional/prefer-readonly-type
-const fakeStore: Map<string, string> = new Map()
+const fakeStore: Map<string, { [key: string]: string }> = new Map()
 const random = (): string => Math.random().toString()
 const createContext = (): Context =>
 	(({
@@ -35,7 +35,7 @@ const fakeRecover = (message: string, signature: string): string =>
 	`${message}-${signature}`
 stub(recover, 'recover').callsFake(fakeRecover)
 stub(db, 'writer').callsFake(() => async (data: db.Secret) => {
-	fakeStore.set(data.id, data.secret) as any
+	fakeStore.set(data.id, data) as any
 	return {
 		statusCode: 200,
 	} as any
@@ -85,11 +85,11 @@ test.serial(
 		const expectedPubSig = publicSignature({
 			message,
 			id,
-			account: fakeAccount,
+			address: fakeAccount,
 		})
 		const data = fakeStore.get(expectedPubSig)
 		stubbed.restore()
-		t.is(data, secret)
+		t.deepEqual(data, { id: expectedPubSig, secret, address: fakeAccount })
 	}
 )
 
@@ -109,7 +109,7 @@ test.serial(
 		const expectedPubSig = publicSignature({
 			message,
 			id,
-			account: fakeAccount,
+			address: fakeAccount,
 		})
 		const data = fakeStore.get(expectedPubSig)
 		stubbed.restore()
