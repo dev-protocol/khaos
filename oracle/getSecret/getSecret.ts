@@ -4,15 +4,15 @@ import { KhaosEventData } from '../getData/getData'
 
 export type oracleArgInfo = {
 	readonly secret: ItemResponse<Secret>
-	readonly json: any
+	readonly eventData: KhaosEventData
 }
 
 export const getSecret = async (
-	json: KhaosEventData
+	eventData: KhaosEventData
 ): Promise<oracleArgInfo> => {
-	const secret = await reader(CosmosClient)(json.s)
+	const secret = await reader(CosmosClient)(eventData.publicSignature)
 	return {
 		secret,
-		json,
+		eventData,
 	}
 }

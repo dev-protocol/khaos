@@ -6,7 +6,12 @@ const ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: false, internalType: 'string', name: '_data', type: 'string' },
+			{
+				indexed: false,
+				internalType: 'bytes',
+				name: '_data',
+				type: 'bytes',
+			},
 		],
 		name: 'Query',
 		type: 'event',
@@ -19,8 +24,9 @@ export const getEvents = async (
 	firstBlock: number,
 	lastBlock: number
 ): Promise<readonly EventData[]> => {
+	// TODO replace ethers....
 	const contract = new web3.eth.Contract([...ABI], address)
-	return contract.getPastEvents('query', {
+	return contract.getPastEvents('Query', {
 		fromBlock: firstBlock,
 		toBlock: lastBlock,
 	})

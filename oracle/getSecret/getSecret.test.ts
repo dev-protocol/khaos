@@ -2,6 +2,7 @@ import test from 'ava'
 import { stub } from 'sinon'
 import * as secret from '../../common/db/secret'
 import { getSecret } from './getSecret'
+import { KhaosEventData } from './../getData/getData'
 
 test.serial(
 	'If the record exists, it returns with the argument json object.',
@@ -12,10 +13,15 @@ test.serial(
 				resource: { secret: 'dummy-secret' },
 			} as any)
 		)
-		const result = await getSecret({ s: 'dummy' } as any)
+		const data: KhaosEventData = {
+			key: 'dummy',
+			publicSignature: 'hogehoge',
+			additionalData: 'dummy-data',
+		}
+		const result = await getSecret(data)
 		t.is(result.secret.statusCode, 200)
 		t.is(result.secret.resource?.secret, 'dummy-secret')
-		t.is(result.json.s, 'dummy')
+		t.is(result.eventData.key, 'dummy')
 		stubbedReader.restore()
 	}
 )
@@ -29,10 +35,15 @@ test.serial(
 				resource: undefined,
 			} as any)
 		)
-		const result = await getSecret({ s: 'dummy2' } as any)
+		const data: KhaosEventData = {
+			key: 'dummy2',
+			publicSignature: 'hogehoge',
+			additionalData: 'dummy-data',
+		}
+		const result = await getSecret(data)
 		t.is(result.secret.statusCode, 200)
 		t.is(result.secret.resource, undefined)
-		t.is(result.json.s, 'dummy2')
+		t.is(result.eventData.key, 'dummy2')
 		stubbedReader.restore()
 	}
 )

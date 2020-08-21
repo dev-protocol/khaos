@@ -4,6 +4,7 @@ import { idProcess } from '../../../oracle/idProcess/idProcess'
 import path from 'path'
 import Web3 from 'web3'
 import { NetworkName } from '../../../functions/address'
+import { notification } from '../../../oracle/notification/notification'
 
 export const handleTimer = (network: NetworkName): AzureFunction =>
 	async function (context: Context, myTimer: any): Promise<void> {
@@ -22,6 +23,8 @@ export const handleTimer = (network: NetworkName): AzureFunction =>
 		const web3 = new Web3(new Web3.providers.HttpProvider(endpoint))
 		const oraclizer = idProcess(web3, network)
 		const results = await Promise.all(dirs.map(oraclizer))
+		// eslint-disable-next-line functional/no-expression-statement
+		await Promise.all(results.map(notification))
 
 		// eslint-disable-next-line functional/no-expression-statement
 		context.log.info('event batch is finished.', results)

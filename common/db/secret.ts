@@ -1,6 +1,6 @@
 import { CosmosClient, ItemResponse } from '@azure/cosmos'
 import { always } from 'ramda'
-import { createDBInstance } from './/common'
+import { createDBInstance } from './common'
 
 export type Secret = {
 	readonly id: string
