@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"description": "Template repository for using TypeScript",
 	"scripts": {
-		"test": "ava oracle/sendContractMethod/sendContractMethod.test.ts",
+		"test": "ava",
 		"build": "tsc",
 		"watch": "tsc -w",
 		"prestart": "yarn build",
