@@ -1840,7 +1840,7 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-discord-webhook-ts@^3.0.3:
+discord-webhook-ts@3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/discord-webhook-ts/-/discord-webhook-ts-3.0.3.tgz#adaea066665a390ad46c394e82b0995640cffde2"
   integrity sha512-u4WcAZrmEUFA/wrJsZjmaYw8DnM1hXVhuM8UJ14VbHH5YY1t6lG21UlXGnoXaHmYUBnhAn9xnWeC+L/40JhVLQ==
@@ -2270,7 +2270,7 @@ ethereumjs-util@^6.0.0:
     rlp "^2.2.3"
     secp256k1 "^3.0.1"
 
-ethers@^5.0.8:
+ethers@5.0.8:
   version "5.0.8"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.0.8.tgz#c13d0fdf5e66db8085e2036d3309ed2f8a17ed89"
   integrity sha512-of/rPgJ7E3yyBADUv5A7Gtkd7EB8ta/T9NS5CCG9tj9cifnXcI3KIdYQ7d8AS+9vm38pR1g6S5I+Q/mRnlQZlg==
