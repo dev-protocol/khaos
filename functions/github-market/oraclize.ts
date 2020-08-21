@@ -1,33 +1,40 @@
-/* eslint-disable functional/no-expression-statement */
-
 import { Oraclize } from '../oraclize'
 import Web3 from 'web3'
 import { ethers } from 'ethers'
-import { AxiosResponse } from 'axios'
-import axios from 'axios'
 import { KhaosEventData } from './../../oracle/getData/getData'
+import bent from 'bent'
+import { tryCatch, always } from 'ramda'
+import { when } from '../../common/util/when'
 
 export type QueryAdditionalDataData = {
 	readonly repository: string
 	readonly property: string
 }
 
-const fn: Oraclize = async (secret, data) => {
-	const additionalData = JSON.parse(
-		data.additionalData
-	) as QueryAdditionalDataData
-	const [user, repository] = additionalData.repository.split('/')
-	// eslint-disable-next-line functional/no-try-statement
-	try {
-		const [status, message] = await postViewerPermission(
-			repository,
-			user,
-			secret
-		)
-		return getResult(data, status, message)
-	} catch (e) {
-		return getResult(data, 2, e.message)
+type GraphQLResponse = {
+	readonly data: {
+		readonly repository: {
+			readonly viewerPermission: string
+		} | null
 	}
+}
+
+const fn: Oraclize = async (secret, data) => {
+	const additionalData = when(
+		data.additionalData,
+		tryCatch(
+			(adata) => JSON.parse(adata) as QueryAdditionalDataData,
+			always(undefined)
+		)
+	)
+	const repos = when(additionalData, (adata) => adata.repository.split('/'))
+	const permission = await when(repos, ([owner, repository]) =>
+		postViewerPermission(repository, owner, secret)
+	)
+	const result = when(permission, ([status, message]) =>
+		getResult(data, status, message)
+	)
+	return result ? result : getResult(data, 2, 'error')
 }
 
 export default fn
@@ -37,15 +44,19 @@ function getResult(
 	status: number,
 	message: string
 ): string {
-	const additionalData = JSON.parse(
-		data.additionalData
-	) as QueryAdditionalDataData
-	const resultAdditionalData = {
-		repository: additionalData.repository,
-		property: Web3.utils.toChecksumAddress(additionalData.property),
+	const additionalData = when(
+		data.additionalData,
+		tryCatch(
+			(adata) => JSON.parse(adata) as QueryAdditionalDataData,
+			always(undefined)
+		)
+	)
+	const resultAdditionalData = when(additionalData, (adata) => ({
+		repository: adata.repository,
+		property: Web3.utils.toChecksumAddress(adata.property),
 		status: status,
 		message: message,
-	}
+	}))
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.encode(
 		['tuple(bytes32, string)'],
@@ -60,26 +71,26 @@ async function postViewerPermission(
 	token: string
 ): Promise<readonly [number, string]> {
 	const res = await post(name, owner, token)
-	// eslint-disable-next-line functional/no-conditional-statement
-	if (res.status !== 200 || typeof res.data.errors !== 'undefined') {
-		return [2, res.data.errors[0].message]
-	}
-	return res.data.data.repository.viewerPermission === 'ADMIN'
-		? [0, 'success']
-		: [1, 'not admin']
+	return res instanceof Error
+		? [2, 'http error']
+		: res.data.repository
+		? res.data.repository.viewerPermission === 'ADMIN'
+			? [0, 'success']
+			: [1, 'not admin']
+		: [2, 'not found']
 }
 
 async function post(
 	name: string,
 	owner: string,
 	token: string
-): Promise<AxiosResponse> {
-	const queryStr = `{repository(name: "${name}", owner: "${owner}") {viewerPermission} }`
+): Promise<GraphQLResponse | Error> {
+	const query = `{repository(name: "${name}", owner: "${owner}") {viewerPermission} }`
 	const authorization = `bearer ${token}`
-	const res = await axios.post(
-		'https://api.github.com/graphql',
+	return bent('https://api.github.com/graphql', 'POST', 'json')(
+		'/',
 		{
-			query: queryStr,
+			query,
 		},
 		{
 			headers: {
@@ -88,5 +99,6 @@ async function post(
 			responseType: 'json',
 		}
 	)
-	return res
+		.then((res) => (res as unknown) as GraphQLResponse)
+		.catch((err: Error) => err)
 }
