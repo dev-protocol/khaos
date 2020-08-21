@@ -3,138 +3,48 @@ import { ethers } from 'ethers'
 import oraclize from './oraclize'
 import { KhaosEventData } from './../../oracle/getData/getData'
 
-test('Successful authentication(personal).', async (t) => {
-	const key = ethers.utils.keccak256(
-		ethers.utils.toUtf8Bytes('Akira-Taniguchi/cloud_lib')
-	)
+test('Successful authentication', async (t) => {
+	const key = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('xxx/yyy'))
 
 	const data: KhaosEventData = {
 		publicSignature: 'dummy-public-signature',
 		key: key,
 		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "Akira-Taniguchi/cloud_lib"}',
+			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "xxx/yyy"}',
 	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
+	const res = await oraclize(
+		{ message: 'xxx/yyy', address: '0x1234', id: data.publicSignature },
+		data
+	)
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
 	const addicionalData = JSON.parse(result[0][1])
-	t.is(addicionalData.repository, 'Akira-Taniguchi/cloud_lib')
+	t.is(addicionalData.repository, 'xxx/yyy')
 	t.is(addicionalData.property, '0x1D415aa39D647834786EB9B5a333A50e9935b796')
 	t.is(addicionalData.status, 0)
 	t.is(addicionalData.message, 'success')
 })
 
-test('Successful authentication(organization).', async (t) => {
-	const key = ethers.utils.keccak256(
-		ethers.utils.toUtf8Bytes('dev-protocol/protocol')
-	)
+test('Returns error when the passed repository is not authorized', async (t) => {
+	const key = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('yyy/zzz'))
 
 	const data: KhaosEventData = {
 		publicSignature: 'dummy-public-signature',
 		key: key,
 		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "dev-protocol/protocol"}',
+			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "yyy/zzz"}',
 	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
-	const abi = new ethers.utils.AbiCoder()
-	const result = abi.decode(['tuple(bytes32, string)'], res)
-	t.is(result[0][0], key)
-	const addicionalData = JSON.parse(result[0][1])
-	t.is(addicionalData.repository, 'dev-protocol/protocol')
-	t.is(addicionalData.property, '0x1D415aa39D647834786EB9B5a333A50e9935b796')
-	t.is(addicionalData.status, 0)
-	t.is(addicionalData.message, 'success')
-})
-
-test('Nonexistent repository.', async (t) => {
-	const key = ethers.utils.keccak256(
-		ethers.utils.toUtf8Bytes('Akira-Taniguchi/hogehoge')
+	const res = await oraclize(
+		{ message: 'xxx/yyy', address: '0x1234', id: data.publicSignature },
+		data
 	)
-
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "Akira-Taniguchi/hogehoge"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
 	const addicionalData = JSON.parse(result[0][1])
-	t.is(addicionalData.repository, 'Akira-Taniguchi/hogehoge')
+	t.is(addicionalData.repository, 'yyy/zzz')
 	t.is(addicionalData.property, '0x1D415aa39D647834786EB9B5a333A50e9935b796')
 	t.is(addicionalData.status, 2)
-	t.is(
-		addicionalData.message,
-		"Could not resolve to a Repository with the name 'Akira-Taniguchi/hogehoge'."
-	)
-})
-
-test('Nonexistent user.', async (t) => {
-	const key = ethers.utils.keccak256(
-		ethers.utils.toUtf8Bytes('hugehugehugehugehugahugahugahuga/cloud_lib')
-	)
-
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "hugehugehugehugehugahugahugahuga/cloud_lib"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
-	const abi = new ethers.utils.AbiCoder()
-	const result = abi.decode(['tuple(bytes32, string)'], res)
-	t.is(result[0][0], key)
-	const addicionalData = JSON.parse(result[0][1])
-	t.is(addicionalData.repository, 'hugehugehugehugehugahugahugahuga/cloud_lib')
-	t.is(addicionalData.property, '0x1D415aa39D647834786EB9B5a333A50e9935b796')
-	t.is(addicionalData.status, 2)
-	t.is(
-		addicionalData.message,
-		"Could not resolve to a Repository with the name 'hugehugehugehugehugahugahugahuga/cloud_lib'."
-	)
-})
-
-test('Illegal token.', async (t) => {
-	const key = ethers.utils.keccak256(
-		ethers.utils.toUtf8Bytes('Akira-Taniguchi/cloud_lib')
-	)
-
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "Akira-Taniguchi/cloud_lib"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5b3', data)
-	const abi = new ethers.utils.AbiCoder()
-	const result = abi.decode(['tuple(bytes32, string)'], res)
-	t.is(result[0][0], key)
-	const addicionalData = JSON.parse(result[0][1])
-	t.is(addicionalData.repository, 'Akira-Taniguchi/cloud_lib')
-	t.is(addicionalData.property, '0x1D415aa39D647834786EB9B5a333A50e9935b796')
-	t.is(addicionalData.status, 2)
-	t.is(addicionalData.message, 'http error')
-})
-
-test('not admin.', async (t) => {
-	const key = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('hhatto/kamasu'))
-
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "hhatto/kamasu"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
-	const abi = new ethers.utils.AbiCoder()
-	const result = abi.decode(['tuple(bytes32, string)'], res)
-	t.is(result[0][0], key)
-	const addicionalData = JSON.parse(result[0][1])
-	t.is(addicionalData.repository, 'hhatto/kamasu')
-	t.is(addicionalData.property, '0x1D415aa39D647834786EB9B5a333A50e9935b796')
-	t.is(addicionalData.status, 1)
-	t.is(addicionalData.message, 'not admin')
+	t.is(addicionalData.message, 'error')
 })

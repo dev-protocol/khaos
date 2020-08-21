@@ -20,7 +20,7 @@ type GraphQLResponse = {
 	readonly errors?: readonly [{ readonly message: string }]
 }
 
-const fn: Oraclize = async (secret, data) => {
+const fn: Oraclize = async (opts, data) => {
 	const additionalData = when(
 		data.additionalData,
 		tryCatch(
@@ -28,14 +28,11 @@ const fn: Oraclize = async (secret, data) => {
 			always(undefined)
 		)
 	)
-	const repos = when(additionalData, (adata) => adata.repository.split('/'))
-	const permission = await when(repos, ([owner, repository]) =>
-		postViewerPermission(repository, owner, secret)
+	const test = when(
+		additionalData,
+		({ repository }) => repository === opts.message
 	)
-	const result = when(permission, ([status, message]) =>
-		getResult(data, status, message)
-	)
-	return result ? result : getResult(data, 2, 'error')
+	return test ? getResult(data, 0, 'success') : getResult(data, 2, 'error')
 }
 
 export default fn
@@ -61,7 +58,7 @@ function getResult(
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.encode(
 		['tuple(bytes32, string)'],
-		[[data.key, JSON.stringify(resultAdditionalData)]]
+		[[data.key, JSON.stringify(resultAdditionalData) || '']]
 	)
 	return result
 }
