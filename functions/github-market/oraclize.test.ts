@@ -116,7 +116,7 @@ test('Illegal token.', async (t) => {
 	t.is(addicionalData.repository, 'Akira-Taniguchi/cloud_lib')
 	t.is(addicionalData.property, '0x1D415aa39D647834786EB9B5a333A50e9935b796')
 	t.is(addicionalData.status, 2)
-	t.is(addicionalData.message, 'Request failed with status code 401')
+	t.is(addicionalData.message, 'http error')
 })
 
 test('not admin.', async (t) => {

@@ -17,6 +17,7 @@ type GraphQLResponse = {
 			readonly viewerPermission: string
 		} | null
 	}
+	readonly errors?: readonly [{ readonly message: string }]
 }
 
 const fn: Oraclize = async (secret, data) => {
@@ -73,11 +74,13 @@ async function postViewerPermission(
 	const res = await post(name, owner, token)
 	return res instanceof Error
 		? [2, 'http error']
+		: res.errors
+		? [2, res.errors[0].message]
 		: res.data.repository
 		? res.data.repository.viewerPermission === 'ADMIN'
 			? [0, 'success']
 			: [1, 'not admin']
-		: [2, 'not found']
+		: [3, 'unexpected error']
 }
 
 async function post(
@@ -85,18 +88,20 @@ async function post(
 	owner: string,
 	token: string
 ): Promise<GraphQLResponse | Error> {
-	const query = `{repository(name: "${name}", owner: "${owner}") {viewerPermission} }`
+	const query = `query {
+		repository(name: "${name}", owner: "${owner}") {
+			viewerPermission
+		}
+	}`
 	const authorization = `bearer ${token}`
-	return bent('https://api.github.com/graphql', 'POST', 'json')(
-		'/',
+	return bent('https://api.github.com/graphql', 'json', 'POST')(
+		'',
 		{
 			query,
 		},
 		{
-			headers: {
-				Authorization: authorization,
-			},
-			responseType: 'json',
+			Authorization: authorization,
+			'User-Agent': 'https://github.com/dev-protocol/khaos',
 		}
 	)
 		.then((res) => (res as unknown) as GraphQLResponse)
