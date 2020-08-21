@@ -16,7 +16,5 @@ export const recoverPublicSignature = (
 			? rec.replace(/(^%|%$)/g, '').split('%-%')
 			: undefined
 	)
-	return parsed
-		? (([message, id]) => ({ message, id, address }))(parsed)
-		: parsed
+	return when(parsed, ([message, id]) => ({ message, id, address }))
 }
