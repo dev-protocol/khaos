@@ -23,10 +23,9 @@ const createEGSFetcher = (
 	fetcher('').then((r) => (r as unknown) as EGSResponse)
 
 export const createFastestGasPriceFetcher = (
-	fetcher: bent.RequestFunction<bent.ValidResponse>,
+	fetcher: bent.RequestFunction<bent.ValidResponse>
 ) =>
-	((egs) => async () =>
-		egs().then((res) => res.fastest / 10 * 1000000000))(
+	((egs) => async () => egs().then((res) => (res.fastest / 10) * 1000000000))(
 		createEGSFetcher(fetcher)
 	)
 

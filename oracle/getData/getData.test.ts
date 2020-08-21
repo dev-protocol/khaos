@@ -23,9 +23,9 @@ test('Returning the contents of _data as a json object', async (t) => {
 		removed: false,
 		address: 'dummy-address',
 		data: '{"key": "value"}',
-		topics: ["topics1"],
+		topics: ['topics1'],
 		transactionHash: 'dumy-transaction-hash',
-		logIndex: 5
+		logIndex: 5,
 	}
 	const result = await getData(testData as any)
 	t.is(result.key, key)

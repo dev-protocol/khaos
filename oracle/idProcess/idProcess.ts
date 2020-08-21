@@ -34,12 +34,16 @@ export const idProcess = (network: NetworkName) => async (
 		address!,
 		[
 			'function khaosCallback(bytes memory _data) external',
-			'event Query(bytes _data)'
+			'event Query(bytes _data)',
 		],
 		wallet
 	)
 	const lastBlock = await getLastBlock(id)
-	const events = await getEvents(marketBehavior, lastBlock + 1, currentBlockNumber)
+	const events = await getEvents(
+		marketBehavior,
+		lastBlock + 1,
+		currentBlockNumber
+	)
 	const state = when(events, (x) => x.map(getData))
 	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))
 	const results = await when(oracleArgList, (x) =>
