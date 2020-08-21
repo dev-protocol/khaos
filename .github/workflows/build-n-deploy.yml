@@ -18,12 +18,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: cache deps
+      - name: cache deps and built sources
         uses: actions/cache@main
         with:
           path: |
             node_modules
             */*/*/node_modules
+            build
           key: ${{ runner.os }}-${ GITHUB_SHA }
 
       - name: install deps
@@ -35,7 +36,10 @@ jobs:
       - name: test
         run: yarn test
 
-  deploy:
+      - name: Build
+        run: yarn build
+
+  deploy/eth-mainnet:
     needs: build
     if: ${{ github.event_name != 'pull_request' && contains(github.ref, 'main') }}
 
@@ -44,24 +48,51 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: restore cache deps
+      - name: restore cache
         uses: actions/cache@main
         with:
           path: |
             node_modules
             */*/*/node_modules
-          key: ${{ runner.os }}-${ GITHUB_SHA }
-
-      - name: Build
-        run: yarn build
+            build
+        key: ${{ runner.os }}-${ GITHUB_SHA }
 
       - name: Login via Azure CLI
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZ_KHAOS_ETH_MAINNET_CREDENTIALS }}
 
       - name: Deploy to Azure Functions
         uses: Azure/functions-action@v1
         id: fa
         with:
-          app-name: khaos-oracle
+          app-name: khaos-eth-mainnet
+
+  deploy/eth-ropsten:
+    needs: build
+    if: ${{ github.event_name != 'pull_request' && contains(github.ref, 'main') }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: restore cache
+        uses: actions/cache@main
+        with:
+          path: |
+            node_modules
+            */*/*/node_modules
+            build
+        key: ${{ runner.os }}-${ GITHUB_SHA }
+
+      - name: Login via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZ_KHAOS_ETH_ROPSTEN_CREDENTIALS }}
+
+      - name: Deploy to Azure Functions
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: khaos-eth-ropsten
