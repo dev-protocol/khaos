@@ -2,6 +2,6 @@
 	"name": "@functions/github-market",
 	"version": "0.0.1",
 	"dependencies": {
-		"discord-webhook-ts": "3.0.3"
+		"axios": "0.20.0"
 	}
 }

@@ -24,7 +24,8 @@
 		"ethers": "5.0.8",
 		"jsonwebtoken": "8.5.1",
 		"ramda": "0.27.1",
-		"web3": "1.2.11"
+		"web3": "1.2.11",
+		"discord-webhook-ts": "3.0.3"
 	},
 	"devDependencies": {
 		"@ava/typescript": "1.1.1",
