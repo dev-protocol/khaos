@@ -10,8 +10,6 @@ export type QueryAdditionalDataData = {
 	readonly property: string
 }
 
-
-
 const fn: Oraclize = async (secret, account, publicSignature) => {
 	// TODO publicSignature とアカウントのペアから message, id(e.g., github-market) を返す関数用意
 
@@ -30,7 +28,7 @@ const fn: Oraclize = async (secret, account, publicSignature) => {
 	// 	getResult(data, status, message)
 	// )
 	// return result ? result : getResult(data, 2, 'error')
-	return ""
+	return ''
 }
 
 export default fn
@@ -60,4 +58,3 @@ export default fn
 // 	)
 // 	return result
 // }
-

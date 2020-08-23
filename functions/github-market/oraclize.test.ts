@@ -7,7 +7,11 @@ test('Successful authentication(personal).', async (t) => {
 		ethers.utils.toUtf8Bytes('Akira-Taniguchi/cloud_lib')
 	)
 
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
+	const res = await oraclize(
+		'eabe72317f1de4c9369f211e99b1c0190c8b5bb3',
+		'',
+		'dummy-public-signature'
+	)
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -23,7 +27,11 @@ test('Successful authentication(organization).', async (t) => {
 		ethers.utils.toUtf8Bytes('dev-protocol/protocol')
 	)
 
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
+	const res = await oraclize(
+		'eabe72317f1de4c9369f211e99b1c0190c8b5bb3',
+		'',
+		'dummy-public-signature'
+	)
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -38,7 +46,11 @@ test('Nonexistent repository.', async (t) => {
 	const key = ethers.utils.keccak256(
 		ethers.utils.toUtf8Bytes('Akira-Taniguchi/hogehoge')
 	)
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
+	const res = await oraclize(
+		'eabe72317f1de4c9369f211e99b1c0190c8b5bb3',
+		'',
+		'dummy-public-signature'
+	)
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -57,7 +69,11 @@ test('Nonexistent user.', async (t) => {
 		ethers.utils.toUtf8Bytes('hugehugehugehugehugahugahugahuga/cloud_lib')
 	)
 
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
+	const res = await oraclize(
+		'eabe72317f1de4c9369f211e99b1c0190c8b5bb3',
+		'',
+		'dummy-public-signature'
+	)
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -76,7 +92,11 @@ test('Illegal token.', async (t) => {
 		ethers.utils.toUtf8Bytes('Akira-Taniguchi/cloud_lib')
 	)
 
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5b3', '', 'dummy-public-signature')
+	const res = await oraclize(
+		'eabe72317f1de4c9369f211e99b1c0190c8b5b3',
+		'',
+		'dummy-public-signature'
+	)
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -90,7 +110,11 @@ test('Illegal token.', async (t) => {
 test('not admin.', async (t) => {
 	const key = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('hhatto/kamasu'))
 
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
+	const res = await oraclize(
+		'eabe72317f1de4c9369f211e99b1c0190c8b5bb3',
+		'',
+		'dummy-public-signature'
+	)
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
