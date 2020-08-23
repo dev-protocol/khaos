@@ -6,7 +6,7 @@
 import test from 'ava'
 import { idProcess, Results } from './idProcess'
 import { stub } from 'sinon'
-import * as lastBlock from '../db/db'
+import * as lastBlock from '../db/last-block'
 import * as secret from '../../common/db/secret'
 
 test.serial('The process is executed successfully.', async (t) => {

@@ -1,6 +1,6 @@
 import test from 'ava'
 import { stub } from 'sinon'
-import * as lastBlock from '../db/db'
+import * as lastBlock from '../db/last-block'
 import { getLastBlock } from './getLastBlock'
 
 test.serial(

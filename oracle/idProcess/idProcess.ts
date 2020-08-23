@@ -1,4 +1,4 @@
-import { importAddress } from '../importAddress/importAddress'
+import { getAddress } from '../getAddress/getAddress'
 import { importAbi } from '../importAbi/importAbi'
 import { getLastBlock } from '../getLastBlock/getLastBlock'
 import { getEvents } from '../getEvents/getEvents'
@@ -7,7 +7,7 @@ import { getSecret } from '../getSecret/getSecret'
 import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { when } from '../../common/util/when'
-import { writer, LastBlock } from '../db/db'
+import { writer, LastBlock } from '../db/last-block'
 import { CosmosClient } from '@azure/cosmos'
 import { ethers } from 'ethers'
 
@@ -21,8 +21,7 @@ export type Results = {
 export const idProcess = (network: string) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
-	const fn = await importAddress(id)
-	const address = fn(network)
+	const address = await getAddress(id, network)
 	const provider = ethers.getDefaultProvider(network, {
 		infura: process.env.INFURA_ID,
 	})

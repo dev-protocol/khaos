@@ -3,7 +3,7 @@
 /* eslint-disable functional/no-conditional-statement */
 /* eslint-disable functional/no-class */
 import test from 'ava'
-import { writer, reader, LastBlock } from './db'
+import { writer, reader, LastBlock } from './last-block'
 import { CosmosClient } from '@azure/cosmos'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

@@ -1,4 +1,4 @@
-import { reader } from '../db/db'
+import { reader } from '../db/last-block'
 import { CosmosClient } from '@azure/cosmos'
 
 export const getLastBlock = async (id: string): Promise<number> => {
