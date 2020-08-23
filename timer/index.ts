@@ -1,11 +1,11 @@
 import { AzureFunction, Context } from '@azure/functions'
-import { getIds } from '../../../oracle/getIds/getIds'
-import { idProcess } from '../../../oracle/idProcess/idProcess'
+import { getIds } from '../oracle/getIds/getIds'
+import { idProcess } from '../oracle/idProcess/idProcess'
 import path from 'path'
-import { NetworkName } from '../../../functions/address'
-import { notification } from '../../../oracle/notification/notification'
+import { notification } from '../oracle/notification/notification'
 
-export const handleTimer = (network: NetworkName): AzureFunction =>
+// eslint-disable-next-line functional/functional-parameters
+const handleTimer = (): AzureFunction =>
 	async function (context: Context, myTimer: any): Promise<void> {
 		// eslint-disable-next-line functional/no-expression-statement
 		context.log.info('event batch is started.')
@@ -18,7 +18,7 @@ export const handleTimer = (network: NetworkName): AzureFunction =>
 
 		const dirPath = path.join(__dirname, '..', '..', '..', 'functions')
 		const dirs = getIds(dirPath)
-		const oraclizer = idProcess(network)
+		const oraclizer = idProcess(process.env.NETWORK!)
 		const results = await Promise.all(dirs.map(oraclizer))
 		// eslint-disable-next-line functional/no-expression-statement
 		await Promise.all(results.map(notification))
@@ -26,3 +26,5 @@ export const handleTimer = (network: NetworkName): AzureFunction =>
 		// eslint-disable-next-line functional/no-expression-statement
 		context.log.info('event batch is finished.', results)
 	}
+
+export default handleTimer

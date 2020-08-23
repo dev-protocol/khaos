@@ -6,7 +6,6 @@ import { getSecret } from '../getSecret/getSecret'
 import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { when } from '../../common/util/when'
-import { NetworkName } from '../../functions/address'
 import { writer, LastBlock } from '../db/db'
 import { CosmosClient } from '@azure/cosmos'
 import { ethers } from 'ethers'
@@ -18,7 +17,7 @@ export type Results = {
 	readonly state?: readonly any[]
 }
 
-export const idProcess = (network: NetworkName) => async (
+export const idProcess = (network: string) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
 	const fn = await importAddress(id)

@@ -96,13 +96,15 @@ test('write; insert new data to `Authentication.Secrets`', async (t) => {
 		(createStub(() => t.pass()) as unknown) as typeof CosmosClient
 	)({
 		id: 'test',
-		secret: 'data',
+		secret: 'secret-data',
+		account: 'account-data',
 	})
 	t.is(res.item.container.database.id, 'Authentication')
 	t.is(res.item.container.id, 'Secrets')
 	t.deepEqual((res as any).options, {
 		id: 'test',
-		secret: 'data',
+		secret: 'secret-data',
+		account: 'account-data',
 	})
 })
 
@@ -117,7 +119,8 @@ test('write; override the data when passed data already exists', async (t) => {
 	}
 	await writer((createStub(fake) as unknown) as typeof CosmosClient)({
 		id: 'test',
-		secret: 'data',
+		secret: 'secret-data',
+		account: 'account-data',
 	})
 	const res = await writer(
 		(createStub(fake, undefined, () =>
@@ -125,7 +128,8 @@ test('write; override the data when passed data already exists', async (t) => {
 		) as unknown) as typeof CosmosClient
 	)({
 		id: 'test',
-		secret: 'data-replaced',
+		secret: 'secret-data',
+		account: 'account-data',
 	})
 
 	t.is(res.item.container.database.id, 'Authentication')

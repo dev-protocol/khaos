@@ -4,8 +4,8 @@
 /* eslint-disable functional/prefer-readonly-type */
 import test from 'ava'
 import { stub } from 'sinon'
-import { handleTimer } from './handleTimer'
-import * as process from '../../../oracle/idProcess/idProcess'
+import handleTimer from '.'
+import * as idPprocess from '../oracle/idProcess/idProcess'
 
 let passedNetwork = ''
 const createContext = () => {
@@ -24,7 +24,7 @@ const createContext = () => {
 		info,
 	}
 }
-const stubbedReader = stub(process, 'idProcess').callsFake(
+const stubbedReader = stub(idPprocess, 'idProcess').callsFake(
 	(network) => async () =>
 		new Promise((resolve) => {
 			passedNetwork = network
@@ -40,7 +40,8 @@ test.serial(
 	'Returns a function for the Azure functions that pass "mainnet" to `idProcess`',
 	async (t) => {
 		const context = createContext()
-		await handleTimer('mainnet')(context as any, {
+		process.env.NETWORK = 'mainnet'
+		await handleTimer()(context as any, {
 			IsPastDue: false,
 		})
 		t.is(passedNetwork, 'mainnet')
@@ -51,7 +52,8 @@ test.serial(
 	'Returns a function for the Azure functions that pass "ropsten" to `idProcess`',
 	async (t) => {
 		const context = createContext()
-		await handleTimer('ropsten')(context as any, {
+		process.env.NETWORK = 'ropsten'
+		await handleTimer()(context as any, {
 			IsPastDue: false,
 		})
 		t.is(passedNetwork, 'ropsten')
@@ -60,7 +62,8 @@ test.serial(
 
 test('If the call is not delayed, there is no warning message.', async (t) => {
 	const context = createContext()
-	await handleTimer('mainnet')(context as any, {
+	process.env.NETWORK = 'mainnet'
+	await handleTimer()(context as any, {
 		IsPastDue: false,
 	})
 	t.is(context.warn.length, 0)
@@ -71,7 +74,8 @@ test('If the call is not delayed, there is no warning message.', async (t) => {
 
 test('If the call is delayed, you get a warning message.', async (t) => {
 	const context = createContext()
-	await handleTimer('mainnet')(context as any, {
+	process.env.NETWORK = 'mainnet'
+	await handleTimer()(context as any, {
 		IsPastDue: true,
 	})
 	t.is(context.warn.length, 1)

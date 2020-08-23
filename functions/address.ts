@@ -1,3 +1,1 @@
-export type NetworkName = 'mainnet' | 'ropsten'
-
-export type Address = (network: NetworkName) => string
+export type Address = (network: string) => string

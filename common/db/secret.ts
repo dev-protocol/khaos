@@ -5,6 +5,7 @@ import { createDBInstance } from './common'
 export type Secret = {
 	readonly id: string
 	readonly secret: string
+	readonly account: string
 }
 
 const SECRETS = {
