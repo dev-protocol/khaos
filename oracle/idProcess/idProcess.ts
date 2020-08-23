@@ -1,4 +1,5 @@
 import { importAddress } from '../importAddress/importAddress'
+import { importAbi } from '../importAbi/importAbi'
 import { getLastBlock } from '../getLastBlock/getLastBlock'
 import { getEvents } from '../getEvents/getEvents'
 import { getData } from '../getData/getData'
@@ -26,17 +27,13 @@ export const idProcess = (network: string) => async (
 		infura: process.env.INFURA_ID,
 	})
 	const currentBlockNumber = provider.blockNumber
+	const fnAbi = await importAbi(id)
+	const abi = fnAbi()
 	const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC!).connect(
 		provider
 	)
-	const marketBehavior = new ethers.Contract(
-		address!,
-		[
-			'function khaosCallback(string memory _githubRepository, uint256 _status, string memory _message) external',
-			'event Query(string _publicSignature)',
-		],
-		wallet
-	)
+	const marketBehavior = new ethers.Contract(address!, abi!, wallet)
+
 	const lastBlock = await getLastBlock(id)
 	const events = await getEvents(
 		marketBehavior,

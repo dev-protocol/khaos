@@ -13,10 +13,10 @@ const sign: AzureFunction = async (
 	const { message = '', secret = '', signature = '' } = req.body
 	const fn = await importAuthorizer(id)
 	const auth = await fn({ message, secret, req })
-	const account = recover(message, signature)
-	const publicSignature = account ? pubSig({ message, id, account }) : undefined
-	const wrote = await (auth && publicSignature && account
-		? writer(CosmosClient)({ id: publicSignature, secret, account })
+	const address = recover(message, signature)
+	const publicSignature = address ? pubSig({ message, id, address }) : undefined
+	const wrote = await (auth && publicSignature && address
+		? writer(CosmosClient)({ id: publicSignature, secret, address })
 		: undefined)
 	const status = auth && wrote?.statusCode === 200 ? 200 : auth ? 500 : 400
 
@@ -24,7 +24,7 @@ const sign: AzureFunction = async (
 	context.res = {
 		status,
 		body: {
-			account,
+			address,
 			publicSignature,
 		},
 	}

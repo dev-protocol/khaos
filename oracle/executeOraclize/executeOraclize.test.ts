@@ -7,7 +7,7 @@ test('Execute the oraclize function if the khaos id exists.', async (t) => {
 		secret: { resource: { secret: 'dummy-secret' } },
 	} as any)
 	t.is(result.khaosId, 'example')
-	t.is(result.result, '')
+	t.is(result.result, undefined)
 })
 
 test('If the khaos id does not exist, the oraclize function is not executed and undefined is returned.', async (t) => {

@@ -2,7 +2,7 @@ import test from 'ava'
 import { stub } from 'sinon'
 import * as secret from '../../common/db/secret'
 import { getSecret } from './getSecret'
-import { MarketEventData } from './../getData/getData'
+import { MarketQueryData } from './../getData/getData'
 
 test.serial(
 	'If the record exists, it returns with the argument json object.',
@@ -13,7 +13,8 @@ test.serial(
 				resource: { secret: 'dummy-secret' },
 			} as any)
 		)
-		const data: MarketEventData = {
+		const data: MarketQueryData = {
+			allData: { repo: 'hugahuga/hogihogi' },
 			publicSignature: 'hogehoge',
 		}
 		const result = await getSecret(data)
@@ -32,7 +33,8 @@ test.serial(
 				resource: undefined,
 			} as any)
 		)
-		const data: MarketEventData = {
+		const data: MarketQueryData = {
+			allData: { repo: 'hugahuga/hogihogi' },
 			publicSignature: 'hogehoge',
 		}
 		const result = await getSecret(data)

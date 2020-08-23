@@ -14,6 +14,11 @@ export const sendContractMethod = (marketBehavior: ethers.Contract) => async (
 		gasLimit: gas,
 		gasPrice: fastest,
 	}
-	const sent = marketBehavior.khaosCallback(info.result, overrides)
+	const sent = marketBehavior.khaosCallback(
+		info.result!.message,
+		info.result!.status,
+		info.result!.statusMessage,
+		overrides
+	)
 	return sent instanceof Promise
 }

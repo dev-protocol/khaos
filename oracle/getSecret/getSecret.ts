@@ -1,14 +1,14 @@
 import { CosmosClient, ItemResponse } from '@azure/cosmos'
 import { reader, Secret } from './../../common/db/secret'
-import { MarketEventData } from '../getData/getData'
+import { MarketQueryData } from './../getData/getData'
 
 export type oracleArgInfo = {
 	readonly secret: ItemResponse<Secret>
-	readonly eventData: MarketEventData
+	readonly eventData: MarketQueryData
 }
 
 export const getSecret = async (
-	eventData: MarketEventData
+	eventData: MarketQueryData
 ): Promise<oracleArgInfo> => {
 	const secret = await reader(CosmosClient)(eventData.publicSignature)
 	return {

@@ -6,5 +6,5 @@ export const when = <D, F>(
 ): undefined | F =>
 	cond([
 		[isNil, always(undefined)],
-		[T, always(fn(depends as NonNullable<D>))],
+		[T, (deps) => fn(deps as NonNullable<D>)],
 	])(depends)

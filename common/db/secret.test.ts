@@ -60,6 +60,7 @@ const createStub = (
 											resource: {
 												id,
 												secret: 'data',
+												address: 'account',
 											},
 										}
 									},
@@ -96,31 +97,31 @@ test('write; insert new data to `Authentication.Secrets`', async (t) => {
 		(createStub(() => t.pass()) as unknown) as typeof CosmosClient
 	)({
 		id: 'test',
-		secret: 'secret-data',
-		account: 'account-data',
+		secret: 'data',
+		address: 'account',
 	})
 	t.is(res.item.container.database.id, 'Authentication')
 	t.is(res.item.container.id, 'Secrets')
 	t.deepEqual((res as any).options, {
 		id: 'test',
-		secret: 'secret-data',
-		account: 'account-data',
+		secret: 'data',
+		address: 'account',
 	})
 })
 
 test('write; override the data when passed data already exists', async (t) => {
-	t.plan(7)
+	t.plan(8)
 	const store = new Map()
 	const fake = (opts: Secret): void => {
 		if (store.has(opts.id)) {
 			throw new Error()
 		}
-		store.set(opts.id, opts.secret)
+		store.set(opts.id, opts)
 	}
 	await writer((createStub(fake) as unknown) as typeof CosmosClient)({
 		id: 'test',
-		secret: 'secret-data',
-		account: 'account-data',
+		secret: 'data',
+		address: 'account',
 	})
 	const res = await writer(
 		(createStub(fake, undefined, () =>
@@ -128,8 +129,8 @@ test('write; override the data when passed data already exists', async (t) => {
 		) as unknown) as typeof CosmosClient
 	)({
 		id: 'test',
-		secret: 'secret-data',
-		account: 'account-data',
+		secret: 'data-replaced',
+		address: 'account',
 	})
 
 	t.is(res.item.container.database.id, 'Authentication')
@@ -138,10 +139,11 @@ test('write; override the data when passed data already exists', async (t) => {
 	t.is((res.item as any).partitionKey, 'test')
 	t.is(res.resource?.id, 'test')
 	t.is(res.resource?.secret, 'data-replaced')
+	t.is(res.resource?.address, 'account')
 })
 
 test('read; get data from `Authentication.Secrets`', async (t) => {
-	t.plan(7)
+	t.plan(8)
 	const res = await reader(
 		(createStub(undefined, () => t.pass()) as unknown) as typeof CosmosClient
 	)('test')
@@ -151,4 +153,5 @@ test('read; get data from `Authentication.Secrets`', async (t) => {
 	t.is((res.item as any).partitionKey, 'test')
 	t.is(res.resource?.id, 'test')
 	t.is(res.resource?.secret, 'data')
+	t.is(res.resource?.address, 'account')
 })
