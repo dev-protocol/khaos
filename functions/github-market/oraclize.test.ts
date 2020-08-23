@@ -1,5 +1,4 @@
 import test from 'ava'
-import { ethers } from 'ethers'
 import oraclize from './oraclize'
 
 test('Successful authentication', async (t) => {
@@ -13,8 +12,6 @@ test('Successful authentication', async (t) => {
 })
 
 test('Returns error when the passed repository is not authorized', async (t) => {
-	const key = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('yyy/zzz'))
-
 	const res = await oraclize(
 		{ message: 'xxx/yyy', address: '0x1234', id: 'dummy-public-signature' },
 		{ allData: { rep: 'yyy/zzz' }, publicSignature: 'dummy-public-signature' }

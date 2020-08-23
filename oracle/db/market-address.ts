@@ -1,5 +1,4 @@
 import { CosmosClient, ItemResponse } from '@azure/cosmos'
-import { always } from 'ramda'
 import { createDBInstance } from '../../common/db/common'
 
 export type Address = {

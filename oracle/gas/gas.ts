@@ -1,5 +1,7 @@
 /* eslint-disable functional/functional-parameters */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 import bent from 'bent'
 

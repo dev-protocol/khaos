@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { sendInfo } from '../executeOraclize/executeOraclize'
 import { ethers } from 'ethers'
 import { createFastestGasPriceFetcher, ethgas } from './../gas/gas'

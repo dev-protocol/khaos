@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { getAddress } from '../getAddress/getAddress'
 import { importAbi } from '../importAbi/importAbi'
 import { getLastBlock } from '../getLastBlock/getLastBlock'

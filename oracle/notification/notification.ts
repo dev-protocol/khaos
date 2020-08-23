@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable functional/no-conditional-statement */
+/* eslint-disable functional/no-expression-statement */
+
 import DiscordWebhook, { Webhook } from 'discord-webhook-ts'
 import { Results } from './../idProcess/idProcess'
 
@@ -5,13 +9,10 @@ export const notification = async (
 	results: readonly Results[] | undefined
 ): Promise<void> => {
 	const errors = results?.filter((result) => result.sent === false)
-	// TODO ここもどうにかする
-	// eslint-disable-next-line functional/no-conditional-statement
 	if (errors?.length === 0) {
 		return
 	}
 
-	// TODO もっといい感じのメッセージを！
 	const requestBody: Webhook.input.POST = {
 		embeds: [
 			{
@@ -31,6 +32,5 @@ export const notification = async (
 	const discordClient = new DiscordWebhook(
 		process.env.DISCORD_NOTIFICATION_URL!
 	)
-	// eslint-disable-next-line functional/no-expression-statement
 	await discordClient.execute(requestBody)
 }
