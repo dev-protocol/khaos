@@ -1,22 +1,36 @@
 import test from 'ava'
 import oraclize from './oraclize'
+import { PublicSignatureOptions } from './../../sign/publicSignature/publicSignature'
+import { MarketQueryData } from './../../oracle/getData/getData'
 
-test('Successful authentication', async (t) => {
-	const res = await oraclize(
-		{ message: 'xxx/yyy', address: '0x1234', id: 'dummy-public-signature' },
-		{ allData: { rep: 'xxx/yyy' }, publicSignature: 'dummy-public-signature' }
-	)
-	t.is(res.message, 'xxx/yyy')
+test('If message and githubRepository are the same, it is treated as success.', async (t) => {
+	const arg1 : PublicSignatureOptions = {
+		message: 'user/repository',
+		id: 'github-market',
+		address: '0x1234'
+	}
+	const arg2 : MarketQueryData = {
+		publicSignature: 'dummy-publicSignature',
+		allData: {githubRepository: 'user/repository'}
+	}
+	const res = await oraclize(arg1, arg2)
+	t.is(res.message, 'user/repository')
 	t.is(res.status, 0)
 	t.is(res.statusMessage, 'success')
 })
 
-test('Returns error when the passed repository is not authorized', async (t) => {
-	const res = await oraclize(
-		{ message: 'xxx/yyy', address: '0x1234', id: 'dummy-public-signature' },
-		{ allData: { rep: 'yyy/zzz' }, publicSignature: 'dummy-public-signature' }
-	)
-	t.is(res.message, 'xxx/yyy')
+test('If message and githubRepository are not the same, it is treated as fail.', async (t) => {
+	const arg1 : PublicSignatureOptions = {
+		message: 'user/repository',
+		id: 'github-market',
+		address: '0x1234'
+	}
+	const arg2 : MarketQueryData = {
+		publicSignature: 'dummy-publicSignature',
+		allData: {githubRepository: 'hoge/hura'}
+	}
+	const res = await oraclize(arg1, arg2)
+	t.is(res.message, 'user/repository')
 	t.is(res.status, 2)
 	t.is(res.statusMessage, 'error')
 })

@@ -3,72 +3,35 @@
 /* eslint-disable functional/no-class */
 import test from 'ava'
 import { getEvents } from './getEvents'
-import { EventData } from 'web3-eth-contract'
+import { ethers } from 'ethers'
 
-// class Web3EventMock {
-// 	readonly eth: any
-// 	constructor(_: any) {
-// 		this.eth = {
-// 			Contract: class Contract {
-// 				readonly _abi: any
-// 				readonly _address: string
-// 				constructor(abi: any, address: string) {
-// 					this._abi = abi
-// 					this._address = address
-// 				}
+const tmp = async (): Promise<ethers.Event[]> => {
+	return [
+		{
+			blockNumber: 1,
+			blockHash: 'dummy-value1',
+		} as any,
+		{
+			blockNumber: 2,
+			blockHash: 'dummy-value2',
+		} as any,
+	]
+}
 
-// 				public async getPastEvents(
-// 					_: string,
-// 					__: Record<string, unknown>
-// 				): Promise<readonly EventData[]> {
-// 					const event1: EventData = {
-// 						returnValues: {
-// 							_data: {
-// 								key1: 'value1',
-// 							},
-// 						},
-// 						raw: {
-// 							data: 'dummy-raw1',
-// 							topics: ['topics1-1', 'topics1-2'],
-// 						},
-// 						event: 'query',
-// 						signature: 'dummy-signature1',
-// 						logIndex: 10,
-// 						transactionIndex: 100,
-// 						transactionHash: 'dummy-transaction-hash1',
-// 						blockHash: 'dummy-block-hash1',
-// 						blockNumber: 10000,
-// 						address: 'dummy-address1',
-// 					}
-// 					const event2: EventData = {
-// 						returnValues: {
-// 							_data: {
-// 								key2: 'value2',
-// 							},
-// 						},
-// 						raw: {
-// 							data: 'dummy-raw2',
-// 							topics: ['topics2-1', 'topics2-2'],
-// 						},
-// 						event: 'query',
-// 						signature: 'dummy-signature2',
-// 						logIndex: 20,
-// 						transactionIndex: 200,
-// 						transactionHash: 'dummy-transaction-hash2',
-// 						blockHash: 'dummy-block-hash2',
-// 						blockNumber: 20000,
-// 						address: 'dummy-address2',
-// 					}
-// 					return new Promise((resolve) => {
-// 						resolve([event1, event2])
-// 					})
-// 				}
-// 			},
-// 		}
-// 	}
-// }
+const dummyConstract = {
+	filters: {
+		Query: () => {
+			return {}
+		}
+	},
+	queryFilter: tmp
+}
 
 test('event information is coming back.', async (t) => {
-	const events = await getEvents({} as any, 0, 100)
+	const events = await getEvents(dummyConstract as any, 0, 100)
 	t.is(events.length, 2)
+	t.is(events[0].blockNumber, 1)
+	t.is(events[0].blockHash, 'dummy-value1')
+	t.is(events[1].blockNumber, 2)
+	t.is(events[1].blockHash, 'dummy-value2')
 })

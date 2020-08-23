@@ -6,10 +6,16 @@
 import test from 'ava'
 import { sendContractMethod } from './sendContractMethod'
 
+const tmp = async (): Promise<any> => {
+	return {}
+}
+
+const dummyConstract = {
+	khaosCallback: tmp
+}
+
 test('event information is coming back.', async (t) => {
-	process.env.MNEMONIC =
-		'size wish volume lecture dinner drastic easy assume pledge ribbon bunker stand drill grunt dutch'
-	const result = await sendContractMethod({} as any)({
+	const result = await sendContractMethod(dummyConstract as any)({
 		result: 'dummy-result',
 	} as any)
 	t.is(result, true)

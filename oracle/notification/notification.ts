@@ -8,7 +8,7 @@ import { Results } from './../idProcess/idProcess'
 export const notification = async (
 	results: readonly Results[] | undefined
 ): Promise<void> => {
-	const errors = results?.filter((result) => result.sent === false)
+	const errors = typeof results === 'undefined' ? [] : results.filter((result) => result.sent === false)
 	if (errors?.length === 0) {
 		return
 	}

@@ -6,7 +6,7 @@ test('oraclize is executed.', async (t) => {
 		{ address: 'account', id: 'signature', message: 'data' },
 		{ allData: '{}', publicSignature: 'dummy-public-signature' }
 	)
-	t.is(res.message, '')
-	t.is(res.status, 0)
-	t.is(res.statusMessage, '')
+	t.is(res.message, undefined)
+	t.is(res.status, undefined)
+	t.is(res.statusMessage, undefined)
 })

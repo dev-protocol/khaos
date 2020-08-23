@@ -54,7 +54,7 @@ test.serial('Returns the signed account', async (t) => {
 	await sign(context, createReq(id, message, secret, signature))
 	const fakeAccount = fakeRecover(message, signature)
 	stubbed.restore()
-	t.is(context.res?.body?.account, fakeAccount)
+	t.is(context.res?.body?.address, fakeAccount)
 })
 
 test.todo('Returns a new public signature')
