@@ -1,1 +1,1 @@
-export type Abi = () => readonly string[]
+export type Abi = () => string[]
