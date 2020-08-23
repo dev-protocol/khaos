@@ -32,8 +32,8 @@ export const idProcess = (network: string) => async (
 	const marketBehavior = new ethers.Contract(
 		address!,
 		[
-			'function khaosCallback(bytes memory _data) external',
-			'event Query(bytes _data)',
+			'function khaosCallback(string memory _githubRepository, uint256 _status, string memory _message) external',
+			'event Query(string _publicSignature)',
 		],
 		wallet
 	)

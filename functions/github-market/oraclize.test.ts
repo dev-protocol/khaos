@@ -1,20 +1,13 @@
 import test from 'ava'
 import { ethers } from 'ethers'
 import oraclize from './oraclize'
-import { KhaosEventData } from './../../oracle/getData/getData'
 
 test('Successful authentication(personal).', async (t) => {
 	const key = ethers.utils.keccak256(
 		ethers.utils.toUtf8Bytes('Akira-Taniguchi/cloud_lib')
 	)
 
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "Akira-Taniguchi/cloud_lib"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
+	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -30,13 +23,7 @@ test('Successful authentication(organization).', async (t) => {
 		ethers.utils.toUtf8Bytes('dev-protocol/protocol')
 	)
 
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "dev-protocol/protocol"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
+	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -51,14 +38,7 @@ test('Nonexistent repository.', async (t) => {
 	const key = ethers.utils.keccak256(
 		ethers.utils.toUtf8Bytes('Akira-Taniguchi/hogehoge')
 	)
-
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "Akira-Taniguchi/hogehoge"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
+	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -77,13 +57,7 @@ test('Nonexistent user.', async (t) => {
 		ethers.utils.toUtf8Bytes('hugehugehugehugehugahugahugahuga/cloud_lib')
 	)
 
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "hugehugehugehugehugahugahugahuga/cloud_lib"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
+	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -102,13 +76,7 @@ test('Illegal token.', async (t) => {
 		ethers.utils.toUtf8Bytes('Akira-Taniguchi/cloud_lib')
 	)
 
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "Akira-Taniguchi/cloud_lib"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5b3', data)
+	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5b3', '', 'dummy-public-signature')
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
@@ -122,13 +90,7 @@ test('Illegal token.', async (t) => {
 test('not admin.', async (t) => {
 	const key = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('hhatto/kamasu'))
 
-	const data: KhaosEventData = {
-		publicSignature: 'dummy-public-signature',
-		key: key,
-		additionalData:
-			'{"property": "0x1D415aa39D647834786EB9B5a333A50e9935b796", "repository": "hhatto/kamasu"}',
-	}
-	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', data)
+	const res = await oraclize('eabe72317f1de4c9369f211e99b1c0190c8b5bb3', '', 'dummy-public-signature')
 	const abi = new ethers.utils.AbiCoder()
 	const result = abi.decode(['tuple(bytes32, string)'], res)
 	t.is(result[0][0], key)
