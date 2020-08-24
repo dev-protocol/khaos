@@ -47,7 +47,7 @@ export const idProcess = (network: NetworkName) => async (
 		Promise.all(x.map(executeOraclize(id)))
 	)
 	const writerInfo: LastBlock = {
-		address: address!,
+		id: address!,
 		lastBlock: currentBlockNumber,
 	}
 	// eslint-disable-next-line functional/no-expression-statement

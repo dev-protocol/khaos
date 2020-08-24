@@ -58,7 +58,7 @@ const createStub = (
 												partitionKey,
 											},
 											resource: {
-												address: '0x111111111',
+												id: '0x111111111',
 												lastBlock: 300,
 											},
 										}
@@ -95,13 +95,13 @@ test('write; insert new data to `Authentication.LastBlock`', async (t) => {
 	const res = await writer(
 		(createStub(() => t.pass()) as unknown) as typeof CosmosClient
 	)({
-		address: '0x00000000',
+		id: '0x00000000',
 		lastBlock: 100,
 	})
 	t.is(res.item.container.database.id, 'Authentication')
 	t.is(res.item.container.id, 'LastBlock')
 	t.deepEqual((res as any).options, {
-		address: '0x00000000',
+		id: '0x00000000',
 		lastBlock: 100,
 	})
 })
@@ -110,13 +110,13 @@ test('write; override the data when passed data already exists', async (t) => {
 	t.plan(7)
 	const store = new Map()
 	const fake = (opts: LastBlock): void => {
-		if (store.has(opts.address)) {
+		if (store.has(opts.id)) {
 			throw new Error()
 		}
-		store.set(opts.address, opts.lastBlock)
+		store.set(opts.id, opts.lastBlock)
 	}
 	await writer((createStub(fake) as unknown) as typeof CosmosClient)({
-		address: '0x111111111',
+		id: '0x111111111',
 		lastBlock: 200,
 	})
 	const res = await writer(
@@ -124,7 +124,7 @@ test('write; override the data when passed data already exists', async (t) => {
 			t.pass()
 		) as unknown) as typeof CosmosClient
 	)({
-		address: '0x111111111',
+		id: '0x111111111',
 		lastBlock: 300,
 	})
 
@@ -132,7 +132,7 @@ test('write; override the data when passed data already exists', async (t) => {
 	t.is(res.item.container.id, 'LastBlock')
 	t.is(res.item.id, '0x111111111')
 	t.is((res.item as any).partitionKey, '0x111111111')
-	t.is(res.resource?.address, '0x111111111')
+	t.is(res.resource?.id, '0x111111111')
 	t.is(res.resource?.lastBlock, 300)
 })
 
@@ -145,6 +145,6 @@ test('read; get data from `Authentication.LastBlock`', async (t) => {
 	t.is(res.item.container.id, 'LastBlock')
 	t.is(res.item.id, '0x111111111')
 	t.is((res.item as any).partitionKey, '0x111111111')
-	t.is(res.resource?.address, '0x111111111')
+	t.is(res.resource?.id, '0x111111111')
 	t.is(res.resource?.lastBlock, 300)
 })

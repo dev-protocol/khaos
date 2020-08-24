@@ -3,7 +3,7 @@ import { always } from 'ramda'
 import { createDBInstance } from '../../common/db/common'
 
 export type LastBlock = {
-	readonly address: string
+	readonly id: string
 	readonly lastBlock: number
 }
 
@@ -18,13 +18,7 @@ export const writer = (client: typeof CosmosClient) => async (
 	const container = await createDBInstance(client, LASTBLOCK, process.env)
 	return container.items
 		.create(data)
-		.catch(
-			always(
-				((address) => container.item(address, address).replace(data))(
-					data.address
-				)
-			)
-		)
+		.catch(always(((id) => container.item(id, id).replace(data))(data.id)))
 }
 
 export const reader = (client: typeof CosmosClient) => async (
