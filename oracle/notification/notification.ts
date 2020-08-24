@@ -33,7 +33,7 @@ export const notification = async (
 		],
 	}
 	const discordClient = new DiscordWebhook(
-		process.env.DISCORD_NOTIFICATION_URL!
+		process.env.KHAOS_DISCORD_NOTIFICATION_URL!
 	)
 	await discordClient.execute(requestBody)
 }

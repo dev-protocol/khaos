@@ -19,7 +19,7 @@ const handleTimer = (): AzureFunction =>
 		const dirPath = path.join(__dirname, '..', '..', 'functions')
 		const dirs = getIds(dirPath)
 		const oraclizer = idProcess(
-			process.env.NETWORK === 'mainnet' ? 'mainnet' : 'ropsten'
+			process.env.KHAOS_NETWORK === 'mainnet' ? 'mainnet' : 'ropsten'
 		)
 		const results = await Promise.all(dirs.map(oraclizer))
 		// eslint-disable-next-line functional/no-expression-statement

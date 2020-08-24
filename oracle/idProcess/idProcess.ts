@@ -25,13 +25,13 @@ export const idProcess = (network: NetworkName) => async (
 ): Promise<readonly Results[] | undefined> => {
 	const addresses = await importAddresses(id)
 	const provider = ethers.getDefaultProvider(network, {
-		infura: process.env.INFURA_ID,
+		infura: process.env.KHAOS_INFURA_ID,
 	})
 	const currentBlockNumber = provider.blockNumber
 	const abi = await importAbi(id)
-	const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC!).connect(
-		provider
-	)
+	const wallet = ethers.Wallet.fromMnemonic(
+		process.env.KHAOS_MNEMONIC!
+	).connect(provider)
 	const address = await addresses(network)
 	const marketBehavior = when(address, (adr) =>
 		when(abi, (intf) => new ethers.Contract(adr, intf, wallet))
