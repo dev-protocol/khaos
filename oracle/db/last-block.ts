@@ -14,7 +14,7 @@ export type LastBlockWithPartition = LastBlock & {
 }
 
 const LASTBLOCK = {
-	database: 'Authentication',
+	database: 'Oraclize',
 	container: 'LastBlock',
 }
 

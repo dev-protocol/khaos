@@ -91,7 +91,7 @@ const createStub = (
 		}
 	}
 
-test('write; insert new data to `Authentication.LastBlock`', async (t) => {
+test('write; insert new data to `Oraclize.LastBlock`', async (t) => {
 	t.plan(4)
 	const res = await writer(
 		(createStub(() => t.pass()) as unknown) as typeof CosmosClient
@@ -99,7 +99,7 @@ test('write; insert new data to `Authentication.LastBlock`', async (t) => {
 		id: '0x00000000',
 		lastBlock: 100,
 	})
-	t.is(res.item.container.database.id, 'Authentication')
+	t.is(res.item.container.database.id, 'Oraclize')
 	t.is(res.item.container.id, 'LastBlock')
 	t.deepEqual((res as any).options, {
 		id: '0x00000000',
@@ -130,7 +130,7 @@ test('write; override the data when passed data already exists', async (t) => {
 		lastBlock: 300,
 	})
 
-	t.is(res.item.container.database.id, 'Authentication')
+	t.is(res.item.container.database.id, 'Oraclize')
 	t.is(res.item.container.id, 'LastBlock')
 	t.is(res.item.id, '0x111111111')
 	t.is((res.item as any).partitionKey, '0x1')
@@ -139,12 +139,12 @@ test('write; override the data when passed data already exists', async (t) => {
 	t.is(res.resource?.lastBlock, 300)
 })
 
-test('read; get data from `Authentication.LastBlock`', async (t) => {
+test('read; get data from `Oraclize.LastBlock`', async (t) => {
 	t.plan(8)
 	const res = await reader(
 		(createStub(undefined, () => t.pass()) as unknown) as typeof CosmosClient
 	)('0x111111111')
-	t.is(res.item.container.database.id, 'Authentication')
+	t.is(res.item.container.database.id, 'Oraclize')
 	t.is(res.item.container.id, 'LastBlock')
 	t.is(res.item.id, '0x111111111')
 	t.is((res.item as any).partitionKey, '0x1')
