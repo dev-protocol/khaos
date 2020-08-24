@@ -1,2 +1,3 @@
-// eslint-disable-next-line functional/prefer-readonly-type
-export type Abi = () => string[]
+import { ContractInterface } from 'ethers'
+
+export type Abi = ContractInterface

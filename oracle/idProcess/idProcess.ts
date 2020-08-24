@@ -27,8 +27,7 @@ export const idProcess = (network: string) => async (
 		infura: process.env.INFURA_ID,
 	})
 	const currentBlockNumber = provider.blockNumber
-	const fnAbi = await importAbi(id)
-	const abi = fnAbi()
+	const abi = await importAbi(id)
 	const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC!).connect(
 		provider
 	)

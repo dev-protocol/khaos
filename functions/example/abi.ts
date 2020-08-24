@@ -1,8 +1,5 @@
 import { Abi } from '../abi'
 
-// eslint-disable-next-line functional/functional-parameters
-const fn: Abi = () => {
-	return []
-}
+const abi: Abi = []
 
-export default fn
+export default abi
