@@ -13,7 +13,7 @@ export const sendContractMethod = (marketBehavior: ethers.Contract) => async (
 	)
 	const overrides = {
 		gasLimit: gas,
-		gasPrice: fastest,
+		gasPrice: await fastest(),
 	}
 	const sent = marketBehavior.khaosCallback(
 		info.result!.message,
