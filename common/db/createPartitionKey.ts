@@ -1,5 +1,5 @@
 export const createPartitionKey = (
-	paths: readonly string[] = ['/partition']
+	paths?: readonly string[]
 ): { readonly paths: readonly string[] } => ({
-	paths: [...paths],
+	paths: paths ? [...paths] : ['/partition'],
 })
