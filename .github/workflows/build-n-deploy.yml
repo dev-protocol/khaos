@@ -24,7 +24,7 @@ jobs:
           path: |
             node_modules
             */*/*/node_modules
-            build
+            dist
           key: ${{ runner.os }}-${ GITHUB_SHA }
 
       - name: install deps
@@ -54,7 +54,7 @@ jobs:
           path: |
             node_modules
             */*/*/node_modules
-            build
+            dist
           key: ${{ runner.os }}-${ GITHUB_SHA }
 
       - name: Login via Azure CLI
@@ -83,7 +83,7 @@ jobs:
           path: |
             node_modules
             */*/*/node_modules
-            build
+            dist
           key: ${{ runner.os }}-${ GITHUB_SHA }
 
       - name: Login via Azure CLI
