@@ -5,7 +5,7 @@ import test from 'ava'
 import { getEvents } from './getEvents'
 import { ethers } from 'ethers'
 
-const tmp = async (): Promise<ethers.Event[]> => {
+const tmp = async (): Promise<readonly ethers.Event[]> => {
 	return [
 		{
 			blockNumber: 1,
@@ -22,9 +22,9 @@ const dummyConstract = {
 	filters: {
 		Query: () => {
 			return {}
-		}
+		},
 	},
-	queryFilter: tmp
+	queryFilter: tmp,
 }
 
 test('event information is coming back.', async (t) => {

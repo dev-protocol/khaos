@@ -21,7 +21,7 @@ test.serial('The process is executed successfully.', async (t) => {
 	)
 	const stubbedWriter = stub(lastBlock, 'writer').callsFake(() => async () =>
 		({
-			statusCode: 200
+			statusCode: 200,
 		} as any)
 	)
 	const stubbedSecretReader = stub(secret, 'reader').callsFake(() => async () =>
@@ -30,14 +30,15 @@ test.serial('The process is executed successfully.', async (t) => {
 			resource: { secret: 'dummy-secret' },
 		} as any)
 	)
-	const stubbedAddressReader = stub(address, 'reader').callsFake(() => async () =>
-		({
-			statusCode: 200,
-			resource: { address: 'dummy-address' },
-		} as any)
+	const stubbedAddressReader = stub(address, 'reader').callsFake(
+		() => async () =>
+			({
+				statusCode: 200,
+				resource: { address: 'dummy-address' },
+			} as any)
 	)
-	const stubbedGetEvents = stub(getEvents, 'getEvents').callsFake(async () =>
-		([] as readonly ethers.Event[])
+	const stubbedGetEvents = stub(getEvents, 'getEvents').callsFake(
+		async () => [] as readonly ethers.Event[]
 	)
 	process.env.MNEMONIC =
 		'size wish volume lecture dinner drastic easy assume pledge ribbon bunker stand drill grunt dutch'

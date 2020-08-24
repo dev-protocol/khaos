@@ -11,7 +11,7 @@ const tmp = async (): Promise<any> => {
 }
 
 const dummyConstract = {
-	khaosCallback: tmp
+	khaosCallback: tmp,
 }
 
 test('event information is coming back.', async (t) => {

@@ -4,7 +4,7 @@ import { getData } from './getData'
 test('Returning the contents of _data as a json object', async (t) => {
 	const data = {
 		publicSignature: 'dummy-public-signature',
-		packagename: 'dummy-package'
+		packagename: 'dummy-package',
 	}
 
 	const testData = {
