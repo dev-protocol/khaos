@@ -12,18 +12,32 @@ const LASTBLOCK = {
 	container: 'LastBlock',
 }
 
+const createPartitionKey = (id: string): string => id.slice(0, 3)
+
 export const writer = (client: typeof CosmosClient) => async (
 	data: LastBlock
 ): Promise<ItemResponse<LastBlock>> => {
-	const container = await createDBInstance(client, LASTBLOCK, process.env)
+	const partitionKey = createPartitionKey(data.id)
+	const container = await createDBInstance(
+		client,
+		{ ...LASTBLOCK, partitionKey },
+		process.env
+	)
 	return container.items
 		.create(data)
-		.catch(always(((id) => container.item(id, id).replace(data))(data.id)))
+		.catch(
+			always(((id) => container.item(id, partitionKey).replace(data))(data.id))
+		)
 }
 
 export const reader = (client: typeof CosmosClient) => async (
 	address: string
 ): Promise<ItemResponse<LastBlock>> => {
-	const container = await createDBInstance(client, LASTBLOCK, process.env)
-	return container.item(address, address).read()
+	const partitionKey = createPartitionKey(address)
+	const container = await createDBInstance(
+		client,
+		{ ...LASTBLOCK, partitionKey },
+		process.env
+	)
+	return container.item(address, partitionKey).read()
 }
