@@ -60,6 +60,7 @@ const createStub = (
 											resource: {
 												id,
 												secret: 'data',
+												partition: id.slice(0, 1),
 												address: 'account',
 											},
 										}
@@ -104,13 +105,14 @@ test('write; insert new data to `Authentication.Secrets`', async (t) => {
 	t.is(res.item.container.id, 'Secrets')
 	t.deepEqual((res as any).options, {
 		id: 'test',
+		partition: 't',
 		secret: 'data',
 		address: 'account',
 	})
 })
 
 test('write; override the data when passed data already exists', async (t) => {
-	t.plan(8)
+	t.plan(9)
 	const store = new Map()
 	const fake = (opts: Secret): void => {
 		if (store.has(opts.id)) {
@@ -138,12 +140,13 @@ test('write; override the data when passed data already exists', async (t) => {
 	t.is(res.item.id, 'test')
 	t.is((res.item as any).partitionKey, 't')
 	t.is(res.resource?.id, 'test')
+	t.is(res.resource?.partition, 't')
 	t.is(res.resource?.secret, 'data-replaced')
 	t.is(res.resource?.address, 'account')
 })
 
 test('read; get data from `Authentication.Secrets`', async (t) => {
-	t.plan(8)
+	t.plan(9)
 	const res = await reader(
 		(createStub(undefined, () => t.pass()) as unknown) as typeof CosmosClient
 	)('test')
@@ -152,6 +155,7 @@ test('read; get data from `Authentication.Secrets`', async (t) => {
 	t.is(res.item.id, 'test')
 	t.is((res.item as any).partitionKey, 't')
 	t.is(res.resource?.id, 'test')
+	t.is(res.resource?.partition, 't')
 	t.is(res.resource?.secret, 'data')
 	t.is(res.resource?.address, 'account')
 })

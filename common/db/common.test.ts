@@ -51,7 +51,9 @@ test('An instance of the database is created (albeit a dummy)', async (t) => {
 		{
 			database: 'dummy-database',
 			container: 'dummy-container',
-			partitionKey: 'd',
+			partitionKey: {
+				paths: ['/partition'],
+			},
 		},
 		process.env
 	)

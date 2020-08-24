@@ -5,7 +5,9 @@ export const createDBInstance = async (
 	opts: {
 		readonly database: string
 		readonly container: string
-		readonly partitionKey: string
+		readonly partitionKey: {
+			readonly paths: readonly string[]
+		}
 	},
 	env: NodeJS.ProcessEnv
 ): Promise<Container> => {
@@ -19,7 +21,9 @@ export const createDBInstance = async (
 	})
 	const { container } = await database.containers.createIfNotExists({
 		id: opts.container,
-		partitionKey: opts.partitionKey,
+		partitionKey: {
+			...{ paths: [...opts.partitionKey.paths] },
+		},
 	})
 	return container
 }
