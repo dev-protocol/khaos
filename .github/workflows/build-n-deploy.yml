@@ -55,7 +55,7 @@ jobs:
             node_modules
             */*/*/node_modules
             build
-        key: ${{ runner.os }}-${ GITHUB_SHA }
+          key: ${{ runner.os }}-${ GITHUB_SHA }
 
       - name: Login via Azure CLI
         uses: azure/login@v1
@@ -84,7 +84,7 @@ jobs:
             node_modules
             */*/*/node_modules
             build
-        key: ${{ runner.os }}-${ GITHUB_SHA }
+          key: ${{ runner.os }}-${ GITHUB_SHA }
 
       - name: Login via Azure CLI
         uses: azure/login@v1
