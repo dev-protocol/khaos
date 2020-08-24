@@ -39,7 +39,7 @@ jobs:
       - name: Build
         run: yarn build
 
-  deploy/eth-mainnet:
+  deploy-eth-mainnet:
     needs: build
     if: ${{ github.event_name != 'pull_request' && contains(github.ref, 'main') }}
 
@@ -68,7 +68,7 @@ jobs:
         with:
           app-name: khaos-eth-mainnet
 
-  deploy/eth-ropsten:
+  deploy-eth-ropsten:
     needs: build
     if: ${{ github.event_name != 'pull_request' && contains(github.ref, 'main') }}
 
