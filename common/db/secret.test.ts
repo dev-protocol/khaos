@@ -60,7 +60,7 @@ const createStub = (
 											resource: {
 												id,
 												secret: 'data',
-												partition: id.slice(0, 1),
+												_partitionKey: id.slice(0, 1),
 												address: 'account',
 											},
 										}
@@ -105,7 +105,7 @@ test('write; insert new data to `Authentication.Secrets`', async (t) => {
 	t.is(res.item.container.id, 'Secrets')
 	t.deepEqual((res as any).options, {
 		id: 'test',
-		partition: 't',
+		_partitionKey: 't',
 		secret: 'data',
 		address: 'account',
 	})
@@ -140,7 +140,7 @@ test('write; override the data when passed data already exists', async (t) => {
 	t.is(res.item.id, 'test')
 	t.is((res.item as any).partitionKey, 't')
 	t.is(res.resource?.id, 'test')
-	t.is(res.resource?.partition, 't')
+	t.is(res.resource?._partitionKey, 't')
 	t.is(res.resource?.secret, 'data-replaced')
 	t.is(res.resource?.address, 'account')
 })
@@ -155,7 +155,7 @@ test('read; get data from `Authentication.Secrets`', async (t) => {
 	t.is(res.item.id, 'test')
 	t.is((res.item as any).partitionKey, 't')
 	t.is(res.resource?.id, 'test')
-	t.is(res.resource?.partition, 't')
+	t.is(res.resource?._partitionKey, 't')
 	t.is(res.resource?.secret, 'data')
 	t.is(res.resource?.address, 'account')
 })

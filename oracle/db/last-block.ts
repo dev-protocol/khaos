@@ -1,7 +1,7 @@
 import { CosmosClient, ItemResponse } from '@azure/cosmos'
 import { always } from 'ramda'
 import { createDBInstance } from '../../common/db/common'
-import { createPartitionKey } from '../../common/db/createPartitionKey'
+import { withPartitionKey } from '../../common/db/withPartitionKey'
 
 export type LastBlock = {
 	readonly id: string
@@ -9,8 +9,7 @@ export type LastBlock = {
 }
 
 export type LastBlockWithPartition = LastBlock & {
-	readonly id: string
-	readonly partition: string
+	readonly _partitionKey: string
 }
 
 const LASTBLOCK = {
@@ -19,18 +18,13 @@ const LASTBLOCK = {
 }
 
 const createPartitionValue = (id: string): string => id.slice(0, 3)
-const partitionKey = createPartitionKey()
 
 export const writer = (client: typeof CosmosClient) => async (
 	data: LastBlock
 ): Promise<ItemResponse<LastBlockWithPartition>> => {
 	const partition = createPartitionValue(data.id)
-	const container = await createDBInstance(
-		client,
-		{ ...LASTBLOCK, partitionKey },
-		process.env
-	)
-	const item: LastBlockWithPartition = { ...data, ...{ partition } }
+	const container = await createDBInstance(client, LASTBLOCK, process.env)
+	const item: LastBlockWithPartition = withPartitionKey(data, partition)
 	return container.items
 		.create(item)
 		.catch(
@@ -42,10 +36,6 @@ export const reader = (client: typeof CosmosClient) => async (
 	address: string
 ): Promise<ItemResponse<LastBlockWithPartition>> => {
 	const partition = createPartitionValue(address)
-	const container = await createDBInstance(
-		client,
-		{ ...LASTBLOCK, partitionKey },
-		process.env
-	)
+	const container = await createDBInstance(client, LASTBLOCK, process.env)
 	return container.item(address, partition).read()
 }

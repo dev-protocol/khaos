@@ -59,7 +59,7 @@ const createStub = (
 											},
 											resource: {
 												id: '0x111111111',
-												partition: '0x1',
+												_partitionKey: '0x1',
 												lastBlock: 300,
 											},
 										}
@@ -104,7 +104,7 @@ test('write; insert new data to `Oraclize.LastBlock`', async (t) => {
 	t.deepEqual((res as any).options, {
 		id: '0x00000000',
 		lastBlock: 100,
-		partition: '0x0',
+		_partitionKey: '0x0',
 	})
 })
 
@@ -135,7 +135,7 @@ test('write; override the data when passed data already exists', async (t) => {
 	t.is(res.item.id, '0x111111111')
 	t.is((res.item as any).partitionKey, '0x1')
 	t.is(res.resource?.id, '0x111111111')
-	t.is(res.resource?.partition, '0x1')
+	t.is(res.resource?._partitionKey, '0x1')
 	t.is(res.resource?.lastBlock, 300)
 })
 
@@ -149,6 +149,6 @@ test('read; get data from `Oraclize.LastBlock`', async (t) => {
 	t.is(res.item.id, '0x111111111')
 	t.is((res.item as any).partitionKey, '0x1')
 	t.is(res.resource?.id, '0x111111111')
-	t.is(res.resource?.partition, '0x1')
+	t.is(res.resource?._partitionKey, '0x1')
 	t.is(res.resource?.lastBlock, 300)
 })
