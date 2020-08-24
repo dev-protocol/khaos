@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { getAddress } from '../getAddress/getAddress'
 import { importAbi } from '../importAbi/importAbi'
 import { getLastBlock } from '../getLastBlock/getLastBlock'
 import { getEvents } from '../getEvents/getEvents'
@@ -11,6 +10,8 @@ import { when } from '../../common/util/when'
 import { writer, LastBlock } from '../db/last-block'
 import { CosmosClient } from '@azure/cosmos'
 import { ethers } from 'ethers'
+import { importAddresses } from '../importAddresses/importAddresses'
+import { NetworkName } from '../../functions/addresses'
 
 export type Results = {
 	readonly sent: boolean
@@ -19,10 +20,10 @@ export type Results = {
 	readonly state?: readonly any[]
 }
 
-export const idProcess = (network: string) => async (
+export const idProcess = (network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
-	const address = await getAddress(id, network)
+	const addresses = await importAddresses(id)
 	const provider = ethers.getDefaultProvider(network, {
 		infura: process.env.INFURA_ID,
 	})
@@ -31,13 +32,14 @@ export const idProcess = (network: string) => async (
 	const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC!).connect(
 		provider
 	)
-	const marketBehavior = new ethers.Contract(address!, abi!, wallet)
+	const address = await addresses(network)
+	const marketBehavior = when(address, (adr) =>
+		when(abi, (intf) => new ethers.Contract(adr, intf, wallet))
+	)
 
 	const lastBlock = await getLastBlock(id)
-	const events = await getEvents(
-		marketBehavior,
-		lastBlock + 1,
-		currentBlockNumber
+	const events = await when(marketBehavior, (behavior) =>
+		getEvents(behavior, lastBlock + 1, currentBlockNumber)
 	)
 	const state = when(events, (x) => x.map(getData))
 	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))
@@ -52,13 +54,15 @@ export const idProcess = (network: string) => async (
 	await writer(CosmosClient)(writerInfo)
 	return when(address, (x) =>
 		when(results, (y) =>
-			Promise.all(y.map(sendContractMethod(marketBehavior))).then((res) =>
-				res.map((sent) => ({
-					address: x,
-					results: y,
-					sent,
-					state,
-				}))
+			when(marketBehavior, (z) =>
+				Promise.all(y.map(sendContractMethod(z))).then((res) =>
+					res.map((sent) => ({
+						address: x,
+						results: y,
+						sent,
+						state,
+					}))
+				)
 			)
 		)
 	)

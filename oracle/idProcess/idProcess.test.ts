@@ -8,7 +8,6 @@ import { idProcess, Results } from './idProcess'
 import { stub } from 'sinon'
 import * as lastBlock from '../db/last-block'
 import * as secret from '../../common/db/secret'
-import * as address from '../db/market-address'
 import * as getEvents from '../getEvents/getEvents'
 import { ethers } from 'ethers'
 
@@ -30,13 +29,6 @@ test.serial('The process is executed successfully.', async (t) => {
 			resource: { secret: 'dummy-secret' },
 		} as any)
 	)
-	const stubbedAddressReader = stub(address, 'reader').callsFake(
-		() => async () =>
-			({
-				statusCode: 200,
-				resource: { address: 'dummy-address' },
-			} as any)
-	)
 	const stubbedGetEvents = stub(getEvents, 'getEvents').callsFake(
 		async () => [] as readonly ethers.Event[]
 	)
@@ -46,7 +38,6 @@ test.serial('The process is executed successfully.', async (t) => {
 	stubbedReader.restore()
 	stubbedWriter.restore()
 	stubbedSecretReader.restore()
-	stubbedAddressReader.restore()
 	stubbedGetEvents.restore()
 	console.log(result)
 	t.is((result as readonly Results[]).length, 0)
