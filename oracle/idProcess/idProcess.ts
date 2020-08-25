@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Context } from '@azure/functions'
 import { importAbi } from '../importAbi/importAbi'
 import { getLastBlock } from '../getLastBlock/getLastBlock'
 import { getEvents } from '../getEvents/getEvents'
@@ -20,7 +22,7 @@ export type Results = {
 	readonly state?: readonly any[]
 }
 
-export const idProcess = (network: NetworkName) => async (
+export const idProcess = (context: Context, network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
 	const addresses = await importAddresses(id)
@@ -56,6 +58,9 @@ export const idProcess = (network: NetworkName) => async (
 			getEvents(behavior, lastBlock + 1, block)
 		)
 	)
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`block from:${lastBlock + 1} to ${currentBlockNumber}`)
+
 	const state = when(events, (x) => x.map(getData))
 	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))
 	const results = await when(oracleArgList, (x) =>

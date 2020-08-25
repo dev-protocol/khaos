@@ -14,7 +14,7 @@ test.serial(
 			} as any)
 		)
 		const data: MarketQueryData = {
-			allData: { repo: 'hugahuga/hogihogi' },
+			allData: { repo: 'hugahuga/hogihogi' } as any,
 			publicSignature: 'hogehoge',
 		}
 		const result = await getSecret(data)
@@ -34,7 +34,7 @@ test.serial(
 			} as any)
 		)
 		const data: MarketQueryData = {
-			allData: { repo: 'hugahuga/hogihogi' },
+			allData: { repo: 'hugahuga/hogihogi' } as any,
 			publicSignature: 'hogehoge',
 		}
 		const result = await getSecret(data)

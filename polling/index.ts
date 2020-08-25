@@ -20,6 +20,7 @@ const handleTimer: AzureFunction = async function (
 	const dirPath = path.join(__dirname, '..', '..', 'functions')
 	const dirs = getIds(dirPath)
 	const oraclizer = idProcess(
+		context,
 		process.env.KHAOS_NETWORK === 'mainnet' ? 'mainnet' : 'ropsten'
 	)
 	const results = await Promise.all(dirs.map(oraclizer))
