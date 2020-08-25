@@ -31,7 +31,9 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 			infura,
 		})
 	)
-	const currentBlockNumber = when(provider, (prov) => prov.blockNumber)
+	const currentBlockNumber = await when(provider, (prov) =>
+		prov.getBlockNumber()
+	)
 	const abi = await importAbi(id)
 	const wallet = when(provider, (prov) =>
 		when(process.env.KHAOS_MNEMONIC, (mnemonic) =>
