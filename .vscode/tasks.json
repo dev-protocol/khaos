@@ -6,26 +6,19 @@
 			"command": "host start",
 			"problemMatcher": "$func-watch",
 			"isBackground": true,
-			"dependsOn": "npm build"
+			"dependsOn": "build"
 		},
 		{
 			"type": "shell",
-			"label": "npm build",
-			"command": "npm run build",
-			"dependsOn": "npm install",
+			"label": "build",
+			"command": "yarn build",
+			"dependsOn": "install",
 			"problemMatcher": "$tsc"
 		},
 		{
 			"type": "shell",
-			"label": "npm install",
-			"command": "npm install"
-		},
-		{
-			"type": "shell",
-			"label": "npm prune",
-			"command": "npm prune --production",
-			"dependsOn": "npm build",
-			"problemMatcher": []
+			"label": "install",
+			"command": "yarn --force"
 		}
 	]
 }
