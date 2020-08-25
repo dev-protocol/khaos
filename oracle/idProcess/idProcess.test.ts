@@ -10,6 +10,7 @@ import * as lastBlock from '../db/last-block'
 import * as secret from '../../common/db/secret'
 import * as getEvents from '../getEvents/getEvents'
 import { ethers } from 'ethers'
+import { createContext } from '../../common/testutils'
 
 test.serial('The process is executed successfully.', async (t) => {
 	const stubbedReader = stub(lastBlock, 'reader').callsFake(() => async () =>
@@ -34,7 +35,8 @@ test.serial('The process is executed successfully.', async (t) => {
 	)
 	process.env.KHAOS_MNEMONIC =
 		'size wish volume lecture dinner drastic easy assume pledge ribbon bunker stand drill grunt dutch'
-	const result = await idProcess('ropsten')('example')
+	const context = createContext()
+	const result = await idProcess(context as any, 'ropsten')('example')
 	stubbedReader.restore()
 	stubbedWriter.restore()
 	stubbedSecretReader.restore()

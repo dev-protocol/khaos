@@ -6,26 +6,12 @@ import test from 'ava'
 import { stub } from 'sinon'
 import handleTimer from '.'
 import * as idPprocess from '../oracle/idProcess/idProcess'
+import { createContext } from '../common/testutils'
 
 let passedNetwork = ''
-const createContext = () => {
-	const warn: string[] = []
-	const info: string[] = []
-	return {
-		log: {
-			warn: function (str: string) {
-				warn.push(str)
-			},
-			info: function (str: string) {
-				info.push(str)
-			},
-		},
-		warn,
-		info,
-	}
-}
+
 const stubbedReader = stub(idPprocess, 'idProcess').callsFake(
-	(network) => async () =>
+	(_, network) => async () =>
 		new Promise((resolve) => {
 			passedNetwork = network
 			resolve(undefined)

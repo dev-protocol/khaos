@@ -4,7 +4,7 @@ import oraclize from './oraclize'
 test('oraclize is executed.', async (t) => {
 	const res = await oraclize(
 		{ address: 'account', id: 'signature', message: 'data' },
-		{ allData: '{}', publicSignature: 'dummy-public-signature' }
+		{ allData: '{}', publicSignature: 'dummy-public-signature' } as any
 	)
 	t.is(res.message, undefined)
 	t.is(res.status, undefined)

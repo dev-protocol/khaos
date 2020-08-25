@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Context } from '@azure/functions'
 import { importAbi } from '../importAbi/importAbi'
 import { getLastBlock } from '../getLastBlock/getLastBlock'
 import { getEvents } from '../getEvents/getEvents'
@@ -21,14 +22,14 @@ export type Results = {
 	readonly state?: readonly any[]
 }
 
-export const idProcess = (network: NetworkName) => async (
+export const idProcess = (context: Context, network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
 	const addresses = await importAddresses(id)
 	const provider = ethers.getDefaultProvider(network, {
 		infura: process.env.KHAOS_INFURA_ID,
 	})
-	const currentBlockNumber = provider.blockNumber
+	const currentBlockNumber = await provider.getBlockNumber()
 	const abi = await importAbi(id)
 	const wallet = ethers.Wallet.fromMnemonic(
 		process.env.KHAOS_MNEMONIC!
@@ -45,6 +46,8 @@ export const idProcess = (network: NetworkName) => async (
 	)
 
 	const lastBlock = await getLastBlock(id)
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`block from:${lastBlock + 1} to ${currentBlockNumber}`)
 	const events = await when(marketBehavior, (behavior) =>
 		getEvents(behavior, lastBlock + 1, currentBlockNumber)
 	)
