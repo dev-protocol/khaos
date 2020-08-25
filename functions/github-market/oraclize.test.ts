@@ -11,7 +11,7 @@ test('If message and githubRepository are the same, it is treated as success.', 
 	}
 	const arg2: MarketQueryData = {
 		publicSignature: 'dummy-publicSignature',
-		allData: { githubRepository: 'user/repository' },
+		allData: { githubRepository: 'user/repository', account: '0x1234' },
 	}
 	const res = await oraclize(arg1, arg2)
 	t.is(res.message, 'user/repository')
