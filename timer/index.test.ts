@@ -41,7 +41,7 @@ test.serial(
 	async (t) => {
 		const context = createContext()
 		process.env.KHAOS_NETWORK = 'mainnet'
-		await handleTimer()(context as any, {
+		await handleTimer(context as any, {
 			IsPastDue: false,
 		})
 		t.is(passedNetwork, 'mainnet')
@@ -53,7 +53,7 @@ test.serial(
 	async (t) => {
 		const context = createContext()
 		process.env.KHAOS_NETWORK = 'ropsten'
-		await handleTimer()(context as any, {
+		await handleTimer(context as any, {
 			IsPastDue: false,
 		})
 		t.is(passedNetwork, 'ropsten')
@@ -63,7 +63,7 @@ test.serial(
 test('If the call is not delayed, there is no warning message.', async (t) => {
 	const context = createContext()
 	process.env.KHAOS_NETWORK = 'mainnet'
-	await handleTimer()(context as any, {
+	await handleTimer(context as any, {
 		IsPastDue: false,
 	})
 	t.is(context.warn.length, 0)
@@ -75,7 +75,7 @@ test('If the call is not delayed, there is no warning message.', async (t) => {
 test('If the call is delayed, you get a warning message.', async (t) => {
 	const context = createContext()
 	process.env.KHAOS_NETWORK = 'mainnet'
-	await handleTimer()(context as any, {
+	await handleTimer(context as any, {
 		IsPastDue: true,
 	})
 	t.is(context.warn.length, 1)
