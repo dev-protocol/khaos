@@ -18,7 +18,7 @@ const SECRETS = {
 	container: 'Secrets',
 }
 
-const createPartitionValue = (id: string): string => id.slice(0, 1)
+const createPartitionValue = (id: string): string => id.substr(id.length - 1)
 
 export const writer = (client: typeof CosmosClient) => async (
 	data: Secret

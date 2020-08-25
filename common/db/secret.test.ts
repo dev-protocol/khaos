@@ -60,7 +60,7 @@ const createStub = (
 											resource: {
 												id,
 												secret: 'data',
-												_partitionKey: id.slice(0, 1),
+												_partitionKey: id.substr(id.length - 1),
 												address: 'account',
 											},
 										}
