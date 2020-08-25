@@ -30,9 +30,9 @@ export const idProcess = (network: NetworkName) => async (
 	})
 	const currentBlockNumber = provider.blockNumber
 	const abi = await importAbi(id)
-	const wallet = ethers.Wallet.fromMnemonic(
-		process.env.KHAOS_MNEMONIC!
-	).connect(provider)
+	const wallet = when(process.env.KHAOS_MNEMONIC, (mnemonic) =>
+		ethers.Wallet.fromMnemonic(mnemonic).connect(provider)
+	)
 	const address = await addresses(network)
 	const marketBehavior = when(address, (adr) =>
 		when(
