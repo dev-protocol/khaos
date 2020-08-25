@@ -51,10 +51,10 @@ test.serial('Returns the signed account', async (t) => {
 	const signature = fakeSignature(random(), id)
 	const secret = random()
 	const message = random()
-	await sign(context, createReq(id, message, secret, signature))
+	const res = await sign(context, createReq(id, message, secret, signature))
 	const fakeAccount = fakeRecover(message, signature)
 	stubbed.restore()
-	t.is(context.res?.body?.address, fakeAccount)
+	t.is(res?.body?.address, fakeAccount)
 })
 
 test.todo('Returns a new public signature')
