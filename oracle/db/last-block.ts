@@ -13,7 +13,7 @@ export type LastBlockWithPartition = LastBlock & {
 }
 
 const LASTBLOCK = {
-	database: 'Oraclize',
+	database: 'Oraclization',
 	container: 'LastBlock',
 }
 
