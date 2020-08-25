@@ -13,7 +13,7 @@ const sign: AzureFunction = async (
 	const { message = '', secret = '', signature = '' } = req.body
 	const fn = await importAuthorizer(id)
 	const auth = await fn({ message, secret, req })
-	const address = recover(message, signature)
+	const address = auth ? recover(message, signature) : undefined
 	const publicSignature = address ? pubSig({ message, id, address }) : undefined
 	const wrote = await (auth && publicSignature && address
 		? writer(CosmosClient)({ id: publicSignature, secret, address })
