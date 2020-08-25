@@ -32,6 +32,7 @@ test.serial('The process is executed successfully.', async (t) => {
 	const stubbedGetEvents = stub(getEvents, 'getEvents').callsFake(
 		async () => [] as readonly ethers.Event[]
 	)
+	process.env.KHAOS_INFURA_ID = 'dummy'
 	process.env.KHAOS_MNEMONIC =
 		'size wish volume lecture dinner drastic easy assume pledge ribbon bunker stand drill grunt dutch'
 	const result = await idProcess('ropsten')('example')
@@ -39,6 +40,5 @@ test.serial('The process is executed successfully.', async (t) => {
 	stubbedWriter.restore()
 	stubbedSecretReader.restore()
 	stubbedGetEvents.restore()
-	console.log(result)
 	t.is((result as readonly Results[]).length, 0)
 })

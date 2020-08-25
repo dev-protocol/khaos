@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { importAbi } from '../importAbi/importAbi'
 import { getLastBlock } from '../getLastBlock/getLastBlock'
 import { getEvents } from '../getEvents/getEvents'
@@ -25,40 +24,51 @@ export const idProcess = (network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
 	const addresses = await importAddresses(id)
-	const provider = ethers.getDefaultProvider(network, {
-		infura: process.env.KHAOS_INFURA_ID,
-	})
-	const currentBlockNumber = provider.blockNumber
+	const provider = when(process.env.KHAOS_INFURA_ID, (infura) =>
+		ethers.getDefaultProvider(network, {
+			infura,
+		})
+	)
+	const currentBlockNumber = when(provider, (prov) => prov.blockNumber)
 	const abi = await importAbi(id)
-	const wallet = when(process.env.KHAOS_MNEMONIC, (mnemonic) =>
-		ethers.Wallet.fromMnemonic(mnemonic).connect(provider)
+	const wallet = when(provider, (prov) =>
+		when(process.env.KHAOS_MNEMONIC, (mnemonic) =>
+			ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
+		)
 	)
 	const address = await addresses(network)
-	const marketBehavior = when(address, (adr) =>
+	const marketBehavior = await when(address, (adr) =>
 		when(
 			abi,
 			tryCatch(
-				(intf) => new ethers.Contract(adr, intf, wallet),
+				(intf) =>
+					((c) => c.resolvedAddress.then(always(c)).catch(always(undefined)))(
+						new ethers.Contract(adr, intf, wallet)
+					),
 				always(undefined)
 			)
 		)
 	)
 
 	const lastBlock = await getLastBlock(id)
-	const events = await when(marketBehavior, (behavior) =>
-		getEvents(behavior, lastBlock + 1, currentBlockNumber)
+	const events = await when(currentBlockNumber, (block) =>
+		when(marketBehavior, (behavior) =>
+			getEvents(behavior, lastBlock + 1, block)
+		)
 	)
 	const state = when(events, (x) => x.map(getData))
 	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))
 	const results = await when(oracleArgList, (x) =>
 		Promise.all(x.map(executeOraclize(id)))
 	)
-	const writerInfo: LastBlock = {
-		id: address!,
-		lastBlock: currentBlockNumber,
-	}
+	const writerInfo: LastBlock | undefined = when(address, (adr) =>
+		when(currentBlockNumber, (block) => ({
+			id: adr,
+			lastBlock: block,
+		}))
+	)
 	// eslint-disable-next-line functional/no-expression-statement
-	await writer(CosmosClient)(writerInfo)
+	await when(writerInfo, (data) => writer(CosmosClient)(data))
 	return when(address, (x) =>
 		when(results, (y) =>
 			when(marketBehavior, (z) =>
