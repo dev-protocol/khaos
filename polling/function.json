@@ -1,8 +1,8 @@
 {
-	"scriptFile": "../dist/timer/index.js",
+	"scriptFile": "../dist/polling/index.js",
 	"bindings": [
 		{
-			"name": "khaosTimer",
+			"name": "khaosPolling",
 			"type": "timerTrigger",
 			"direction": "in",
 			"schedule": "0 */1 * * * *"
