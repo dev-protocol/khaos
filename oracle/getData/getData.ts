@@ -8,7 +8,7 @@ export type MarketQueryData = {
 
 export const getData = function (event: ethers.Event): MarketQueryData {
 	return {
-		publicSignature: event.args?.get('publicSignature'),
+		publicSignature: event.args?.['publicSignature'],
 		allData: event.args,
 	} as MarketQueryData
 }
