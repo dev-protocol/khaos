@@ -12,6 +12,7 @@ import { CosmosClient } from '@azure/cosmos'
 import { ethers } from 'ethers'
 import { importAddresses } from '../importAddresses/importAddresses'
 import { NetworkName } from '../../functions/addresses'
+import { tryCatch, always } from 'ramda'
 
 export type Results = {
 	readonly sent: boolean
@@ -34,7 +35,13 @@ export const idProcess = (network: NetworkName) => async (
 	).connect(provider)
 	const address = await addresses(network)
 	const marketBehavior = when(address, (adr) =>
-		when(abi, (intf) => new ethers.Contract(adr, intf, wallet))
+		when(
+			abi,
+			tryCatch(
+				(intf) => new ethers.Contract(adr, intf, wallet),
+				always(undefined)
+			)
+		)
 	)
 
 	const lastBlock = await getLastBlock(id)

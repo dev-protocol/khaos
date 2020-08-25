@@ -28,10 +28,28 @@ const dummyConstract = {
 }
 
 test('event information is coming back.', async (t) => {
-	const events = await getEvents(dummyConstract as any, 0, 100)
+	const events = await getEvents(dummyConstract as any, 0, 100).then(
+		(res) => (res as unknown) as readonly ethers.Event[]
+	)
 	t.is(events.length, 2)
 	t.is(events[0].blockNumber, 1)
 	t.is(events[0].blockHash, 'dummy-value1')
 	t.is(events[1].blockNumber, 2)
 	t.is(events[1].blockHash, 'dummy-value2')
+})
+
+test('Returns undefined when `Query` not found.', async (t) => {
+	const events = await getEvents(
+		{
+			filters: {
+				query: () => {
+					return {}
+				},
+			},
+			queryFilter: tmp,
+		} as any,
+		0,
+		100
+	)
+	t.is(events, undefined)
 })
