@@ -8,7 +8,7 @@ export const recoverPublicSignature = (
 ): PublicSignatureOptions | undefined =>
 	tryCatch<PublicSignatureOptions | undefined>(
 		(i: string, a: string) =>
-			(({ i: id, m: message, a: address }) => ({
+			(({ i: id, m: message }) => ({
 				id,
 				message,
 				address,
@@ -16,7 +16,6 @@ export const recoverPublicSignature = (
 				verify(i, a) as {
 					readonly i: string
 					readonly m: string
-					readonly a: string
 				}
 			),
 		always(undefined)

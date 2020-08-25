@@ -10,10 +10,7 @@ test('Returns signature from the passed message, address and sign method name', 
 	const message = 'A'
 	const id = 'C'
 	const address = 'B'
-	const expected = sign(
-		JSON.stringify({ i: id, m: message, a: address }),
-		address
-	)
+	const expected = sign(JSON.stringify({ i: id, m: message }), address)
 	const result = publicSignature({ message, id, address })
 	t.is(result, expected)
 })
@@ -22,10 +19,7 @@ test('Returns the same result when the same arguments', (t) => {
 	const message = random()
 	const id = random()
 	const address = random()
-	const expected = sign(
-		JSON.stringify({ i: id, m: message, a: address }),
-		address
-	)
+	const expected = sign(JSON.stringify({ i: id, m: message }), address)
 	const result1 = publicSignature({ message, id, address })
 	const result2 = publicSignature({ message, id, address })
 	const result3 = publicSignature({ message, id, address })
@@ -38,10 +32,7 @@ test('Returns the same result when the same arguments with different order', (t)
 	const message = random()
 	const id = random()
 	const address = random()
-	const expected = sign(
-		JSON.stringify({ i: id, m: message, a: address }),
-		address
-	)
+	const expected = sign(JSON.stringify({ i: id, m: message }), address)
 	const result1 = publicSignature({ address, id, message })
 	const result2 = publicSignature({ address, message, id })
 	const result3 = publicSignature({ id, address, message })
@@ -60,7 +51,7 @@ test('Returns the different result when the different arguments', (t) => {
 	const message = random()
 	const id = random()
 	const address = random()
-	const sig = sign(JSON.stringify({ i: id, m: message, a: address }), address)
+	const sig = sign(JSON.stringify({ i: id, m: message }), address)
 	const result1 = publicSignature({ message: `0${message}`, id, address })
 	const result2 = publicSignature({ message, id: `0${id}`, address })
 	const result3 = publicSignature({ message, id, address: `0${address}` })
@@ -75,7 +66,7 @@ test('A created signature can be verified by the account address', (t) => {
 	const address = random()
 	const pubSig = publicSignature({ message, id, address })
 	const verified = verify(pubSig, address)
-	const expected = { m: message, i: id, a: address }
+	const expected = { m: message, i: id }
 	t.like(verified, expected)
 })
 

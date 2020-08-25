@@ -9,5 +9,5 @@ export type PublicSignatureOptions = {
 export const publicSignature = ({
 	id: i,
 	message: m,
-	address: a,
-}: PublicSignatureOptions): string => sign(JSON.stringify({ i, m, a }), a)
+	address,
+}: PublicSignatureOptions): string => sign(JSON.stringify({ i, m }), address)
