@@ -5,10 +5,18 @@ import { writer } from './../common/db/secret'
 import { CosmosClient } from '@azure/cosmos'
 import { importAuthorizer } from './importAuthorizer/importAuthorizer'
 
+type Response = {
+	readonly status: number
+	readonly body: string | Record<string, unknown>
+	readonly headers?: {
+		readonly [key: string]: string
+	}
+}
+
 const sign: AzureFunction = async (
 	context: Context,
 	req: HttpRequest
-): Promise<void> => {
+): Promise<Response> => {
 	const { id = '' } = req.params
 	const { message = '', secret = '', signature = '' } = req.body
 	const fn = await importAuthorizer(id)
@@ -20,8 +28,7 @@ const sign: AzureFunction = async (
 		: undefined)
 	const status = auth && wrote?.statusCode === 200 ? 200 : auth ? 500 : 400
 
-	// eslint-disable-next-line functional/immutable-data, functional/no-expression-statement
-	context.res = {
+	return {
 		status,
 		body: {
 			address,
