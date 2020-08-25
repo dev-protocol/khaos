@@ -7,7 +7,7 @@ const gas = 7000000
 
 export const sendContractMethod = (marketBehavior: ethers.Contract) => async (
 	info: sendInfo
-): Promise<boolean> => {
+): Promise<ethers.Transaction> => {
 	const fastest = createFastestGasPriceFetcher(
 		ethgas(process.env.KHAOS_EGS_TOKEN!)
 	)
@@ -15,11 +15,10 @@ export const sendContractMethod = (marketBehavior: ethers.Contract) => async (
 		gasLimit: gas,
 		gasPrice: await fastest(),
 	}
-	const sent = marketBehavior.khaosCallback(
+	return marketBehavior.khaosCallback(
 		info.result!.message,
 		info.result!.status,
 		info.result!.statusMessage,
 		overrides
 	)
-	return sent instanceof Promise
 }

@@ -81,7 +81,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 					res.map((sent) => ({
 						address: x,
 						results: y,
-						sent,
+						sent: Boolean(sent),
 						state,
 					}))
 				)
