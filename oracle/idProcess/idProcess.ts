@@ -54,14 +54,16 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		)
 	)
 
-	const lastBlock = await getLastBlock(id)
-	const events = await when(currentBlockNumber, (block) =>
-		when(marketBehavior, (behavior) =>
-			getEvents(behavior, lastBlock + 1, block)
+	const lastBlock = await when(address, (adr) => getLastBlock(adr))
+	const events = await when(lastBlock, (last) =>
+		when(currentBlockNumber, (block) =>
+			when(marketBehavior, (behavior) => getEvents(behavior, last + 1, block))
 		)
 	)
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`block from:${lastBlock + 1} to ${currentBlockNumber}`)
+	context.log.info(
+		`block from:${(lastBlock || 0) + 1} to ${currentBlockNumber}`
+	)
 
 	const state = when(events, (x) => x.map(getData))
 	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))
