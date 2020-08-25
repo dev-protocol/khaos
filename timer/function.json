@@ -2,7 +2,7 @@
 	"scriptFile": "../dist/timer/index.js",
 	"bindings": [
 		{
-			"name": "myTimer",
+			"name": "khaosTimer",
 			"type": "timerTrigger",
 			"direction": "in",
 			"schedule": "0 */1 * * * *"
