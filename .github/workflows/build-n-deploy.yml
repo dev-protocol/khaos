@@ -67,7 +67,6 @@ jobs:
         id: fa
         with:
           app-name: khaos-eth-mainnet
-          publish-profile: ${{ secrets.AZ_KHAOS_ETH_MAINNET_PUBLISH_PROFILE }}
 
   deploy-eth-ropsten:
     needs: build
@@ -97,4 +96,3 @@ jobs:
         id: fa
         with:
           app-name: khaos-eth-ropsten
-          publish-profile: ${{ secrets.AZ_KHAOS_ETH_ROPSTEN_PUBLISH_PROFILE }}
