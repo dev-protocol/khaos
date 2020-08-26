@@ -21,7 +21,7 @@
 		"@azure/cosmos": "3.9.0",
 		"@azure/functions": "1.2.2",
 		"bent": "7.3.10",
-		"ethers": "5.0.8",
+		"ethers": "5.0.9",
 		"jsonwebtoken": "8.5.1",
 		"ramda": "0.27.1",
 		"web3": "1.2.11",

@@ -4,7 +4,6 @@ import { publicSignature as pubSig } from './publicSignature/publicSignature'
 import { writer } from './../common/db/secret'
 import { CosmosClient } from '@azure/cosmos'
 import { importAuthorizer } from './importAuthorizer/importAuthorizer'
-import { when } from '../common/util/when'
 
 type Response = {
 	readonly status: number
@@ -28,7 +27,7 @@ const sign: AzureFunction = async (
 		? writer(CosmosClient)({ id: publicSignature, secret, address })
 		: undefined)
 	const status =
-		auth && when(wrote?.statusCode, (status) => status > 199 && status < 300)
+		auth && [200, 201].includes(Number(wrote?.statusCode))
 			? 200
 			: auth
 			? 500
