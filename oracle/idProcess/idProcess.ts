@@ -78,7 +78,9 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	return when(address, (x) =>
 		when(results, (y) =>
 			when(marketBehavior, (z) =>
-				Promise.all(y.map(sendContractMethod(z))).then((res) =>
+				Promise.all(
+					y.map((i) => sendContractMethod(z)(i).catch(always(undefined)))
+				).then((res) =>
 					res.map((sent) => ({
 						address: x,
 						results: y,
