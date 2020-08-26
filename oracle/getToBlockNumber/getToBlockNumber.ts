@@ -9,5 +9,5 @@ export const getToBlockNumber = async (
 	)
 	return typeof currentBlockNumber === 'undefined'
 		? undefined
-		: currentBlockNumber - Number(process.env.APPROVAL)
+		: currentBlockNumber - Number(process.env.KHAOS_APPROVAL)
 }
