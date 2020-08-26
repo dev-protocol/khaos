@@ -1,6 +1,6 @@
 import { cond, isNil, always, T } from 'ramda'
 
-export const when = <D, F>(
+export const whenDefined = <D, F>(
 	depends: D,
 	fn: (d: NonNullable<D>) => F
 ): undefined | F =>

@@ -1,4 +1,4 @@
-import { when } from '../../common/util/when'
+import { whenDefined } from '../../common/util/whenDefined'
 import DiscordWebhook, { Webhook } from 'discord-webhook-ts'
 import { Results } from './../idProcess/idProcess'
 import { sendInfo } from '../executeOraclize/executeOraclize'
@@ -9,8 +9,10 @@ export const notification = async (
 ): Promise<
 	ReadonlyArray<ReturnType<DiscordWebhook['execute']> | undefined> | undefined
 > => {
-	const errors = when(results, (res) => res.filter((r) => r.sent === false))
-	return when(errors, (e) => Promise.all(e.map(sendMessage)))
+	const errors = whenDefined(results, (res) =>
+		res.filter((r) => r.sent === false)
+	)
+	return whenDefined(errors, (e) => Promise.all(e.map(sendMessage)))
 }
 
 const sendMessage = async function (
@@ -33,11 +35,11 @@ const sendMessage = async function (
 			},
 		],
 	}
-	const discordClient = when(
+	const discordClient = whenDefined(
 		process.env.KHAOS_DISCORD_NOTIFICATION_URL,
 		(discordUrl) => new DiscordWebhook(discordUrl)
 	)
-	return when(discordClient, (discord) =>
+	return whenDefined(discordClient, (discord) =>
 		discord.execute(requestBody).catch(always(undefined))
 	)
 }

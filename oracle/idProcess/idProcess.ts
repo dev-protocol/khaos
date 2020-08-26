@@ -8,7 +8,7 @@ import { getSecret } from '../getSecret/getSecret'
 import { getToBlockNumber } from '../getToBlockNumber/getToBlockNumber'
 import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
-import { when } from '../../common/util/when'
+import { whenDefined } from '../../common/util/whenDefined'
 import { writer, LastBlock } from '../db/last-block'
 import { CosmosClient } from '@azure/cosmos'
 import { ethers } from 'ethers'
@@ -27,21 +27,23 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
 	const addresses = await importAddresses(id)
-	const provider = when(process.env.KHAOS_INFURA_ID, (infura) =>
+	const provider = whenDefined(process.env.KHAOS_INFURA_ID, (infura) =>
 		ethers.getDefaultProvider(network, {
 			infura,
 		})
 	)
-	const toBlockNumber = await when(provider, (prov) => getToBlockNumber(prov))
+	const toBlockNumber = await whenDefined(provider, (prov) =>
+		getToBlockNumber(prov)
+	)
 	const abi = await importAbi(id)
-	const wallet = when(provider, (prov) =>
-		when(process.env.KHAOS_MNEMONIC, (mnemonic) =>
+	const wallet = whenDefined(provider, (prov) =>
+		whenDefined(process.env.KHAOS_MNEMONIC, (mnemonic) =>
 			ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
 		)
 	)
 	const address = await addresses(network)
-	const marketBehavior = await when(address, (adr) =>
-		when(
+	const marketBehavior = await whenDefined(address, (adr) =>
+		whenDefined(
 			abi,
 			tryCatch(
 				(intf) =>
@@ -53,31 +55,35 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		)
 	)
 
-	const fromBlock = await when(address, (adr) => getLastBlock(adr))
-	const events = await when(fromBlock, (from) =>
-		when(toBlockNumber, (to) =>
-			when(marketBehavior, (behavior) => getEvents(behavior, from + 1, to))
+	const fromBlock = await whenDefined(address, (adr) => getLastBlock(adr))
+	const events = await whenDefined(fromBlock, (from) =>
+		whenDefined(toBlockNumber, (to) =>
+			whenDefined(marketBehavior, (behavior) =>
+				getEvents(behavior, from + 1, to)
+			)
 		)
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`block from:${(fromBlock || 0) + 1} to ${toBlockNumber}`)
 
-	const state = when(events, (x) => x.map(getData))
-	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))
-	const results = await when(oracleArgList, (x) =>
+	const state = whenDefined(events, (x) => x.map(getData))
+	const oracleArgList = await whenDefined(state, (x) =>
+		Promise.all(x.map(getSecret))
+	)
+	const results = await whenDefined(oracleArgList, (x) =>
 		Promise.all(x.map(executeOraclize(id)))
 	)
-	const writerInfo: LastBlock | undefined = when(address, (adr) =>
-		when(toBlockNumber, (block) => ({
+	const writerInfo: LastBlock | undefined = whenDefined(address, (adr) =>
+		whenDefined(toBlockNumber, (block) => ({
 			id: adr,
 			lastBlock: block,
 		}))
 	)
 	// eslint-disable-next-line functional/no-expression-statement
-	await when(writerInfo, (data) => writer(CosmosClient)(data))
-	return when(address, (x) =>
-		when(results, (y) =>
-			when(marketBehavior, (z) =>
+	await whenDefined(writerInfo, (data) => writer(CosmosClient)(data))
+	return whenDefined(address, (x) =>
+		whenDefined(results, (y) =>
+			whenDefined(marketBehavior, (z) =>
 				Promise.all(
 					y.map((i) => sendContractMethod(z)(i).catch(always(undefined)))
 				).then((res) =>
