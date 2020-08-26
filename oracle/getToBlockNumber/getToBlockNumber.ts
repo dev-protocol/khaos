@@ -7,7 +7,9 @@ export const getToBlockNumber = async (
 	const currentBlockNumber = await when(provider, (prov) =>
 		prov.getBlockNumber()
 	)
-	return typeof currentBlockNumber === 'undefined'
-		? undefined
-		: currentBlockNumber - Number(process.env.KHAOS_APPROVAL)
+
+	return when(
+		currentBlockNumber,
+		(number) => number - Number(process.env.KHAOS_APPROVAL)
+	)
 }
