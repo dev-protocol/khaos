@@ -9,10 +9,7 @@ export const notification = async (
 ): Promise<
 	ReadonlyArray<ReturnType<DiscordWebhook['execute']> | undefined> | undefined
 > => {
-	const errors =
-		typeof results === 'undefined'
-			? []
-			: results.filter((result) => result.sent === false)
+	const errors = when(results, (res) => res.filter((r) => r.sent === false))
 	return when(errors, (e) => Promise.all(e.map(sendMessage)))
 }
 
