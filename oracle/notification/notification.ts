@@ -2,19 +2,23 @@ import { when } from '../../common/util/when'
 import DiscordWebhook, { Webhook } from 'discord-webhook-ts'
 import { Results } from './../idProcess/idProcess'
 import { sendInfo } from '../executeOraclize/executeOraclize'
+import { always } from 'ramda'
 
 export const notification = async (
 	results: readonly Results[] | undefined
-): Promise<void> => {
+): Promise<
+	ReadonlyArray<ReturnType<DiscordWebhook['execute']> | undefined> | undefined
+> => {
 	const errors =
 		typeof results === 'undefined'
 			? []
 			: results.filter((result) => result.sent === false)
-	// eslint-disable-next-line functional/no-expression-statement
-	await when(errors, (e) => Promise.all(e.map(sendMessage)))
+	return when(errors, (e) => Promise.all(e.map(sendMessage)))
 }
 
-const sendMessage = async function (result: Results): Promise<void> {
+const sendMessage = async function (
+	result: Results
+): Promise<ReturnType<DiscordWebhook['execute']> | undefined> {
 	const tmp = result.results.map(convertSendInfoToStr)
 	const requestBody: Webhook.input.POST = {
 		embeds: [
@@ -36,8 +40,9 @@ const sendMessage = async function (result: Results): Promise<void> {
 		process.env.KHAOS_DISCORD_NOTIFICATION_URL,
 		(discordUrl) => new DiscordWebhook(discordUrl)
 	)
-	// eslint-disable-next-line functional/no-expression-statement
-	await when(discordClient, (discord) => discord.execute(requestBody))
+	return when(discordClient, (discord) =>
+		discord.execute(requestBody).catch(always(undefined))
+	)
 }
 
 const convertSendInfoToStr = function (info: sendInfo): string {
