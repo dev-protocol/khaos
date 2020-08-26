@@ -3,20 +3,25 @@ import { executeOraclize } from './executeOraclize'
 import { publicSignature } from '../../sign/publicSignature/publicSignature'
 
 test('Execute the oraclize function if the khaos id exists.', async (t) => {
+	const sig = publicSignature({ id: 'A', message: 'B', address: 'D' })
 	const result = await executeOraclize('example')({
 		json: { i: 'example' },
 		secret: {
 			resource: {
-				id: publicSignature({ id: 'A', message: 'B', address: 'D' }),
+				id: sig,
 				address: 'D',
 			},
 		},
+		eventData: {
+			allData: [],
+			publicSignature: sig,
+		},
 	} as any)
 	t.is(result.khaosId, 'example')
-	t.is(result.result, {
-		message: 'data',
+	t.deepEqual(result.result, {
+		message: 'B',
 		status: 0,
-		statusMessage: 'With dummy-public-signature',
+		statusMessage: `With ${sig}`,
 	})
 })
 
