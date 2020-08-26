@@ -5,6 +5,7 @@ import { getLastBlock } from '../getLastBlock/getLastBlock'
 import { getEvents } from '../getEvents/getEvents'
 import { getData } from '../getData/getData'
 import { getSecret } from '../getSecret/getSecret'
+import { getToBlockNumber } from '../getToBlockNumber/getToBlockNumber'
 import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { when } from '../../common/util/when'
@@ -31,9 +32,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 			infura,
 		})
 	)
-	const currentBlockNumber = await when(provider, (prov) =>
-		prov.getBlockNumber()
-	)
+	const toBlockNumber = await when(provider, (prov) => getToBlockNumber(prov))
 	const abi = await importAbi(id)
 	const wallet = when(provider, (prov) =>
 		when(process.env.KHAOS_MNEMONIC, (mnemonic) =>
@@ -54,16 +53,14 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		)
 	)
 
-	const lastBlock = await when(address, (adr) => getLastBlock(adr))
-	const events = await when(lastBlock, (last) =>
-		when(currentBlockNumber, (block) =>
-			when(marketBehavior, (behavior) => getEvents(behavior, last + 1, block))
+	const fromBlock = await when(address, (adr) => getLastBlock(adr))
+	const events = await when(fromBlock, (from) =>
+		when(toBlockNumber, (to) =>
+			when(marketBehavior, (behavior) => getEvents(behavior, from + 1, to))
 		)
 	)
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(
-		`block from:${(lastBlock || 0) + 1} to ${currentBlockNumber}`
-	)
+	context.log.info(`block from:${(fromBlock || 0) + 1} to ${toBlockNumber}`)
 
 	const state = when(events, (x) => x.map(getData))
 	const oracleArgList = await when(state, (x) => Promise.all(x.map(getSecret)))
@@ -71,7 +68,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		Promise.all(x.map(executeOraclize(id)))
 	)
 	const writerInfo: LastBlock | undefined = when(address, (adr) =>
-		when(currentBlockNumber, (block) => ({
+		when(toBlockNumber, (block) => ({
 			id: adr,
 			lastBlock: block,
 		}))
