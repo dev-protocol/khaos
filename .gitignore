@@ -95,3 +95,6 @@ local.settings.json
 
 # use yarn as a package manager
 package-lock.json
+
+# Azurite
+__azurite*__.json
