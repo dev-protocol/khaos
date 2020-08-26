@@ -26,7 +26,12 @@ const sign: AzureFunction = async (
 	const wrote = await (auth && publicSignature && address
 		? writer(CosmosClient)({ id: publicSignature, secret, address })
 		: undefined)
-	const status = auth && wrote?.statusCode === 200 ? 200 : auth ? 500 : 400
+	const status =
+		auth && [200, 201].includes(Number(wrote?.statusCode))
+			? 200
+			: auth
+			? 500
+			: 400
 
 	return {
 		status,
