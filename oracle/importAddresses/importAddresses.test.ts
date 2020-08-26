@@ -12,6 +12,5 @@ test('Returns a function that exists in functions/addresses', async (t) => {
 test('Returns a function that always returns false when not exists in functions/addresses', async (t) => {
 	const result = await importAddresses('*30%Cj*')
 	const expected = always(undefined)
-	console.log()
 	t.is(result.toString(), expected.toString())
 })
