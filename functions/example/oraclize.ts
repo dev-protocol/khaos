@@ -1,8 +1,11 @@
-import { Oraclize, KhaosCallbackArg } from '../oraclize'
+import { Oraclize } from '../oraclize'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const fn: Oraclize = async (opts, eventData) => {
-	return {} as KhaosCallbackArg
+	return {
+		message: opts.message,
+		status: 0,
+		statusMessage: `With ${eventData.publicSignature}`,
+	}
 }
 
 export default fn
