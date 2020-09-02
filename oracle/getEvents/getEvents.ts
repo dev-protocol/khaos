@@ -14,14 +14,13 @@ export const getEvents = async (
 		marketBehavior.queryFilter(filt, firstBlock, lastBlock)
 	)
 	const validEvents = await whenDefined(queryEvents, (events) =>
-		events.filter((event) => isValid(event, khaosId))
+		filterAsync(events, isValid(khaosId))
 	)
 	return validEvents
 }
 
-const isValid = async (
-	event: ethers.Event,
-	khaosId: string
+const isValid = (khaosId: string) => async (
+	event: ethers.Event
 ): Promise<boolean> => {
 	const alreadyReceived = await isAlreadyReceived(CosmosClient)(
 		event.transactionHash,
@@ -29,4 +28,19 @@ const isValid = async (
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	return !alreadyReceived
+}
+
+function mapAsync<T, U>(
+	array: readonly T[],
+	callbackfn: (value: T, index: number, array: readonly T[]) => Promise<U>
+): Promise<readonly U[]> {
+	return Promise.all(array.map(callbackfn))
+}
+
+async function filterAsync<T>(
+	array: readonly T[],
+	callbackfn: (value: T, index: number, array: readonly T[]) => Promise<boolean>
+): Promise<readonly T[]> {
+	const filterMap = await mapAsync(array, callbackfn)
+	return array.filter((value, index) => filterMap[index])
 }

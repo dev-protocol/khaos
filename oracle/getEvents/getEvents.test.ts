@@ -63,19 +63,19 @@ test.serial(
 	}
 )
 
-// test.serial('Returns undefined when `Query` not found.', async (t) => {
-// 	const events = await getEvents(
-// 		{
-// 			filters: {
-// 				query: () => {
-// 					return {}
-// 				},
-// 			},
-// 			queryFilter: tmp,
-// 		} as any,
-// 		0,
-// 		100,
-// 		'example'
-// 	)
-// 	t.is(events, undefined)
-// })
+test.serial('Returns undefined when `Query` not found.', async (t) => {
+	const events = await getEvents(
+		{
+			filters: {
+				query: () => {
+					return {}
+				},
+			},
+			queryFilter: tmp,
+		} as any,
+		0,
+		100,
+		'example'
+	)
+	t.is(events, undefined)
+})
