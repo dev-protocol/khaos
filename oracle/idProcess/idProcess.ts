@@ -55,7 +55,9 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		)
 	)
 
-	const fromBlock = await whenDefined(address, (adr) => getLastBlock(adr))
+	const fromBlock = await whenDefined(address, (adr) =>
+		getLastBlock(adr).then((b) => (b > 0 ? b : (toBlockNumber || 80) - 80))
+	)
 	const events = await whenDefined(fromBlock, (from) =>
 		whenDefined(toBlockNumber, (to) =>
 			whenDefined(marketBehavior, (behavior) =>
