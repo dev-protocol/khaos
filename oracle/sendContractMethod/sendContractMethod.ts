@@ -3,7 +3,7 @@ import { sendInfo } from '../executeOraclize/executeOraclize'
 import { ethers } from 'ethers'
 import { createFastestGasPriceFetcher, ethgas } from './../gas/gas'
 
-const gas = process.env.KHAOS_GAS_LIMIT || 1000000
+const gas = Number(process.env.KHAOS_GAS_LIMIT || 1000000)
 
 export const sendContractMethod = (marketBehavior: ethers.Contract) => async (
 	info: sendInfo
