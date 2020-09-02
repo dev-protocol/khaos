@@ -4,6 +4,8 @@
 import test from 'ava'
 import { getEvents } from './getEvents'
 import { ethers } from 'ethers'
+import { stub } from 'sinon'
+import * as received from '../db/received-event'
 
 const tmp = async (): Promise<readonly ethers.Event[]> => {
 	return [
@@ -27,8 +29,12 @@ const dummyConstract = {
 	queryFilter: tmp,
 }
 
-test('event information is coming back.', async (t) => {
-	const events = await getEvents(dummyConstract as any, 0, 100).then(
+test.serial('event information is coming back.', async (t) => {
+	const stubbedReader = stub(
+		received,
+		'isAlreadyReceived'
+	).callsFake(() => async () => false)
+	const events = await getEvents(dummyConstract as any, 0, 100, 'example').then(
 		(res) => (res as unknown) as readonly ethers.Event[]
 	)
 	t.is(events.length, 2)
@@ -36,20 +42,40 @@ test('event information is coming back.', async (t) => {
 	t.is(events[0].blockHash, 'dummy-value1')
 	t.is(events[1].blockNumber, 2)
 	t.is(events[1].blockHash, 'dummy-value2')
+	stubbedReader.restore()
 })
 
-test('Returns undefined when `Query` not found.', async (t) => {
-	const events = await getEvents(
-		{
-			filters: {
-				query: () => {
-					return {}
-				},
-			},
-			queryFilter: tmp,
-		} as any,
-		0,
-		100
-	)
-	t.is(events, undefined)
-})
+test.serial(
+	'already received event information is not coming back.',
+	async (t) => {
+		const stubbedReader = stub(
+			received,
+			'isAlreadyReceived'
+		).callsFake(() => async () => true)
+		const events = await getEvents(
+			dummyConstract as any,
+			0,
+			100,
+			'example'
+		).then((res) => (res as unknown) as readonly ethers.Event[])
+		t.is(events.length, 0)
+		stubbedReader.restore()
+	}
+)
+
+// test.serial('Returns undefined when `Query` not found.', async (t) => {
+// 	const events = await getEvents(
+// 		{
+// 			filters: {
+// 				query: () => {
+// 					return {}
+// 				},
+// 			},
+// 			queryFilter: tmp,
+// 		} as any,
+// 		0,
+// 		100,
+// 		'example'
+// 	)
+// 	t.is(events, undefined)
+// })

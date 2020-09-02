@@ -13,8 +13,7 @@ test('return undefined if provider is undefined.', async (t) => {
 	t.is(typeof result, 'undefined')
 })
 
-test('The current block number minus the number of approvals set is returned.', async (t) => {
-	process.env.KHAOS_APPROVAL = '4'
+test('The current block number is returned.', async (t) => {
 	const result = await getToBlockNumber(dummyProvider as any)
-	t.is(result, 96)
+	t.is(result, 100)
 })

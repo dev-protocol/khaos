@@ -1,5 +1,5 @@
 import { PublicSignatureOptions } from '../sign/publicSignature/publicSignature'
-import { MarketQueryData } from '../oracle/getData/getData'
+import { MarketQueryData } from '../common/structs'
 
 export type KhaosCallbackArg = {
 	readonly message: string
