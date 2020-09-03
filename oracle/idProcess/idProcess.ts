@@ -13,7 +13,7 @@ import { ethers } from 'ethers'
 import { importAddresses } from '../importAddresses/importAddresses'
 import { NetworkName } from '../../functions/addresses'
 import { tryCatch, always } from 'ramda'
-import { saveReceivedEventHashes } from '../saveReceivedEventHashes/saveReceivedEventHashes'
+import { saveReceivedEventHashe } from '../saveReceivedEventHashe/saveReceivedEventHashe'
 
 export type Results = {
 	readonly sent: boolean
@@ -71,7 +71,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	await whenDefined(state, (x) =>
-		Promise.all(x.map(saveReceivedEventHashes(id)))
+		Promise.all(x.map(saveReceivedEventHashe(id)))
 	)
 	const results = await whenDefined(oracleArgList, (x) =>
 		Promise.all(x.map(executeOraclize(id)))

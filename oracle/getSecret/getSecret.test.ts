@@ -16,7 +16,7 @@ test.serial(
 		const data: MarketQueryData = {
 			allData: { repo: 'hugahuga/hogihogi' } as any,
 			publicSignature: 'hogehoge',
-			transactionhash: 'dummy-transaction-hash', // TODO test
+			transactionhash: 'dummy-transaction-hash',
 		}
 		const result = await getSecret(data)
 		t.is(result.secret.statusCode, 200)
@@ -37,7 +37,7 @@ test.serial(
 		const data: MarketQueryData = {
 			allData: { repo: 'hugahuga/hogihogi' } as any,
 			publicSignature: 'hogehoge',
-			transactionhash: 'dummy-transaction-hash', // TODO test
+			transactionhash: 'dummy-transaction-hash',
 		}
 		const result = await getSecret(data)
 		t.is(result.secret.statusCode, 200)

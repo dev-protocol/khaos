@@ -3,10 +3,10 @@ import {
 	writer,
 	ReceivedEvent,
 	ReceivedEventWithPartition,
-} from './../db/received-event'
+} from '../db/received-event'
 import { CosmosClient, ItemResponse } from '@azure/cosmos'
 
-export const saveReceivedEventHashes = (khaosId: string) => async (
+export const saveReceivedEventHashe = (khaosId: string) => async (
 	data: MarketQueryData
 ): Promise<ItemResponse<ReceivedEventWithPartition>> => {
 	const insertData: ReceivedEvent = {
