@@ -54,7 +54,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		)
 	)
 
-	const fromBlock = await whenDefined(toBlockNumber, (to) => getFromBlock(to))
+	const fromBlock = getFromBlock(toBlockNumber)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`block from:${fromBlock || 0} to ${toBlockNumber || 0}`)
 	const events = await whenDefined(fromBlock, (from) =>

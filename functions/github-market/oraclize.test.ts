@@ -12,7 +12,7 @@ test('If message and githubRepository are the same, it is treated as success.', 
 	const arg2: MarketQueryData = {
 		publicSignature: 'dummy-publicSignature',
 		allData: { githubRepository: 'user/repository', account: '0x1234' } as any,
-		transactionhash: 'dummy-transaction-hash', // TODO test
+		transactionhash: 'dummy-transaction-hash',
 	}
 	const res = await oraclize(arg1, arg2)
 	t.is(res.message, 'user/repository')
@@ -29,7 +29,7 @@ test('If message and githubRepository are not the same, it is treated as fail.',
 	const arg2: MarketQueryData = {
 		publicSignature: 'dummy-publicSignature',
 		allData: { githubRepository: 'hoge/hura' } as any,
-		transactionhash: 'dummy-transaction-hash', // TODO test
+		transactionhash: 'dummy-transaction-hash',
 	}
 	const res = await oraclize(arg1, arg2)
 	t.is(res.message, 'user/repository')

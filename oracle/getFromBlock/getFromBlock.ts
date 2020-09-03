@@ -1,10 +1,9 @@
 import { whenDefined } from '../../common/util/whenDefined'
 
-export const getFromBlock = async (
+export const getFromBlock = (
 	toBlockNumber: number | undefined
-): Promise<number | undefined> => {
-	const fromBlockNumber = whenDefined(toBlockNumber, (to) =>
-		whenDefined(process.env.KHAOS_BLOCK_RANGE, (range) => to - Number(range))
-	)
+): number | undefined => {
+	const range = Number(process.env.KHAOS_BLOCK_RANGE || 80)
+	const fromBlockNumber = whenDefined(toBlockNumber, (to) => to - Number(range))
 	return fromBlockNumber
 }
