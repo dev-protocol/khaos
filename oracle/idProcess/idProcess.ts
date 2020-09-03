@@ -64,7 +64,8 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 			)
 		)
 	)
-
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`event count:${events?.length}`)
 	const state = whenDefined(events, (x) => x.map(getData))
 	const oracleArgList = await whenDefined(state, (x) =>
 		Promise.all(x.map(getSecret))
