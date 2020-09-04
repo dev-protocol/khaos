@@ -26,7 +26,6 @@ const isValid = (khaosId: string) => async (
 		event.transactionHash,
 		khaosId
 	)
-	// eslint-disable-next-line functional/no-expression-statement
 	return !alreadyReceived
 }
 
