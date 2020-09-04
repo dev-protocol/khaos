@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Context } from '@azure/functions'
 import { importAbi } from '../importAbi/importAbi'
-import { getLastBlock } from '../getLastBlock/getLastBlock'
+import { getFromBlock } from '../getFromBlock/getFromBlock'
 import { getEvents } from '../getEvents/getEvents'
 import { getData } from '../getData/getData'
 import { getSecret } from '../getSecret/getSecret'
@@ -9,12 +9,11 @@ import { getToBlockNumber } from '../getToBlockNumber/getToBlockNumber'
 import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { whenDefined } from '../../common/util/whenDefined'
-import { writer, LastBlock } from '../db/last-block'
-import { CosmosClient } from '@azure/cosmos'
 import { ethers } from 'ethers'
 import { importAddresses } from '../importAddresses/importAddresses'
 import { NetworkName } from '../../functions/addresses'
 import { tryCatch, always } from 'ramda'
+import { saveReceivedEventHashe } from '../saveReceivedEventHashe/saveReceivedEventHashe'
 
 export type Results = {
 	readonly sent: boolean
@@ -55,34 +54,29 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		)
 	)
 
-	const fromBlock = await whenDefined(address, (adr) =>
-		getLastBlock(adr).then((b) => (b > 0 ? b : (toBlockNumber || 80) - 80))
-	)
+	const fromBlock = getFromBlock(toBlockNumber)
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`block from:${fromBlock || 0} to ${toBlockNumber || 0}`)
 	const events = await whenDefined(fromBlock, (from) =>
 		whenDefined(toBlockNumber, (to) =>
 			whenDefined(marketBehavior, (behavior) =>
-				getEvents(behavior, from + 1, to)
+				getEvents(behavior, from, to, id)
 			)
 		)
 	)
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`block from:${(fromBlock || 0) + 1} to ${toBlockNumber}`)
-
+	context.log.info(`event count:${events?.length}`)
 	const state = whenDefined(events, (x) => x.map(getData))
 	const oracleArgList = await whenDefined(state, (x) =>
 		Promise.all(x.map(getSecret))
 	)
+	// eslint-disable-next-line functional/no-expression-statement
+	await whenDefined(state, (x) =>
+		Promise.all(x.map(saveReceivedEventHashe(id)))
+	)
 	const results = await whenDefined(oracleArgList, (x) =>
 		Promise.all(x.map(executeOraclize(id)))
 	)
-	const writerInfo: LastBlock | undefined = whenDefined(address, (adr) =>
-		whenDefined(toBlockNumber, (block) => ({
-			id: adr,
-			lastBlock: block,
-		}))
-	)
-	// eslint-disable-next-line functional/no-expression-statement
-	await whenDefined(writerInfo, (data) => writer(CosmosClient)(data))
 	return whenDefined(address, (x) =>
 		whenDefined(results, (y) =>
 			whenDefined(marketBehavior, (z) =>

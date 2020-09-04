@@ -2,7 +2,7 @@ import test from 'ava'
 import { stub } from 'sinon'
 import * as secret from '../../common/db/secret'
 import { getSecret } from './getSecret'
-import { MarketQueryData } from './../getData/getData'
+import { MarketQueryData } from './../../common/structs'
 
 test.serial(
 	'If the record exists, it returns with the argument json object.',
@@ -16,6 +16,7 @@ test.serial(
 		const data: MarketQueryData = {
 			allData: { repo: 'hugahuga/hogihogi' } as any,
 			publicSignature: 'hogehoge',
+			transactionhash: 'dummy-transaction-hash',
 		}
 		const result = await getSecret(data)
 		t.is(result.secret.statusCode, 200)
@@ -36,6 +37,7 @@ test.serial(
 		const data: MarketQueryData = {
 			allData: { repo: 'hugahuga/hogihogi' } as any,
 			publicSignature: 'hogehoge',
+			transactionhash: 'dummy-transaction-hash',
 		}
 		const result = await getSecret(data)
 		t.is(result.secret.statusCode, 200)

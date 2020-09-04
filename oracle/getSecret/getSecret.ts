@@ -1,6 +1,6 @@
 import { CosmosClient, ItemResponse } from '@azure/cosmos'
 import { reader, Secret } from './../../common/db/secret'
-import { MarketQueryData } from './../getData/getData'
+import { MarketQueryData } from './../../common/structs'
 
 export type oracleArgInfo = {
 	readonly secret: ItemResponse<Secret>
