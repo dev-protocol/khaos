@@ -2320,10 +2320,10 @@ ethereumjs-util@^6.0.0:
     rlp "^2.2.3"
     secp256k1 "^3.0.1"
 
-ethers@5.0.11:
-  version "5.0.11"
-  resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.0.11.tgz#af1175f0bb82fe6feef77b49db3cd7fd91034b56"
-  integrity sha512-cYUxf0IvGkJtvRaSOlmjoA07pqREN3bFw4yKJHmO3UhJAfDQlk4hQyyjHnROaNKB7YYBFFsE6FmDmOx057KQTA==
+ethers@5.0.12:
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.0.12.tgz#8986cf53a425d1a00af6bda886e9098b0448d1fb"
+  integrity sha512-mgF1ZLd1y5r+hS1IPATKwKx5k/PCSqz4PEQjMR+er+Hhu6IefVVcoYATUMjmK4FG+3PAkorRMA9rJ4Y/fdW0UA==
   dependencies:
     "@ethersproject/abi" "^5.0.3"
     "@ethersproject/abstract-provider" "^5.0.3"
