@@ -1369,10 +1369,10 @@ bech32@1.1.4:
   resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.4.tgz#e38c9f37bf179b8eb16ae3a772b40c356d4832e9"
   integrity sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==
 
-bent@7.3.11:
-  version "7.3.11"
-  resolved "https://registry.yarnpkg.com/bent/-/bent-7.3.11.tgz#69043a6f5a875441172119ffbaa84d4b12e12479"
-  integrity sha512-rR4cxkBWlfcMwfj8skEMYVyScRpufIpII9sZwImmZQLPq8v8sVaxYDrdzqIPUgSRVCp32BtY0/sI6HMmj3CB4A==
+bent@7.3.12:
+  version "7.3.12"
+  resolved "https://registry.yarnpkg.com/bent/-/bent-7.3.12.tgz#e0a2775d4425e7674c64b78b242af4f49da6b035"
+  integrity sha512-T3yrKnVGB63zRuoco/7Ybl7BwwGZR0lceoVG5XmQyMIH9s19SV5m+a8qam4if0zQuAmOQTyPTPmsQBdAorGK3w==
   dependencies:
     bytesish "^0.4.1"
     caseless "~0.12.0"
