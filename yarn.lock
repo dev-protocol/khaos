@@ -868,10 +868,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@types/bent@7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@types/bent/-/bent-7.3.0.tgz#c3a99e790eceba77e0b87423eef35f0b034678a5"
-  integrity sha512-EitzswEqzdUc1Yqnyuqd90aLQCgHeTCwd7GMoL56saxpNt5Mi6v8Sr4BrlKd0NYRwdwcayQqb2QuKjGYM7GegQ==
+"@types/bent@7.3.1":
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@types/bent/-/bent-7.3.1.tgz#e59e9144058da1843c00b8fcc3c5b3ed7bfab9e6"
+  integrity sha512-76ieb6NdaxXAURJwTXaFYovU7lXB2cO03vMMCDlfTb12Uw7jgEBdAABBMvsm/SIB6LavDofvFXYDhiU/qAySDg==
   dependencies:
     "@types/node" "*"
 
