@@ -3,13 +3,14 @@ import { importOraclize } from '../importOraclize/importOraclize'
 import { recoverPublicSignature } from '../../sign/publicSignature/recoverPublicSignature'
 import { KhaosCallbackArg } from '../../functions/oraclize'
 import { whenDefined } from '../../common/util/whenDefined'
+import { NetworkName } from '../../common/types'
 
 export type sendInfo = {
 	readonly khaosId: string
 	readonly result?: KhaosCallbackArg
 }
 
-export const executeOraclize = (id: string) => async (
+export const executeOraclize = (id: string, network: NetworkName) => async (
 	info: oracleArgInfo
 ): Promise<sendInfo> => {
 	const oraclize = await importOraclize(id)
@@ -17,7 +18,7 @@ export const executeOraclize = (id: string) => async (
 		recoverPublicSignature(id, address)
 	)
 	const callBack = await whenDefined(recoverd, (r) =>
-		oraclize(r, info.eventData)
+		oraclize(r, info.eventData, network)
 	)
 	return {
 		khaosId: id,

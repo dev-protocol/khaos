@@ -1,10 +1,10 @@
 import { Oraclize } from '../oraclize'
 
-const fn: Oraclize = async (opts, eventData) => {
+const fn: Oraclize = async (opts, eventData, net) => {
 	return {
 		message: opts.message,
 		status: 0,
-		statusMessage: `With ${eventData.publicSignature}`,
+		statusMessage: `${net} ${eventData.publicSignature}`,
 	}
 }
 
