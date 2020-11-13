@@ -4,11 +4,11 @@ const fn: Oraclize = async (opts, queryData, net) => {
 	const incubatorAddress =
 		net === 'mainnet' ? 'incubator address' : 'ropsten incubator address'
 
-	const test1 = queryData.allData['githubRepository'] == opts.message
+	const test1 = queryData.allData['githubRepository'] === opts.message
 	const test2 =
-		queryData.allData['account'] == incubatorAddress
+		queryData.allData['account'] === incubatorAddress
 			? true
-			: queryData.allData['account'] == opts.address
+			: queryData.allData['account'] === opts.address
 
 	return test1 && test2
 		? ({
