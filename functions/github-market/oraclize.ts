@@ -2,7 +2,9 @@ import { Oraclize, KhaosCallbackArg } from '../oraclize'
 
 const fn: Oraclize = async (opts, queryData, net) => {
 	const incubatorAddress =
-		net === 'mainnet' ? 'incubator address' : 'ropsten incubator address'
+		net === 'mainnet'
+			? '0x0000000000000000000000000000000000000000'
+			: '0xCBffAD9738B627Fb9eE3fef691518AAdB98Bc86f'
 
 	const test1 = queryData.allData['githubRepository'] === opts.message
 	const test2 =

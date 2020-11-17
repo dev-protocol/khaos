@@ -11,3 +11,5 @@ const _verify = (
 export type JWTVerifyWithoutCallback = typeof _verify
 
 export type NetworkName = 'mainnet' | 'ropsten'
+
+export type UndefinedOr<R> = undefined | R

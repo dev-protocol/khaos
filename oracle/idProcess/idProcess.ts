@@ -14,6 +14,7 @@ import { importAddresses } from '../importAddresses/importAddresses'
 import { NetworkName } from '../../common/types'
 import { tryCatch, always } from 'ramda'
 import { saveReceivedEventHashe } from '../saveReceivedEventHashe/saveReceivedEventHashe'
+import { whenDefinedAll } from '../../common/util/whenDefinedAll'
 
 export type Results = {
 	readonly sent: boolean
@@ -35,34 +36,27 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		getToBlockNumber(prov)
 	)
 	const abi = await importAbi(id)
-	const wallet = whenDefined(provider, (prov) =>
-		whenDefined(process.env.KHAOS_MNEMONIC, (mnemonic) =>
-			ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
-		)
+	const wallet = whenDefinedAll(
+		[provider, process.env.KHAOS_MNEMONIC],
+		([prov, mnemonic]) => ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
 	)
 	const address = await addresses(network)
-	const marketBehavior = await whenDefined(address, (adr) =>
-		whenDefined(
-			abi,
-			tryCatch(
-				(intf) =>
-					((c) => c.resolvedAddress.then(always(c)).catch(always(undefined)))(
-						new ethers.Contract(adr, intf, wallet)
-					),
-				always(undefined)
-			)
-		)
+	const marketBehavior = await whenDefinedAll([address, abi], ([adr, i]) =>
+		tryCatch(
+			(intf) =>
+				((c) => c.resolvedAddress.then(always(c)).catch(always(undefined)))(
+					new ethers.Contract(adr, intf, wallet)
+				),
+			always(undefined)
+		)(i)
 	)
 
 	const fromBlock = getFromBlock(toBlockNumber)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`block from:${fromBlock || 0} to ${toBlockNumber || 0}`)
-	const events = await whenDefined(fromBlock, (from) =>
-		whenDefined(toBlockNumber, (to) =>
-			whenDefined(marketBehavior, (behavior) =>
-				getEvents(behavior, from, to, id)
-			)
-		)
+	const events = await whenDefinedAll(
+		[fromBlock, toBlockNumber, marketBehavior],
+		([from, to, behavior]) => getEvents(behavior, from, to, id)
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`event count:${events?.length}`)
@@ -77,20 +71,16 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	const results = await whenDefined(oracleArgList, (x) =>
 		Promise.all(x.map(executeOraclize(id, network)))
 	)
-	return whenDefined(address, (x) =>
-		whenDefined(results, (y) =>
-			whenDefined(marketBehavior, (z) =>
-				Promise.all(
-					y.map((i) => sendContractMethod(z)(i).catch(always(undefined)))
-				).then((res) =>
-					res.map((sent) => ({
-						address: x,
-						results: y,
-						sent: Boolean(sent),
-						state,
-					}))
-				)
-			)
+	return whenDefinedAll([address, results, marketBehavior], ([x, y, z]) =>
+		Promise.all(
+			y.map((i) => sendContractMethod(z)(i).catch(always(undefined)))
+		).then((res) =>
+			res.map((sent) => ({
+				address: x,
+				results: y,
+				sent: Boolean(sent),
+				state,
+			}))
 		)
 	)
 }
