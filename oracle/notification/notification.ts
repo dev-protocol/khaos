@@ -1,4 +1,4 @@
-import { whenDefined } from '../../common/util/whenDefined'
+import { whenDefined } from '@devprtcl/util-ts'
 import DiscordWebhook, { Webhook } from 'discord-webhook-ts'
 import { Results } from './../idProcess/idProcess'
 import { sendInfo } from '../executeOraclize/executeOraclize'
