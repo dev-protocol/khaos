@@ -9,5 +9,3 @@ const _verify = (
 ) => verify(token, secretOrPublicKey, options)
 
 export type JWTVerifyWithoutCallback = typeof _verify
-
-export type UndefinedOr<R> = undefined | R

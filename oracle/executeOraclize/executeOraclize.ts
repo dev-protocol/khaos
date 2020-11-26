@@ -2,7 +2,7 @@ import { oracleArgInfo } from './../getSecret/getSecret'
 import { importOraclize } from '../importOraclize/importOraclize'
 import { recoverPublicSignature } from '../../sign/publicSignature/recoverPublicSignature'
 import { KhaosCallbackArg } from '../../functions/oraclize'
-import { whenDefined } from '../../common/util/whenDefined'
+import { whenDefined } from '@devprtcl/util-ts'
 
 export type sendInfo = {
 	readonly khaosId: string
