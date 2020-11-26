@@ -1,4 +1,4 @@
-import { whenDefined } from '../../common/util/whenDefined'
+import { whenDefined } from '@devprtcl/util-ts'
 
 export const getFromBlock = (
 	toBlockNumber: number | undefined
