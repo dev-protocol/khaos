@@ -13,7 +13,7 @@
 		"start": "func start",
 		"lint": "yarn lint:eslint && yarn lint:format",
 		"lint:eslint": "eslint . --ext .ts,.js --fix",
-		"lint:format": "prettier --write '**/*.{js,json,md,yml}'"
+		"lint:format": "prettier --write '**/*.{ts,js,json,md,yml}'"
 	},
 	"author": "",
 	"license": "MPL-2.0",
@@ -43,7 +43,6 @@
 		"eslint": "7.14.0",
 		"eslint-config-prettier": "6.15.0",
 		"eslint-plugin-functional": "3.1.0",
-		"eslint-plugin-prettier": "3.1.4",
 		"husky": "4.3.0",
 		"prettier": "2.2.0",
 		"rimraf": "3.0.2",
