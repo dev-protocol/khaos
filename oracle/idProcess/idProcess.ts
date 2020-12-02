@@ -11,7 +11,7 @@ import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { whenDefined } from '@devprtcl/util-ts'
 import { ethers } from 'ethers'
 import { importAddresses } from '../importAddresses/importAddresses'
-import { NetworkName } from '../../functions/addresses'
+import { NetworkName } from '../../common/types'
 import { tryCatch, always } from 'ramda'
 import { saveReceivedEventHashe } from '../saveReceivedEventHashe/saveReceivedEventHashe'
 import { whenDefinedAll } from '@devprtcl/util-ts'
@@ -69,7 +69,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		Promise.all(x.map(saveReceivedEventHashe(id)))
 	)
 	const results = await whenDefined(oracleArgList, (x) =>
-		Promise.all(x.map(executeOraclize(id)))
+		Promise.all(x.map(executeOraclize(id, network)))
 	)
 	return whenDefinedAll([address, results, marketBehavior], ([x, y, z]) =>
 		Promise.all(

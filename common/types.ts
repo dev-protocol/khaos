@@ -9,3 +9,5 @@ const _verify = (
 ) => verify(token, secretOrPublicKey, options)
 
 export type JWTVerifyWithoutCallback = typeof _verify
+
+export type NetworkName = 'mainnet' | 'ropsten'

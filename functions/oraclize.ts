@@ -1,5 +1,6 @@
 import { PublicSignatureOptions } from '../sign/publicSignature/publicSignature'
 import { MarketQueryData } from '../common/structs'
+import { NetworkName } from '../common/types'
 
 export type KhaosCallbackArg = {
 	readonly message: string
@@ -9,5 +10,6 @@ export type KhaosCallbackArg = {
 
 export type Oraclize = (
 	signedOptions: PublicSignatureOptions,
-	queryData: MarketQueryData
+	queryData: MarketQueryData,
+	net: NetworkName
 ) => Promise<KhaosCallbackArg>
