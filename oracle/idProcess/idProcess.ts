@@ -8,13 +8,13 @@ import { getSecret } from '../getSecret/getSecret'
 import { getToBlockNumber } from '../getToBlockNumber/getToBlockNumber'
 import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
-import { whenDefined } from '@devprtcl/util-ts'
+import { whenDefined } from '@devprotocol/util-ts'
 import { ethers } from 'ethers'
 import { importAddresses } from '../importAddresses/importAddresses'
 import { NetworkName } from '../../common/types'
 import { tryCatch, always } from 'ramda'
 import { saveReceivedEventHashe } from '../saveReceivedEventHashe/saveReceivedEventHashe'
-import { whenDefinedAll } from '@devprtcl/util-ts'
+import { whenDefinedAll } from '@devprotocol/util-ts'
 
 export type Results = {
 	readonly sent: boolean
