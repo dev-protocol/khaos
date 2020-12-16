@@ -1,5 +1,5 @@
 import test from 'ava'
-import authorizer from './authorizer'
+import authorizer from './authorize'
 
 test('Returns true if the passed message and secret are string type', async (t) => {
 	const res = await authorizer({

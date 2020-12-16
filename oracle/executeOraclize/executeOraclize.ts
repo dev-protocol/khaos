@@ -1,7 +1,7 @@
 import { oracleArgInfo } from './../getSecret/getSecret'
 import { importOraclize } from '../importOraclize/importOraclize'
 import { recoverPublicSignature } from '@devprotocol/khaos-core/sign/recoverPublicSignature/recoverPublicSignature'
-import { KhaosCallbackArg } from '../../functions/oraclize'
+import { KhaosCallbackArg } from '../../functions/oraclizer'
 import { whenDefined } from '@devprotocol/util-ts'
 import { NetworkName } from '../../common/types'
 

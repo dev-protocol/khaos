@@ -1,9 +1,9 @@
 import { always } from 'ramda'
-import { Oraclize } from '../../functions/oraclize'
+import { Oraclizer } from '../../functions/oraclizer'
 
 export const importOraclize = async (
 	id: string
-): Promise<Oraclize | (() => undefined)> =>
+): Promise<Oraclizer | (() => undefined)> =>
 	import(`../../functions/${id}/oraclize`)
-		.then((e: { readonly default: Oraclize }) => e.default)
+		.then((e: { readonly default: Oraclizer }) => e.default)
 		.catch(always(always(undefined)))

@@ -1,6 +1,6 @@
-import { Oraclize } from '../oraclize'
+import { Oraclizer } from '../oraclizer'
 
-const fn: Oraclize = async (opts, eventData, net) => {
+const fn: Oraclizer = async (opts, eventData, net) => {
 	return {
 		message: opts.message,
 		status: 0,

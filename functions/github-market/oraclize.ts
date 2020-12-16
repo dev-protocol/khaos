@@ -1,6 +1,6 @@
-import { Oraclize, KhaosCallbackArg } from '../oraclize'
+import { Oraclizer, KhaosCallbackArg } from '../oraclizer'
 
-const fn: Oraclize = async (opts, queryData, net) => {
+const fn: Oraclizer = async (opts, queryData, net) => {
 	const incubatorAddress =
 		net === 'mainnet'
 			? '0x0000000000000000000000000000000000000000'
