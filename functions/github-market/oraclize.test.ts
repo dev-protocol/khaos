@@ -1,6 +1,6 @@
 import test from 'ava'
 import oraclize from './oraclize'
-import { PublicSignatureOptions } from './../../sign/publicSignature/publicSignature'
+import { PublicSignatureOptions } from '@devprotocol/khaos-core/types'
 import { MarketQueryData } from './../../common/structs'
 
 test('If message and githubRepository are the same, it is treated as success.', async (t) => {

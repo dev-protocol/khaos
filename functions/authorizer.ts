@@ -1,7 +1,3 @@
-import { HttpRequest } from '@azure/functions'
+import { FunctionAuthorizer } from '@devprotocol/khaos-core/types'
 
-export type Authorizer = (props: {
-	readonly message: string
-	readonly secret: string
-	readonly req: HttpRequest
-}) => Promise<boolean>
+export type Authorizer = FunctionAuthorizer

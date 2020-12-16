@@ -1,6 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import { recover } from './recover/recover'
-import { publicSignature as pubSig } from './publicSignature/publicSignature'
+import { publicSignature as pubSig } from '@devprotocol/khaos-core/sign/publicSignature/publicSignature'
 import { writer } from './../common/db/secret'
 import { CosmosClient } from '@azure/cosmos'
 import { importAuthorizer } from './importAuthorizer/importAuthorizer'
