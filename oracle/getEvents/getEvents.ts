@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-import { whenDefined } from '@devprtcl/util-ts'
+import { whenDefined } from '@devprotocol/util-ts'
 import { isAlreadyReceived } from './../db/received-event'
 import { CosmosClient } from '@azure/cosmos'
 

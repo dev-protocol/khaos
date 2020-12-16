@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-import { whenDefined } from '@devprtcl/util-ts'
+import { whenDefined } from '@devprotocol/util-ts'
 
 export const getToBlockNumber = async (
 	provider: ethers.providers.BaseProvider
