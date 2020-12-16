@@ -1,6 +1,6 @@
 import test from 'ava'
 import { executeOraclize } from './executeOraclize'
-import { publicSignature } from '../../sign/publicSignature/publicSignature'
+import { publicSignature } from '@devprotocol/khaos-core/sign/publicSignature/publicSignature'
 
 test('Execute the oraclize function if the khaos id exists.', async (t) => {
 	const sig = publicSignature({ id: 'A', message: 'B', address: 'D' })

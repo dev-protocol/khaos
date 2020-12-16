@@ -20,6 +20,7 @@
 	"dependencies": {
 		"@azure/cosmos": "3.9.3",
 		"@azure/functions": "1.2.2",
+		"@devprotocol/khaos-core": "^0.1.0",
 		"@devprotocol/util-ts": "1.4.0",
 		"bent": "7.3.12",
 		"discord-webhook-ts": "3.0.3",

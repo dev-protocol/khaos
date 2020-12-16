@@ -1,3 +1,1 @@
-import { ContractInterface } from 'ethers'
-
-export type Abi = ContractInterface
+export { Abi } from '@devprotocol/khaos-core/types'

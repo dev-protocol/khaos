@@ -1,15 +1,8 @@
-import { PublicSignatureOptions } from '../sign/publicSignature/publicSignature'
-import { MarketQueryData } from '../common/structs'
-import { NetworkName } from '../common/types'
+import {
+	FunctionOraclize,
+	FunctionOraclizeResults,
+} from '@devprotocol/khaos-core/types'
 
-export type KhaosCallbackArg = {
-	readonly message: string
-	readonly status: number
-	readonly statusMessage: string
-}
+export type KhaosCallbackArg = FunctionOraclizeResults
 
-export type Oraclize = (
-	signedOptions: PublicSignatureOptions,
-	queryData: MarketQueryData,
-	net: NetworkName
-) => Promise<KhaosCallbackArg>
+export type Oraclize = FunctionOraclize

@@ -1,3 +1,3 @@
-import { NetworkName } from '../common/types'
+import { FunctionAddresses } from '@devprotocol/khaos-core/types'
 
-export type Addresses = (net: NetworkName) => Promise<string>
+export type Addresses = FunctionAddresses
