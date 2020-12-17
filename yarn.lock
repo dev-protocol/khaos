@@ -59,13 +59,14 @@
   dependencies:
     arrify "^1.0.1"
 
-"@devprotocol/khaos-core@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-0.1.1.tgz#2f3c25333bbb255fb43d05f4aab628015d89da86"
-  integrity sha512-4Vm5Ji0TMPvfSK8dQ4yDZRDRKoU8htIJJmdf5NBuN24PGHNqgAHn6R7xostZBwWqGrobkkWxfolVsH/94SeQfQ==
+"@devprotocol/khaos-core@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-0.1.2.tgz#22911354b8fab5dcccafce1118f1196c17945cec"
+  integrity sha512-uJ6VdLGCnwlI73tS79zmOo9tCuSvImnWUt/wphCpeBIaY0/TRVFcHPMKn1r5pMJ0AO3+H0vTfp66eBCC0NzQFw==
   dependencies:
     "@azure/functions" "^1.2.2"
-    ethereum-waffle "3.2.1"
+    "@ethersproject/abi" "^5.0.9"
+    "@ethersproject/contracts" "^5.0.8"
     jsonwebtoken "^8.5.1"
     ramda "^0.27.1"
 
@@ -175,7 +176,7 @@
     "@ethersproject/properties" ">=5.0.0-beta.131"
     "@ethersproject/strings" ">=5.0.0-beta.130"
 
-"@ethersproject/abi@5.0.9", "@ethersproject/abi@^5.0.1":
+"@ethersproject/abi@5.0.9", "@ethersproject/abi@^5.0.1", "@ethersproject/abi@^5.0.9":
   version "5.0.9"
   resolved "https://registry.yarnpkg.com/@ethersproject/abi/-/abi-5.0.9.tgz#738c1c557e56d8f395a5a27caef9b0449bc85a10"
   integrity sha512-ily2OufA2DTrxkiHQw5GqbkMSnNKuwZBqKsajtT0ERhZy1r9w2CpW1bmtRMIGzaqQxCdn/GEoFogexk72cBBZQ==
@@ -429,7 +430,7 @@
   dependencies:
     "@ethersproject/bignumber" "^5.0.7"
 
-"@ethersproject/contracts@5.0.8":
+"@ethersproject/contracts@5.0.8", "@ethersproject/contracts@^5.0.8":
   version "5.0.8"
   resolved "https://registry.yarnpkg.com/@ethersproject/contracts/-/contracts-5.0.8.tgz#71d3ba16853a1555be2e161a6741df186f81c73b"
   integrity sha512-PecBL4vnsrpuks2lzzkRsOts8csJy338HNDKDIivbFmx92BVzh3ohOOv3XsoYPSXIHQvobF959W+aSk3RCZL/g==
