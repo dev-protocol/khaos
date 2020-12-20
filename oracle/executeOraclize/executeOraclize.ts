@@ -17,8 +17,8 @@ export const executeOraclize = (id: string, network: NetworkName) => async (
 	const recoverd = whenDefined(info.secret.resource, ({ id, address }) =>
 		recoverPublicSignature(id, address)
 	)
-	const callBack = await whenDefined(recoverd, (r) =>
-		oraclize(r, info.eventData, network)
+	const callBack = await whenDefined(recoverd, (signatureOptions) =>
+		oraclize({ signatureOptions, query: info.eventData, network })
 	)
 	return {
 		khaosId: id,
