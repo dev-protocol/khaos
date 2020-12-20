@@ -59,10 +59,10 @@
   dependencies:
     arrify "^1.0.1"
 
-"@devprotocol/khaos-core@0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-0.1.2.tgz#22911354b8fab5dcccafce1118f1196c17945cec"
-  integrity sha512-uJ6VdLGCnwlI73tS79zmOo9tCuSvImnWUt/wphCpeBIaY0/TRVFcHPMKn1r5pMJ0AO3+H0vTfp66eBCC0NzQFw==
+"@devprotocol/khaos-core@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-0.2.0.tgz#8c5214f52fcdd95fee1e492d0cfcab2aa7445812"
+  integrity sha512-3y7pgOUz7ZS9hhhETek0TSRM+k4HwMk+HDtPuQe1Z30N2pKvnGb4FBszTUyyTws+IMwyheBfdiO6kpcErHYDlw==
   dependencies:
     "@azure/functions" "^1.2.2"
     "@ethersproject/abi" "^5.0.9"

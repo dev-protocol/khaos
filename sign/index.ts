@@ -15,12 +15,12 @@ type Response = {
 
 const sign: AzureFunction = async (
 	context: Context,
-	req: HttpRequest
+	request: HttpRequest
 ): Promise<Response> => {
-	const { id = '' } = req.params
-	const { message = '', secret = '', signature = '' } = req.body
+	const { id = '' } = request.params
+	const { message = '', secret = '', signature = '' } = request.body
 	const fn = await importAuthorizer(id)
-	const auth = await fn({ message, secret, req })
+	const auth = await fn({ message, secret, request })
 	const address = auth ? recover(message, signature) : undefined
 	const publicSignature = address ? pubSig({ message, id, address }) : undefined
 	const wrote = await (auth && publicSignature && address

@@ -40,7 +40,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		[provider, process.env.KHAOS_MNEMONIC],
 		([prov, mnemonic]) => ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
 	)
-	const address = await addresses(network)
+	const address = await addresses({ network })
 	const marketBehavior = await whenDefinedAll([address, abi], ([adr, i]) =>
 		tryCatch(
 			(intf) =>
