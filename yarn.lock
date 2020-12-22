@@ -70,10 +70,10 @@
     jsonwebtoken "^8.5.1"
     ramda "^0.27.1"
 
-"@devprotocol/khaos-functions@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.1.0.tgz#03bdb264e77d4e659fe3eb911d3df5af2348d49d"
-  integrity sha512-x/cfyUUXRq3HIdFTbvX8oEOSED+ABMQ6nkXPAQxOoa/NtgDwPZfVxccoeEd8S8ODHGvvY0C5uVIEEU6qjZvGFQ==
+"@devprotocol/khaos-functions@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.1.1.tgz#46d44e16e174e1498bb9c4deb8d4bebbf5c3cc91"
+  integrity sha512-q/rl2Qfvcdixd8DdDO+4WsCBppgULXYOyDkXqfpcKwKpzaBKEf/tiNiXqMf89kIryqH6HISvyzeMw856ieOlcg==
   dependencies:
     "@azure/functions" "1.2.2"
     "@devprotocol/khaos-core" "0.2.0"
