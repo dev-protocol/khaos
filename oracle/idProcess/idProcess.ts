@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Context } from '@azure/functions'
-import { importAbi } from '../importAbi/importAbi'
 import { getFromBlock } from '../getFromBlock/getFromBlock'
 import { getEvents } from '../getEvents/getEvents'
 import { getData } from '../getData/getData'
@@ -10,11 +9,11 @@ import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { whenDefined } from '@devprotocol/util-ts'
 import { ethers } from 'ethers'
-import { importAddresses } from '../importAddresses/importAddresses'
 import { NetworkName } from '../../common/types'
 import { tryCatch, always } from 'ramda'
 import { saveReceivedEventHashe } from '../saveReceivedEventHashe/saveReceivedEventHashe'
 import { whenDefinedAll } from '@devprotocol/util-ts'
+import { call } from '@devprotocol/khaos-functions'
 
 export type Results = {
 	readonly sent: boolean
@@ -26,7 +25,12 @@ export type Results = {
 export const idProcess = (context: Context, network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
-	const addresses = await importAddresses(id)
+	const khaosFunctions = call()
+	const address = await khaosFunctions({
+		id,
+		method: 'addresses',
+		options: { network },
+	})
 	const provider = whenDefined(
 		process.env.KHAOS_INFURA_ID,
 		(infura) =>
@@ -38,20 +42,21 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	const toBlockNumber = await whenDefined(provider, (prov) =>
 		getToBlockNumber(prov)
 	)
-	const abi = await importAbi(id)
+	const abi = await khaosFunctions({ id, method: 'abi' })
 	const wallet = whenDefinedAll(
 		[provider, process.env.KHAOS_MNEMONIC],
 		([prov, mnemonic]) => ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
 	)
-	const address = await addresses({ network })
-	const marketBehavior = await whenDefinedAll([address, abi], ([adr, i]) =>
-		tryCatch(
-			(intf) =>
-				((c) => c.resolvedAddress.then(always(c)).catch(always(undefined)))(
-					new ethers.Contract(adr, intf, wallet)
-				),
-			always(undefined)
-		)(i)
+	const marketBehavior = await whenDefinedAll(
+		[address?.data, abi?.data],
+		([adr, i]) =>
+			tryCatch(
+				(intf) =>
+					((c) => c.resolvedAddress.then(always(c)).catch(always(undefined)))(
+						new ethers.Contract(adr, intf, wallet)
+					),
+				always(undefined)
+			)(i)
 	)
 
 	const fromBlock = getFromBlock(toBlockNumber)
@@ -74,7 +79,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	const results = await whenDefined(oracleArgList, (x) =>
 		Promise.all(x.map(executeOraclize(id, network)))
 	)
-	return whenDefinedAll([address, results, marketBehavior], ([x, y, z]) =>
+	return whenDefinedAll([address?.data, results, marketBehavior], ([x, y, z]) =>
 		Promise.all(
 			y.map((i) => sendContractMethod(z)(i).catch(always(undefined)))
 		).then((res) =>

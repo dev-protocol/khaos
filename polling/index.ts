@@ -1,7 +1,6 @@
 import { AzureFunction, Context } from '@azure/functions'
-import { getIds } from '../oracle/getIds/getIds'
+import { ids } from '@devprotocol/khaos-functions'
 import { idProcess } from '../oracle/idProcess/idProcess'
-import path from 'path'
 import { notification } from '../oracle/notification/notification'
 
 const handleTimer: AzureFunction = async function (
@@ -17,13 +16,12 @@ const handleTimer: AzureFunction = async function (
 		context.log.warn('Timer function is running late!')
 	}
 
-	const dirPath = path.join(__dirname, '..', '..', 'functions')
-	const dirs = getIds(dirPath)
+	const dirs = await ids()
 	const oraclizer = idProcess(
 		context,
 		process.env.KHAOS_NETWORK === 'mainnet' ? 'mainnet' : 'ropsten'
 	)
-	const results = await Promise.all(dirs.map(oraclizer))
+	const results = await Promise.all(dirs.map((x) => x.id).map(oraclizer))
 	// eslint-disable-next-line functional/no-expression-statement
 	await Promise.all(results.map(notification))
 
