@@ -1,7 +1,7 @@
 import { oracleArgInfo } from './../getSecret/getSecret'
 import { importOraclize } from '../importOraclize/importOraclize'
-import { recoverPublicSignature } from '../../sign/publicSignature/recoverPublicSignature'
-import { KhaosCallbackArg } from '../../functions/oraclize'
+import { recoverPublicSignature } from '@devprotocol/khaos-core/sign/recoverPublicSignature/recoverPublicSignature'
+import { KhaosCallbackArg } from '../../functions/oraclizer'
 import { whenDefined } from '@devprotocol/util-ts'
 import { NetworkName } from '../../common/types'
 
@@ -17,8 +17,8 @@ export const executeOraclize = (id: string, network: NetworkName) => async (
 	const recoverd = whenDefined(info.secret.resource, ({ id, address }) =>
 		recoverPublicSignature(id, address)
 	)
-	const callBack = await whenDefined(recoverd, (r) =>
-		oraclize(r, info.eventData, network)
+	const callBack = await whenDefined(recoverd, (signatureOptions) =>
+		oraclize({ signatureOptions, query: info.eventData, network })
 	)
 	return {
 		khaosId: id,

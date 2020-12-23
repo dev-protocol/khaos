@@ -1,10 +1,10 @@
-import { Oraclize } from '../oraclize'
+import { Oraclizer } from '../oraclizer'
 
-const fn: Oraclize = async (opts, eventData, net) => {
+const fn: Oraclizer = async ({ signatureOptions, query, network }) => {
 	return {
-		message: opts.message,
+		message: signatureOptions.message,
 		status: 0,
-		statusMessage: `${net} ${eventData.publicSignature}`,
+		statusMessage: `${network} ${query.publicSignature}`,
 	}
 }
 

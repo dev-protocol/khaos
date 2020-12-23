@@ -1,25 +1,25 @@
-import { Oraclize, KhaosCallbackArg } from '../oraclize'
+import { Oraclizer, KhaosCallbackArg } from '../oraclizer'
 
-const fn: Oraclize = async (opts, queryData, net) => {
+const fn: Oraclizer = async ({ signatureOptions, query, network }) => {
 	const incubatorAddress =
-		net === 'mainnet'
+		network === 'mainnet'
 			? '0x0000000000000000000000000000000000000000'
 			: '0xCBffAD9738B627Fb9eE3fef691518AAdB98Bc86f'
 
-	const test1 = queryData.allData['githubRepository'] === opts.message
+	const test1 = query.allData['githubRepository'] === signatureOptions.message
 	const test2 =
-		queryData.allData['account'] === incubatorAddress
+		query.allData['account'] === incubatorAddress
 			? true
-			: queryData.allData['account'] === opts.address
+			: query.allData['account'] === signatureOptions.address
 
 	return test1 && test2
 		? ({
-				message: opts.message,
+				message: signatureOptions.message,
 				status: 0,
 				statusMessage: 'success',
 		  } as KhaosCallbackArg)
 		: ({
-				message: opts.message,
+				message: signatureOptions.message,
 				status: 2,
 				statusMessage: 'error',
 		  } as KhaosCallbackArg)

@@ -27,10 +27,13 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
 	const addresses = await importAddresses(id)
-	const provider = whenDefined(process.env.KHAOS_INFURA_ID, (infura) =>
-		ethers.getDefaultProvider(network, {
-			infura,
-		})
+	const provider = whenDefined(
+		process.env.KHAOS_INFURA_ID,
+		(infura) =>
+			new ethers.providers.InfuraProvider(
+				network === 'mainnet' ? 'homestead' : network,
+				infura
+			)
 	)
 	const toBlockNumber = await whenDefined(provider, (prov) =>
 		getToBlockNumber(prov)
@@ -40,7 +43,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		[provider, process.env.KHAOS_MNEMONIC],
 		([prov, mnemonic]) => ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
 	)
-	const address = await addresses(network)
+	const address = await addresses({ network })
 	const marketBehavior = await whenDefinedAll([address, abi], ([adr, i]) =>
 		tryCatch(
 			(intf) =>

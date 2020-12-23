@@ -1,5 +1,5 @@
 import test from 'ava'
-import authorizer from './authorizer'
+import authorizer from './authorize'
 
 test('Successful authentication.', async (t) => {
 	const res = await authorizer({
