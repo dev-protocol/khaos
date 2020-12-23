@@ -3,7 +3,7 @@ import { recover } from './recover/recover'
 import { publicSignature as pubSig } from '@devprotocol/khaos-core/sign/publicSignature/publicSignature'
 import { writer } from './../common/db/secret'
 import { CosmosClient } from '@azure/cosmos'
-import { importAuthorizer } from './importAuthorizer/importAuthorizer'
+import { call } from '@devprotocol/khaos-functions'
 
 type Response = {
 	readonly status: number
@@ -19,17 +19,20 @@ const sign: AzureFunction = async (
 ): Promise<Response> => {
 	const { id = '' } = request.params
 	const { message = '', secret = '', signature = '' } = request.body
-	const fn = await importAuthorizer(id)
-	const auth = await fn({ message, secret, request })
-	const address = auth ? recover(message, signature) : undefined
+	const auth = await call()({
+		id,
+		method: 'authorize',
+		options: { message, secret, request },
+	})
+	const address = auth && auth.data ? recover(message, signature) : undefined
 	const publicSignature = address ? pubSig({ message, id, address }) : undefined
 	const wrote = await (auth && publicSignature && address
 		? writer(CosmosClient)({ id: publicSignature, secret, address })
 		: undefined)
 	const status =
-		auth && [200, 201].includes(Number(wrote?.statusCode))
+		auth && auth.data && [200, 201].includes(Number(wrote?.statusCode))
 			? 200
-			: auth
+			: auth?.data
 			? 500
 			: 400
 

@@ -3,7 +3,7 @@ import { HttpRequest, Context } from '@azure/functions'
 import { stub } from 'sinon'
 import * as recover from './recover/recover'
 import * as db from './../common/db/secret'
-import * as importAuthorizer from './importAuthorizer/importAuthorizer'
+import * as khaosFunctions from '@devprotocol/khaos-functions'
 import { sign as fakeSignature } from 'jsonwebtoken'
 import sign from './index'
 import { publicSignature } from '@devprotocol/khaos-core/sign/publicSignature/publicSignature'
@@ -11,7 +11,7 @@ import { publicSignature } from '@devprotocol/khaos-core/sign/publicSignature/pu
 // eslint-disable-next-line functional/prefer-readonly-type
 const fakeStore: Map<string, { [key: string]: string }> = new Map()
 const random = (): string => Math.random().toString()
-const fakeImportAuthorizer = async () => async () => true
+const fakeImportAuthorizer = () => async () => ({ data: true } as any)
 const fakeRecover = (message: string, signature: string): string | undefined =>
 	`${message}-${signature}`
 const createContext = (): Context =>
@@ -50,7 +50,7 @@ stub(db, 'writer').callsFake(() => async (data: db.Secret) => {
 test.serial('Returns the signed account', async (t) => {
 	const stubs = [
 		stub(recover, 'recover').callsFake(fakeRecover),
-		stub(importAuthorizer, 'importAuthorizer').callsFake(fakeImportAuthorizer),
+		stub(khaosFunctions, 'call').callsFake(fakeImportAuthorizer),
 	]
 	returnFakeWriter.set('default', { statusCode: 200 })
 	const id = 'xxx'
@@ -67,7 +67,7 @@ test.serial('Returns the signed account', async (t) => {
 test.serial('Returns a new public signature', async (t) => {
 	const stubs = [
 		stub(recover, 'recover').callsFake(fakeRecover),
-		stub(importAuthorizer, 'importAuthorizer').callsFake(fakeImportAuthorizer),
+		stub(khaosFunctions, 'call').callsFake(fakeImportAuthorizer),
 	]
 	returnFakeWriter.set('default', { statusCode: 200 })
 	const id = 'xxx'
@@ -87,9 +87,7 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(() => undefined),
-			stub(importAuthorizer, 'importAuthorizer').callsFake(
-				fakeImportAuthorizer
-			),
+			stub(khaosFunctions, 'call').callsFake(fakeImportAuthorizer),
 		]
 		returnFakeWriter.set('default', { statusCode: 200 })
 		const id = 'xxx'
@@ -108,9 +106,7 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(() => undefined),
-			stub(importAuthorizer, 'importAuthorizer').callsFake(
-				fakeImportAuthorizer
-			),
+			stub(khaosFunctions, 'call').callsFake(fakeImportAuthorizer),
 		]
 		returnFakeWriter.set('default', { statusCode: 200 })
 		const id = 'xxx'
@@ -132,9 +128,7 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(fakeRecover),
-			stub(importAuthorizer, 'importAuthorizer').callsFake(
-				fakeImportAuthorizer
-			),
+			stub(khaosFunctions, 'call').callsFake(fakeImportAuthorizer),
 		]
 		returnFakeWriter.set('default', { statusCode: 200 })
 		const id = 'xxx'
@@ -153,10 +147,11 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(fakeRecover),
-			stub(
-				importAuthorizer,
-				'importAuthorizer'
-			).callsFake(async () => async () => false),
+			stub(khaosFunctions, 'call').callsFake(() => async () =>
+				({
+					data: false,
+				} as any)
+			),
 		]
 		returnFakeWriter.set('default', { statusCode: 200 })
 		const id = 'xxx'
@@ -175,9 +170,7 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(fakeRecover),
-			stub(importAuthorizer, 'importAuthorizer').callsFake(
-				fakeImportAuthorizer
-			),
+			stub(khaosFunctions, 'call').callsFake(fakeImportAuthorizer),
 		]
 		returnFakeWriter.set('default', { statusCode: 500 })
 		const id = 'xxx'
@@ -196,9 +189,7 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(fakeRecover),
-			stub(importAuthorizer, 'importAuthorizer').callsFake(
-				fakeImportAuthorizer
-			),
+			stub(khaosFunctions, 'call').callsFake(fakeImportAuthorizer),
 		]
 		returnFakeWriter.set('default', { statusCode: 200 })
 		const id = 'xxx'
@@ -223,10 +214,11 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(fakeRecover),
-			stub(
-				importAuthorizer,
-				'importAuthorizer'
-			).callsFake(async () => async () => false),
+			stub(khaosFunctions, 'call').callsFake(() => async () =>
+				({
+					data: false,
+				} as any)
+			),
 		]
 		const id = 'xxx'
 		const signature = fakeSignature(random(), id)
