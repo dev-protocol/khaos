@@ -12,7 +12,7 @@ test.serial(
 				message: 'B',
 				status: 0,
 				statusMessage: 'message',
-			},
+			} as any,
 		}))
 
 		const sig = publicSignature({ id: 'A', message: 'B', address: 'D' })

@@ -11,7 +11,7 @@ import { publicSignature } from '@devprotocol/khaos-core/sign/publicSignature/pu
 // eslint-disable-next-line functional/prefer-readonly-type
 const fakeStore: Map<string, { [key: string]: string }> = new Map()
 const random = (): string => Math.random().toString()
-const fakeImportAuthorizer = () => async () => ({ data: true })
+const fakeImportAuthorizer = () => async () => ({ data: true } as any)
 const fakeRecover = (message: string, signature: string): string | undefined =>
 	`${message}-${signature}`
 const createContext = (): Context =>
@@ -147,9 +147,11 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(fakeRecover),
-			stub(khaosFunctions, 'call').callsFake(() => async () => ({
-				data: false,
-			})),
+			stub(khaosFunctions, 'call').callsFake(() => async () =>
+				({
+					data: false,
+				} as any)
+			),
 		]
 		returnFakeWriter.set('default', { statusCode: 200 })
 		const id = 'xxx'
@@ -212,9 +214,11 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(fakeRecover),
-			stub(khaosFunctions, 'call').callsFake(() => async () => ({
-				data: false,
-			})),
+			stub(khaosFunctions, 'call').callsFake(() => async () =>
+				({
+					data: false,
+				} as any)
+			),
 		]
 		const id = 'xxx'
 		const signature = fakeSignature(random(), id)
