@@ -3,7 +3,6 @@ import test from 'ava'
 import { sign, verify } from 'jsonwebtoken'
 import { publicSignature } from './publicSignature'
 import { tryCatch, always } from 'ramda'
-import { JWTVerifyWithoutCallback } from '../../common/types'
 
 const random = (): string =>
 	sign(Math.random().toString(), Math.random().toString())
@@ -77,10 +76,7 @@ test('Should fail to verify when an account address is mismatch', (t) => {
 	const id = random()
 	const address = random()
 	const pubSig = publicSignature({ message, id, address })
-	const check = tryCatch<
-		ReturnType<JWTVerifyWithoutCallback> | undefined,
-		string
-	>((sig: string, account: string) => verify(sig, account), always(undefined))
+	const check = tryCatch((sig: string, account: string) => verify(sig, account), always(undefined))
 	const verified1 = check(pubSig, `0${address}`)
 	const verified2 = check(pubSig, address.toLowerCase())
 	const verified3 = check(pubSig, address.toUpperCase())

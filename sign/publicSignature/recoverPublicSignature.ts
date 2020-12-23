@@ -6,7 +6,7 @@ export const recoverPublicSignature = (
 	publicSignature: string,
 	address: string
 ): PublicSignatureOptions | undefined =>
-	tryCatch<PublicSignatureOptions | undefined>(
+	tryCatch(
 		(i: string, a: string) =>
 			(({ i: id, m: message }) => ({
 				id,
