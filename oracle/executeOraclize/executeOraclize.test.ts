@@ -1,6 +1,6 @@
 import test from 'ava'
 import { executeOraclize } from './executeOraclize'
-import { publicSignature } from '@devprotocol/khaos-core/sign/publicSignature/publicSignature'
+import { publicSignature } from '@devprotocol/khaos-core'
 import * as khaosFunctions from '@devprotocol/khaos-functions'
 import { stub } from 'sinon'
 

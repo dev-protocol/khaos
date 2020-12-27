@@ -1,4 +1,1 @@
-export {
-	JWTVerifyWithoutCallback,
-	NetworkName,
-} from '@devprotocol/khaos-core/types'
+export { JWTVerifyWithoutCallback, NetworkName } from '@devprotocol/khaos-core'

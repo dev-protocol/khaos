@@ -6,7 +6,7 @@ import * as db from './../common/db/secret'
 import * as khaosFunctions from '@devprotocol/khaos-functions'
 import { sign as fakeSignature } from 'jsonwebtoken'
 import sign from './index'
-import { publicSignature } from '@devprotocol/khaos-core/sign/publicSignature/publicSignature'
+import { publicSignature } from '@devprotocol/khaos-core'
 
 // eslint-disable-next-line functional/prefer-readonly-type
 const fakeStore: Map<string, { [key: string]: string }> = new Map()
