@@ -44,7 +44,7 @@
 		"dotenv": "8.2.0",
 		"eslint": "7.17.0",
 		"eslint-config-prettier": "6.15.0",
-		"eslint-plugin-functional": "3.1.0",
+		"eslint-plugin-functional": "3.2.1",
 		"husky": "4.3.6",
 		"prettier": "2.2.1",
 		"rimraf": "3.0.2",
