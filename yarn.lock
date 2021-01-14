@@ -102,6 +102,15 @@
     ethereum-waffle "3.2.1"
     ramda "^0.27.1"
 
+"@devprotocol/util-ts@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@devprotocol/util-ts/-/util-ts-2.1.0.tgz#e0e5cc95b3c3b85985002970926d7271f5bfa352"
+  integrity sha512-ZcCj8K2oBhZ1BVV7oXMF4MpiwQVOcTY1J/HZtroH/b9arV2YddIKBlZSB4TdcIK9x6HsxWY1kAIZ1Lz350XIrA==
+  dependencies:
+    bent "7.3.12"
+    ethereum-waffle "3.2.1"
+    ramda "^0.27.1"
+
 "@ensdomains/ens@^0.4.4":
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/@ensdomains/ens/-/ens-0.4.5.tgz#e0aebc005afdc066447c6e22feb4eda89a5edbfc"
