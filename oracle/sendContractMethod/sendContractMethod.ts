@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { sendInfo } from '../executeOraclize/executeOraclize'
+import { FunctionPackResults } from '@devprotocol/khaos-core'
+import { whenDefinedAll } from '@devprotocol/util-ts'
 import { ethers } from 'ethers'
 import { createFastestGasPriceFetcher, ethgas } from './../gas/gas'
 
 export const sendContractMethod = (marketBehavior: ethers.Contract) => async (
-	info: sendInfo
+	name: string,
+	args: FunctionPackResults['args']
 ): Promise<ethers.Transaction> => {
 	const fastest = createFastestGasPriceFetcher(
 		ethgas(process.env.KHAOS_EGS_TOKEN!)
@@ -14,10 +16,7 @@ export const sendContractMethod = (marketBehavior: ethers.Contract) => async (
 		gasLimit: gas,
 		gasPrice: await fastest(),
 	}
-	return marketBehavior.khaosCallback(
-		info.result!.message,
-		info.result!.status,
-		info.result!.statusMessage,
-		overrides
+	return whenDefinedAll([marketBehavior[name], args], ([callback, _args]) =>
+		callback(..._args, overrides)
 	)
 }

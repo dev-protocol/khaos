@@ -7,9 +7,10 @@ export const getEvents = async (
 	marketBehavior: ethers.Contract,
 	firstBlock: number,
 	lastBlock: number,
-	khaosId: string
+	khaosId: string,
+	eventName: string
 ): Promise<readonly ethers.Event[] | undefined> => {
-	const filter = whenDefined(marketBehavior.filters.Query, (query) => query())
+	const filter = whenDefined(marketBehavior.filters[eventName], (ev) => ev())
 	const queryEvents = await whenDefined(filter, (filt) =>
 		marketBehavior.queryFilter(filt, firstBlock, lastBlock)
 	)

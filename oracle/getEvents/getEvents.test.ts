@@ -34,9 +34,13 @@ test.serial('event information is coming back.', async (t) => {
 		received,
 		'isAlreadyReceived'
 	).callsFake(() => async () => false)
-	const events = await getEvents(dummyConstract as any, 0, 100, 'example').then(
-		(res) => (res as unknown) as readonly ethers.Event[]
-	)
+	const events = await getEvents(
+		dummyConstract as any,
+		0,
+		100,
+		'example',
+		'Query'
+	).then((res) => (res as unknown) as readonly ethers.Event[])
 	t.is(events.length, 2)
 	t.is(events[0].blockNumber, 1)
 	t.is(events[0].blockHash, 'dummy-value1')
@@ -56,7 +60,8 @@ test.serial(
 			dummyConstract as any,
 			0,
 			100,
-			'example'
+			'example',
+			'Query'
 		).then((res) => (res as unknown) as readonly ethers.Event[])
 		t.is(events.length, 0)
 		stubbedReader.restore()
@@ -75,7 +80,8 @@ test.serial('Returns undefined when `Query` not found.', async (t) => {
 		} as any,
 		0,
 		100,
-		'example'
+		'example',
+		'Query'
 	)
 	t.is(events, undefined)
 })

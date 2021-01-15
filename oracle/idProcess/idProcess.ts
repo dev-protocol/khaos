@@ -62,9 +62,14 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	const fromBlock = getFromBlock(toBlockNumber)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`block from:${fromBlock || 0} to ${toBlockNumber || 0}`)
+	const event = await khaosFunctions({
+		id,
+		method: 'event',
+		options: { network },
+	})
 	const events = await whenDefinedAll(
-		[fromBlock, toBlockNumber, marketBehavior],
-		([from, to, behavior]) => getEvents(behavior, from, to, id)
+		[fromBlock, toBlockNumber, marketBehavior, event?.data],
+		([from, to, behavior, ev]) => getEvents(behavior, from, to, id, ev)
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`event count:${events?.length}`)
@@ -81,7 +86,21 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	)
 	return whenDefinedAll([address?.data, results, marketBehavior], ([x, y, z]) =>
 		Promise.all(
-			y.map((i) => sendContractMethod(z)(i).catch(always(undefined)))
+			y.map((i) =>
+				khaosFunctions({
+					id,
+					method: 'pack',
+					options: { results: i.result },
+				})
+					.then((packed) =>
+						whenDefined(packed, ({ data }) =>
+							whenDefinedAll([data?.name, data?.args], ([name, args]) =>
+								sendContractMethod(z)(name, args)
+							)
+						)
+					)
+					.catch(always(undefined))
+			)
 		).then((res) =>
 			res.map((sent) => ({
 				address: x,
