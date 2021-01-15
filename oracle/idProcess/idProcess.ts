@@ -93,7 +93,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 					options: { results: i.result },
 				})
 					.then((packed) =>
-							whenDefined(packed, ({ data }) =>
+						whenDefined(packed, ({ data }) =>
 							whenDefinedAll([data?.name, data?.args], ([name, args]) =>
 								sendContractMethod(z)(name, args)
 							)
