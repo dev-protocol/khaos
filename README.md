@@ -1,3 +1,8 @@
+| Pipeline         | Status                                                                                                                                                                                                  |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ethereum Mainnet | [![Build Status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-eth-mainnet?branchName=main)](https://dev.azure.com/dev-protocol/Khaos/_build/latest?definitionId=7&branchName=main) |
+| Ethereum Ropsten | [![Build Status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-eth-ropsten?branchName=main)](https://dev.azure.com/dev-protocol/Khaos/_build/latest?definitionId=6&branchName=main) |
+
 # What's Khaos?
 
 Khaos is an oracle service designed to bring Internet data into blockchains while keeping secret information, such as secret tokens, under wraps. Initially, we will only support Dev Protocol, but we plan to open it up in the future.
