@@ -59,10 +59,10 @@
   dependencies:
     arrify "^1.0.1"
 
-"@devprotocol/khaos-core@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-0.2.0.tgz#8c5214f52fcdd95fee1e492d0cfcab2aa7445812"
-  integrity sha512-3y7pgOUz7ZS9hhhETek0TSRM+k4HwMk+HDtPuQe1Z30N2pKvnGb4FBszTUyyTws+IMwyheBfdiO6kpcErHYDlw==
+"@devprotocol/khaos-core@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-1.1.1.tgz#96b5068174bd09cfe2f3c32da7e91bb613ac6443"
+  integrity sha512-XuBmKJNPglYiUeXRh7Wwp6GLmbC/yRQGcbAo815/FrojnlZc3hWH7q39iYLB+naZ702iLNRYG29Vc/wu0TlGSg==
   dependencies:
     "@azure/functions" "^1.2.2"
     "@ethersproject/abi" "^5.0.9"
@@ -70,37 +70,17 @@
     jsonwebtoken "^8.5.1"
     ramda "^0.27.1"
 
-"@devprotocol/khaos-core@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-1.0.0.tgz#85729d270ce74d68ab1a644c34196e2f855cf0e9"
-  integrity sha512-1r+5yCgoUIjcg+Bfk/d2OKvaGJC1QgzE0G+rxmo9q/OmgAdSvDMStAMlAhnHaxmOzQCjAYcsUaIX4dFzSRpXHg==
-  dependencies:
-    "@azure/functions" "^1.2.2"
-    "@ethersproject/abi" "^5.0.9"
-    "@ethersproject/contracts" "^5.0.8"
-    jsonwebtoken "^8.5.1"
-    ramda "^0.27.1"
-
-"@devprotocol/khaos-functions@0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.2.4.tgz#95fbfe98e48803c68e67d3e6b8ec6c7ba2e366b5"
-  integrity sha512-UFptNrakD6Bpy0YtATyHwLbcX1rhEoq89z/LDsNQ4xxk/UddiccclkRPTbsWs2QX8nxy1f9tl2zm5tiYjd2oKw==
+"@devprotocol/khaos-functions@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.3.0.tgz#c4553833d085a1cfce060c831fa9342d4105f0c8"
+  integrity sha512-eZxE4jivuRlzfZs+PHjnC1rcO5BE6czUjApELP+A1gjM22weXgSuTLlFoL3A/MkGc+iLSrzQac/7i7jXIDim5g==
   dependencies:
     "@azure/functions" "1.2.2"
-    "@devprotocol/khaos-core" "0.2.0"
-    "@devprotocol/util-ts" "2.0.1"
+    "@devprotocol/khaos-core" "1.1.1"
+    "@devprotocol/util-ts" "2.1.0"
     bent "7.3.12"
     ramda "0.27.1"
     type-fest "0.20.2"
-
-"@devprotocol/util-ts@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@devprotocol/util-ts/-/util-ts-2.0.1.tgz#e78f9037bd227da24e2e250fe4491e2f0f30d37c"
-  integrity sha512-d/rPhPX4P1nRgM26B71OthcVsFPvkFedan1m9HKjTsDjr+k6x/HjKuHzSvozpOPH8kYsLUNMpdAx5mU4xY4Tzw==
-  dependencies:
-    bent "7.3.12"
-    ethereum-waffle "3.2.1"
-    ramda "^0.27.1"
 
 "@devprotocol/util-ts@2.1.0":
   version "2.1.0"
