@@ -31,6 +31,11 @@
   resolved "https://registry.yarnpkg.com/@azure/functions/-/functions-1.2.2.tgz#8fcb6aa3a879d3be0dc3d68919f969b054bbe3f3"
   integrity sha512-p/dDHq1sG/iAib+eDY4NxskWHoHW1WFzD85s0SfWxc2wVjJbxB0xz/zBF4s7ymjVgTu+0ceipeBk+tmpnt98oA==
 
+"@azure/functions@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@azure/functions/-/functions-1.2.3.tgz#65765837e7319eedffbf8a971cb2f78d4e043d54"
+  integrity sha512-dZITbYPNg6ay6ngcCOjRUh1wDhlFITS0zIkqplyH5KfKEAVPooaoaye5mUFnR+WP9WdGRjlNXyl/y2tgWKHcRg==
+
 "@babel/code-frame@^7.0.0":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
@@ -59,17 +64,6 @@
   dependencies:
     arrify "^1.0.1"
 
-"@devprotocol/khaos-core@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-1.1.1.tgz#96b5068174bd09cfe2f3c32da7e91bb613ac6443"
-  integrity sha512-XuBmKJNPglYiUeXRh7Wwp6GLmbC/yRQGcbAo815/FrojnlZc3hWH7q39iYLB+naZ702iLNRYG29Vc/wu0TlGSg==
-  dependencies:
-    "@azure/functions" "^1.2.2"
-    "@ethersproject/abi" "^5.0.9"
-    "@ethersproject/contracts" "^5.0.8"
-    jsonwebtoken "^8.5.1"
-    ramda "^0.27.1"
-
 "@devprotocol/khaos-core@1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-1.2.1.tgz#59dbf9136714cb81d18bae12890df84d1343aa56"
@@ -82,13 +76,13 @@
     jsonwebtoken "^8.5.1"
     ramda "^0.27.1"
 
-"@devprotocol/khaos-functions@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.3.0.tgz#c4553833d085a1cfce060c831fa9342d4105f0c8"
-  integrity sha512-eZxE4jivuRlzfZs+PHjnC1rcO5BE6czUjApELP+A1gjM22weXgSuTLlFoL3A/MkGc+iLSrzQac/7i7jXIDim5g==
+"@devprotocol/khaos-functions@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.3.1.tgz#bd98c0b3eeac117a1512b8c4bc08aaa1868678f0"
+  integrity sha512-V7X1xZWnaKCoLMH7/JyQCQqr+TtbcbaNhbI/180Zm90BmJ6IDrmORK/395upeB8TTdlbiV9oXI2O/Fykbt5HDg==
   dependencies:
-    "@azure/functions" "1.2.2"
-    "@devprotocol/khaos-core" "1.1.1"
+    "@azure/functions" "1.2.3"
+    "@devprotocol/khaos-core" "1.2.1"
     "@devprotocol/util-ts" "2.1.0"
     bent "7.3.12"
     ramda "0.27.1"
