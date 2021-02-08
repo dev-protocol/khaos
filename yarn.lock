@@ -26,12 +26,7 @@
     universal-user-agent "^6.0.0"
     uuid "^8.3.0"
 
-"@azure/functions@1.2.2", "@azure/functions@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@azure/functions/-/functions-1.2.2.tgz#8fcb6aa3a879d3be0dc3d68919f969b054bbe3f3"
-  integrity sha512-p/dDHq1sG/iAib+eDY4NxskWHoHW1WFzD85s0SfWxc2wVjJbxB0xz/zBF4s7ymjVgTu+0ceipeBk+tmpnt98oA==
-
-"@azure/functions@1.2.3":
+"@azure/functions@1.2.3", "@azure/functions@^1.2.3":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@azure/functions/-/functions-1.2.3.tgz#65765837e7319eedffbf8a971cb2f78d4e043d54"
   integrity sha512-dZITbYPNg6ay6ngcCOjRUh1wDhlFITS0zIkqplyH5KfKEAVPooaoaye5mUFnR+WP9WdGRjlNXyl/y2tgWKHcRg==
@@ -64,37 +59,25 @@
   dependencies:
     arrify "^1.0.1"
 
-"@devprotocol/khaos-core@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-1.2.1.tgz#59dbf9136714cb81d18bae12890df84d1343aa56"
-  integrity sha512-7q1Pr2K4uooVsNzGeKstXlkTJ/yhpE3JH13HupD9cNLTbtu9OhC+n4SKGU34ez8R6gTxbCNSIsjD8vXoN86UZA==
+"@devprotocol/khaos-core@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-1.2.3.tgz#f411b5a510674c712bb0716d43f5b64e70788e51"
+  integrity sha512-aovocHv8XQ4edT05J5OPvLLXBStyP0VhAvRYVwbLHYsp/gpQe81XCg9XPVe79wGwSn5LEULWzjhj3U8HUlsjtA==
   dependencies:
-    "@azure/functions" "^1.2.2"
+    "@azure/functions" "^1.2.3"
     "@devprotocol/util-ts" "2.1.0"
-    "@ethersproject/abi" "^5.0.9"
-    "@ethersproject/contracts" "^5.0.8"
+    "@ethersproject/abi" "^5.0.12"
+    "@ethersproject/contracts" "^5.0.10"
     jsonwebtoken "^8.5.1"
     ramda "^0.27.1"
 
-"@devprotocol/khaos-core@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-1.2.2.tgz#088d6e0a94185a084c967d94d634cd45a2512962"
-  integrity sha512-CmxYp80+t4xVQPAHeMcpaxDBh7KsrwtujQIP3mfJS1STuF13csMChEOrpL/Yl85hRb5UABvzKdHNHb2yG4B5lg==
-  dependencies:
-    "@azure/functions" "^1.2.2"
-    "@devprotocol/util-ts" "2.1.0"
-    "@ethersproject/abi" "^5.0.9"
-    "@ethersproject/contracts" "^5.0.8"
-    jsonwebtoken "^8.5.1"
-    ramda "^0.27.1"
-
-"@devprotocol/khaos-functions@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.3.1.tgz#bd98c0b3eeac117a1512b8c4bc08aaa1868678f0"
-  integrity sha512-V7X1xZWnaKCoLMH7/JyQCQqr+TtbcbaNhbI/180Zm90BmJ6IDrmORK/395upeB8TTdlbiV9oXI2O/Fykbt5HDg==
+"@devprotocol/khaos-functions@0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.3.2.tgz#8c53bad12769d857a4932b5b2a33e8a5bae9c5e1"
+  integrity sha512-cPD/TwWGvxRZQgWQeGZsTbyUuq4lh2ngF0JR8G9dh7cYA6QpPu1cCxiTchba6IFyGCjHF/2PSHxnpSXbc0fpgw==
   dependencies:
     "@azure/functions" "1.2.3"
-    "@devprotocol/khaos-core" "1.2.1"
+    "@devprotocol/khaos-core" "1.2.3"
     "@devprotocol/util-ts" "2.1.0"
     bent "7.3.12"
     ramda "0.27.1"
@@ -206,7 +189,7 @@
     "@ethersproject/properties" ">=5.0.0-beta.131"
     "@ethersproject/strings" ">=5.0.0-beta.130"
 
-"@ethersproject/abi@5.0.10", "@ethersproject/abi@^5.0.1", "@ethersproject/abi@^5.0.10", "@ethersproject/abi@^5.0.9":
+"@ethersproject/abi@5.0.10", "@ethersproject/abi@^5.0.1", "@ethersproject/abi@^5.0.10":
   version "5.0.10"
   resolved "https://registry.yarnpkg.com/@ethersproject/abi/-/abi-5.0.10.tgz#c32baa919ad0e5cddabb2f3a8aed0eaeeed7fa4a"
   integrity sha512-cfC3lGgotfxX3SMri4+CisOPwignoj/QGHW9J29spC4R4Qqcnk/SYuVkPFBMdLbvBp3f/pGiVqPNwont0TSXhg==
@@ -221,7 +204,7 @@
     "@ethersproject/properties" "^5.0.7"
     "@ethersproject/strings" "^5.0.8"
 
-"@ethersproject/abi@5.0.12":
+"@ethersproject/abi@5.0.12", "@ethersproject/abi@^5.0.12":
   version "5.0.12"
   resolved "https://registry.yarnpkg.com/@ethersproject/abi/-/abi-5.0.12.tgz#9aebe6aedc05ce45bb6c41b06d80bd195b7de77c"
   integrity sha512-Ujr/3bwyYYjXLDQfebeiiTuvOw9XtUKM8av6YkoBeMXyGQM9GkjrQlwJMNwGTmqjATH/ZNbRgCh98GjOLiIB1Q==
@@ -397,7 +380,7 @@
   dependencies:
     "@ethersproject/bignumber" "^5.0.13"
 
-"@ethersproject/contracts@5.0.10":
+"@ethersproject/contracts@5.0.10", "@ethersproject/contracts@^5.0.10":
   version "5.0.10"
   resolved "https://registry.yarnpkg.com/@ethersproject/contracts/-/contracts-5.0.10.tgz#650cbf6f3cf89a63006ea91727a68aee4dc3381f"
   integrity sha512-h9kdvllwT6B1LyUXeNQIb7Y6u6ZprP5LUiQIjSqvOehhm1sFZcaVtydsSa0LIg3SBC5QF0M7zH5p7EtI2VD0rQ==
@@ -412,7 +395,7 @@
     "@ethersproject/logger" "^5.0.8"
     "@ethersproject/properties" "^5.0.7"
 
-"@ethersproject/contracts@5.0.9", "@ethersproject/contracts@^5.0.8":
+"@ethersproject/contracts@5.0.9":
   version "5.0.9"
   resolved "https://registry.yarnpkg.com/@ethersproject/contracts/-/contracts-5.0.9.tgz#6c67c0ebe20ee1af903f7f43568401023334a181"
   integrity sha512-CCTxVeDh6sjdSEbjzONhtwPjECvaHE62oGkY8M7kP0CHmgLD2SEGel0HZib8e5oQKRKGly9AKcUFW4g3rQ0AQw==
@@ -1049,10 +1032,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.21.tgz#d934aacc22424fe9622ebf6857370c052eae464e"
   integrity sha512-cHYfKsnwllYhjOzuC5q1VpguABBeecUp24yFluHpn/BQaVxB1CuQ1FSRZCzrPxrkIfWISXV2LbeoBthLWg0+0A==
 
-"@types/node@13.13.5":
-  version "13.13.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.5.tgz#96ec3b0afafd64a4ccea9107b75bf8489f0e5765"
-  integrity sha512-3ySmiBYJPqgjiHA7oEaIo2Rzz0HrOZ7yrNO5HWyaE5q0lQ3BppDZ3N53Miz8bw2I7gh1/zir2MGVZBvpb1zq9g==
+"@types/node@14.14.25":
+  version "14.14.25"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.25.tgz#15967a7b577ff81383f9b888aa6705d43fbbae93"
+  integrity sha512-EPpXLOVqDvisVxtlbvzfyqSsFeQxltFbluZNRndIb8tr9KiBnYNLzrc1N3pyKUCww2RNrfHDViqDWWE1LCJQtQ==
 
 "@types/node@^12.12.6":
   version "12.19.14"
@@ -3470,12 +3453,10 @@ escape-string-regexp@^4.0.0:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
 
-eslint-config-prettier@6.15.0:
-  version "6.15.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.15.0.tgz#7f93f6cb7d45a92f1537a70ecc06366e1ac6fed9"
-  integrity sha512-a1+kOYLR8wMGustcgAjdydMsQ2A/2ipRPwRKUmfYaSxc9ZPcrku080Ctl6zrZzZNs/U82MjSv+qKREkoq3bJaw==
-  dependencies:
-    get-stdin "^6.0.0"
+eslint-config-prettier@7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-7.2.0.tgz#f4a4bd2832e810e8cc7c1411ec85b3e85c0c53f9"
+  integrity sha512-rV4Qu0C3nfJKPOAhFujFxB7RMP+URFyQqqOZW9DMRD7ZDTFyjaIlETU3xzHELt++4ugC0+Jm084HQYkkJe+Ivg==
 
 eslint-plugin-functional@3.1.0:
   version "3.1.0"
@@ -4527,11 +4508,6 @@ get-intrinsic@^1.0.2:
     function-bind "^1.1.1"
     has "^1.0.3"
     has-symbols "^1.0.1"
-
-get-stdin@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-6.0.0.tgz#9e09bf712b360ab9225e812048f71fde9c89657b"
-  integrity sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g==
 
 get-stream@^3.0.0:
   version "3.0.0"
