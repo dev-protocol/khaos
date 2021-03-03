@@ -2,10 +2,8 @@
 import { Context } from '@azure/functions'
 import { getFromBlock } from '../getFromBlock/getFromBlock'
 import { getEvents } from '../getEvents/getEvents'
-import { getData } from '../getData/getData'
-import { getSecret } from '../getSecret/getSecret'
 import { getToBlockNumber } from '../getToBlockNumber/getToBlockNumber'
-import { executeOraclize, sendInfo } from '../executeOraclize/executeOraclize'
+import { sendInfo } from '../executeOraclize/executeOraclize'
 import { sendContractMethod } from '../sendContractMethod/sendContractMethod'
 import { whenDefined } from '@devprotocol/util-ts'
 import { ethers } from 'ethers'
@@ -14,12 +12,12 @@ import { tryCatch, always } from 'ramda'
 import { saveReceivedEventHashe } from '../saveReceivedEventHashe/saveReceivedEventHashe'
 import { whenDefinedAll } from '@devprotocol/util-ts'
 import { call } from '@devprotocol/khaos-functions'
+import { compute } from '../compute/compute'
 
 export type Results = {
 	readonly sent: boolean
 	readonly address: string
 	readonly results: readonly sendInfo[]
-	readonly state?: readonly any[]
 }
 
 export const idProcess = (context: Context, network: NetworkName) => async (
@@ -73,41 +71,34 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`event count:${events?.length}`)
-	const state = whenDefined(events, (x) => x.map(getData))
-	const oracleArgList = await whenDefined(state, (x) =>
-		Promise.all(x.map(getSecret))
+	const computed = await whenDefined(events, (x) =>
+		Promise.all(x.map(compute(id, network)))
 	)
 	// eslint-disable-next-line functional/no-expression-statement
-	await whenDefined(state, (x) =>
-		Promise.all(x.map(saveReceivedEventHashe(id)))
+	await whenDefined(computed, (c) =>
+		Promise.all(c.map((c) => c.query).map(saveReceivedEventHashe(id)))
 	)
-	const results = await whenDefined(oracleArgList, (x) =>
-		Promise.all(x.map(executeOraclize(id, network)))
-	)
-	return whenDefinedAll([address?.data, results, marketBehavior], ([x, y, z]) =>
-		Promise.all(
-			y.map((i) =>
-				khaosFunctions({
-					id,
-					method: 'pack',
-					options: { results: i.result },
-				})
-					.then((packed) =>
+	return whenDefinedAll(
+		[address?.data, computed, marketBehavior],
+		([contractAddress, computedData, contractInterface]) =>
+			Promise.all(
+				computedData
+					.map((x) => x.packed)
+					.map((packed) =>
 						whenDefined(packed, ({ data }) =>
 							whenDefinedAll([data?.name, data?.args], ([name, args]) =>
-								sendContractMethod(z)(name, args)
+								sendContractMethod(contractInterface)(name, args).catch(
+									always(undefined)
+								)
 							)
 						)
 					)
-					.catch(always(undefined))
+			).then((res) =>
+				res.map((sent) => ({
+					address: contractAddress,
+					results: computedData.map((x) => x.oraclized),
+					sent: Boolean(sent),
+				}))
 			)
-		).then((res) =>
-			res.map((sent) => ({
-				address: x,
-				results: y,
-				sent: Boolean(sent),
-				state,
-			}))
-		)
 	)
 }
