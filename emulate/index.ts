@@ -19,13 +19,11 @@ const emulate: AzureFunction = async (
 	const { network = '', event } = request.body
 	const computed = await compute(id, network)(event).catch(always(undefined))
 	const status = computed ? 200 : 400
-	const packed = whenDefined(computed, (x) => x.packed)
+	const body = whenDefined(computed, (x) => x.packed) || { data: undefined }
 
 	return {
 		status,
-		body: {
-			packed,
-		},
+		body,
 	}
 }
 
