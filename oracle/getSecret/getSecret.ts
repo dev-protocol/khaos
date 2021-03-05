@@ -11,7 +11,9 @@ export const getSecret = async (
 	eventData: MarketQueryData
 ): Promise<oracleArgInfo> => {
 	const isUndefined = typeof eventData.publicSignature === 'undefined'
-	const secret = isUndefined ? undefined : await reader(CosmosClient)(eventData.publicSignature)
+	const secret = isUndefined
+		? undefined
+		: await reader(CosmosClient)(eventData.publicSignature)
 	return {
 		secret,
 		eventData,
