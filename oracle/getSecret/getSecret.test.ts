@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import test from 'ava'
 import { stub } from 'sinon'
 import * as secret from '../../common/db/secret'
@@ -19,8 +20,8 @@ test.serial(
 			transactionhash: 'dummy-transaction-hash',
 		}
 		const result = await getSecret(data)
-		t.is(result.secret.statusCode, 200)
-		t.is(result.secret.resource?.secret, 'dummy-secret')
+		t.is(result.secret!.statusCode, 200)
+		t.is(result.secret!.resource?.secret, 'dummy-secret')
 		stubbedReader.restore()
 	}
 )
@@ -40,8 +41,18 @@ test.serial(
 			transactionhash: 'dummy-transaction-hash',
 		}
 		const result = await getSecret(data)
-		t.is(result.secret.statusCode, 200)
-		t.is(result.secret.resource, undefined)
+		t.is(result.secret!.statusCode, 200)
+		t.is(result.secret!.resource, undefined)
 		stubbedReader.restore()
 	}
 )
+
+test('If publicSignature is undefined, returnd secret record is undefined.', async (t) => {
+	const data: MarketQueryData = {
+		allData: { repo: 'hugahuga/hogihogi' } as any,
+		publicSignature: undefined as any,
+		transactionhash: 'dummy-transaction-hash',
+	}
+	const result = await getSecret(data)
+	t.is(result.secret, undefined)
+})

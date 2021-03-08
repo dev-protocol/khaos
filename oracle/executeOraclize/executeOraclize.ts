@@ -16,7 +16,7 @@ export const executeOraclize = (id: string, network: NetworkName) => async (
 	info: oracleArgInfo
 ): Promise<sendInfo> => {
 	const oraclize = call()
-	const recoverd = whenDefined(info.secret.resource, ({ id, address }) =>
+	const recoverd = whenDefined(info.secret?.resource, ({ id, address }) =>
 		recoverPublicSignature(id, address)
 	)
 	const callBack = await whenDefined(recoverd, (signatureOptions) =>
