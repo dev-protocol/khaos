@@ -36,7 +36,9 @@ export const compute = (id: string, network: NetworkName): Compute => {
 		console.log(`oraclized.khaosId:${oraclized.khaosId}`)
 		console.log(`oraclized.result.message:${oraclized.result?.message}`)
 		console.log(`oraclized.result.status:${oraclized.result?.status}`)
-		console.log(`oraclized.result.statusMessage:${oraclized.result?.statusMessage}`)
+		console.log(
+			`oraclized.result.statusMessage:${oraclized.result?.statusMessage}`
+		)
 
 		const packed = await khaosFunctions({
 			id,
