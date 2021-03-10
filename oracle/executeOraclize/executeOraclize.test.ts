@@ -42,18 +42,40 @@ test.serial(
 	}
 )
 
-test('If the khaos id does not exist, the oraclize function is not executed and undefined is returned.', async (t) => {
-	const kStub = stub(khaosFunctions, 'call').callsFake(() => async () =>
-		undefined
-	)
-	const result = await executeOraclize(
-		'example2',
-		'mainnet'
-	)({
-		json: { i: 'example2' },
-		secret: { resource: { secret: 'dummy-secret2' } },
-	} as any)
-	t.is(result.khaosId, 'example2')
-	t.is(result.result, undefined)
-	kStub.restore()
-})
+test.serial(
+	'If the khaos id does not exist, the oraclize function is not executed and undefined is returned.',
+	async (t) => {
+		const kStub = stub(khaosFunctions, 'call').callsFake(() => async () =>
+			undefined
+		)
+		const result = await executeOraclize(
+			'example2',
+			'mainnet'
+		)({
+			json: { i: 'example2' },
+			secret: { resource: { secret: 'dummy-secret2' } },
+		} as any)
+		t.is(result.khaosId, 'example2')
+		t.is(result.result, undefined)
+		kStub.restore()
+	}
+)
+
+test.serial(
+	'If the ItemResponce isn undefined, return result is undefiend.',
+	async (t) => {
+		const kStub = stub(khaosFunctions, 'call').callsFake(() => async () =>
+			undefined
+		)
+		const result = await executeOraclize(
+			'example2',
+			'mainnet'
+		)({
+			json: { i: 'example2' },
+			secret: undefined,
+		} as any)
+		t.is(result.khaosId, 'example2')
+		t.is(result.result, undefined)
+		kStub.restore()
+	}
+)
