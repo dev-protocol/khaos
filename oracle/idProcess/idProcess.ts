@@ -65,7 +65,9 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 
 	const fromBlock = getFromBlock(toBlockNumber)
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} block from:${fromBlock || 0} to ${toBlockNumber || 0}`)
+	context.log.info(
+		`id:${id} block from:${fromBlock || 0} to ${toBlockNumber || 0}`
+	)
 	const event = await khaosFunctions({
 		id,
 		method: 'event',
