@@ -24,7 +24,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`network name:${network}`)
+	context.log.info(`id:${id} network name:${network}`)
 	const khaosFunctions = call()
 	const address = await khaosFunctions({
 		id,
@@ -32,7 +32,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		options: { network },
 	})
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`contract address:${address?.data}`)
+	context.log.info(`id:${id} contract address:${address?.data}`)
 	const provider = whenDefined(
 		process.env.KHAOS_INFURA_ID,
 		(infura) =>
@@ -46,7 +46,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	)
 	const abi = await khaosFunctions({ id, method: 'abi' })
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`abi:${abi?.data}`)
+	context.log.info(`id:${id} abi:${abi?.data}`)
 	const wallet = whenDefinedAll(
 		[provider, process.env.KHAOS_MNEMONIC],
 		([prov, mnemonic]) => ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
@@ -65,7 +65,9 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 
 	const fromBlock = getFromBlock(toBlockNumber)
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`block from:${fromBlock || 0} to ${toBlockNumber || 0}`)
+	context.log.info(
+		`id:${id} block from:${fromBlock || 0} to ${toBlockNumber || 0}`
+	)
 	const event = await khaosFunctions({
 		id,
 		method: 'event',
@@ -76,7 +78,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		([from, to, behavior, ev]) => getEvents(behavior, from, to, id, ev)
 	)
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`event count:${events?.length}`)
+	context.log.info(`id:${id} event count:${events?.length}`)
 	const computed = await whenDefined(events, (x) =>
 		Promise.all(x.map(compute(id, network)))
 	)
