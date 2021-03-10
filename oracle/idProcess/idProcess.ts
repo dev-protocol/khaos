@@ -32,7 +32,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		options: { network },
 	})
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`contract address:${address}`)
+	context.log.info(`contract address:${address?.data}`)
 	const provider = whenDefined(
 		process.env.KHAOS_INFURA_ID,
 		(infura) =>
@@ -46,7 +46,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	)
 	const abi = await khaosFunctions({ id, method: 'abi' })
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`abi:${abi}`)
+	context.log.info(`abi:${abi?.data}`)
 	const wallet = whenDefinedAll(
 		[provider, process.env.KHAOS_MNEMONIC],
 		([prov, mnemonic]) => ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
