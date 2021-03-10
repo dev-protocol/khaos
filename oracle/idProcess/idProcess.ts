@@ -23,12 +23,16 @@ export type Results = {
 export const idProcess = (context: Context, network: NetworkName) => async (
 	id: string
 ): Promise<readonly Results[] | undefined> => {
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`network name:${network}`)
 	const khaosFunctions = call()
 	const address = await khaosFunctions({
 		id,
 		method: 'addresses',
 		options: { network },
 	})
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`contract address:${address}`)
 	const provider = whenDefined(
 		process.env.KHAOS_INFURA_ID,
 		(infura) =>
@@ -41,6 +45,8 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		getToBlockNumber(prov)
 	)
 	const abi = await khaosFunctions({ id, method: 'abi' })
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`abi:${abi}`)
 	const wallet = whenDefinedAll(
 		[provider, process.env.KHAOS_MNEMONIC],
 		([prov, mnemonic]) => ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
