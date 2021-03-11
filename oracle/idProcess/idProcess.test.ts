@@ -10,7 +10,6 @@ import * as secret from '../../common/db/secret'
 import * as getEvents from '../getEvents/getEvents'
 import { ethers } from 'ethers'
 import { createContext } from '../../common/testutils'
-const alchemy = '6ocdDMoEb3mY8QiUf_cl1PHK667Mydy-'
 
 test.serial('The process is executed successfully.', async (t) => {
 	const stubbedSecretReader = stub(secret, 'reader').callsFake(() => async () =>
@@ -22,19 +21,12 @@ test.serial('The process is executed successfully.', async (t) => {
 	const stubbedGetEvents = stub(getEvents, 'getEvents').callsFake(
 		async () => [] as readonly ethers.Event[]
 	)
-	const stubbedProviders = stub(ethers.providers, 'InfuraProvider').callsFake(
-		() =>
-			ethers.getDefaultProvider('ropsten', {
-				alchemy,
-			})
-	)
-	process.env.KHAOS_INFURA_ID = 'dummy'
+	process.env.KHAOS_INFURA_ID = '8e44280aca0d4fbebad2f2849c39a83f'
 	process.env.KHAOS_MNEMONIC =
 		'size wish volume lecture dinner drastic easy assume pledge ribbon bunker stand drill grunt dutch'
 	const context = createContext()
 	const result = await idProcess(context as any, 'ropsten')('example')
 	stubbedSecretReader.restore()
 	stubbedGetEvents.restore()
-	stubbedProviders.restore()
 	t.is((result as readonly Results[]).length, 0)
 })

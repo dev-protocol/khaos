@@ -13,7 +13,8 @@
 		"start": "func start",
 		"lint": "yarn lint:eslint && yarn lint:format",
 		"lint:eslint": "eslint . --ext .ts,.js --fix",
-		"lint:format": "prettier --write '**/*.{ts,js,json,md,yml}'"
+		"lint:format": "prettier --write '**/*.{ts,js,json,md,yml}'",
+		"prepare": "husky install"
 	},
 	"author": "",
 	"license": "MPL-2.0",
@@ -59,11 +60,6 @@
 			"rewritePaths": {
 				"/": "dist/"
 			}
-		}
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm run lint"
 		}
 	},
 	"repository": {
