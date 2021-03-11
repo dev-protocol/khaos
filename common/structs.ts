@@ -1,7 +1,3 @@
-import { Result } from '@ethersproject/abi'
+import { QueryData } from '@devprotocol/khaos-core'
 
-export type MarketQueryData = {
-	readonly publicSignature: string
-	readonly allData: Result
-	readonly transactionhash: string
-}
+export type MarketQueryData = QueryData
