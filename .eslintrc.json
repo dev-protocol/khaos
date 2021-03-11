@@ -13,8 +13,7 @@
 		"plugin:@typescript-eslint/recommended",
 		"plugin:functional/external-recommended",
 		"plugin:functional/all",
-		"prettier",
-		"prettier/@typescript-eslint"
+		"prettier"
 	],
 	"rules": {
 		"@typescript-eslint/no-explicit-any": 0
