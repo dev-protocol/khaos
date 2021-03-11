@@ -2,7 +2,6 @@ import { oracleArgInfo } from './../getSecret/getSecret'
 import {
 	recoverPublicSignature,
 	FunctionOraclizeResults,
-	PublicSignatureOptions,
 } from '@devprotocol/khaos-core'
 import { whenDefined } from '@devprotocol/util-ts'
 import { NetworkName } from '../../common/types'
@@ -17,20 +16,15 @@ export const executeOraclize = (id: string, network: NetworkName) => async (
 	info: oracleArgInfo
 ): Promise<sendInfo> => {
 	const oraclize = call()
-	const tmp = whenDefined(info.secret?.resource, ({ id, address }) =>
-		recoverPublicSignature(id, address)
+	const signatureOptions = whenDefined(
+		info.secret?.resource,
+		({ id, address }) => recoverPublicSignature(id, address)
 	)
-	const recoverd =
-		typeof tmp === 'undefined'
-			? ({ message: '', id: '', address: '' } as PublicSignatureOptions)
-			: tmp
-	const callBack = await whenDefined(recoverd, (signatureOptions) =>
-		oraclize({
-			id,
-			method: 'oraclize',
-			options: { signatureOptions, query: info.eventData, network },
-		})
-	)
+	const callBack = await oraclize({
+		id,
+		method: 'oraclize',
+		options: { signatureOptions, query: info.eventData, network },
+	})
 	return {
 		khaosId: id,
 		result: typeof callBack === 'undefined' ? undefined : callBack.data,
