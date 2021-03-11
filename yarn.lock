@@ -75,18 +75,6 @@
   dependencies:
     arrify "^1.0.1"
 
-"@devprotocol/khaos-core@1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-1.2.3.tgz#f411b5a510674c712bb0716d43f5b64e70788e51"
-  integrity sha512-aovocHv8XQ4edT05J5OPvLLXBStyP0VhAvRYVwbLHYsp/gpQe81XCg9XPVe79wGwSn5LEULWzjhj3U8HUlsjtA==
-  dependencies:
-    "@azure/functions" "^1.2.3"
-    "@devprotocol/util-ts" "2.1.0"
-    "@ethersproject/abi" "^5.0.12"
-    "@ethersproject/contracts" "^5.0.10"
-    jsonwebtoken "^8.5.1"
-    ramda "^0.27.1"
-
 "@devprotocol/khaos-core@1.2.4":
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@devprotocol/khaos-core/-/khaos-core-1.2.4.tgz#ce9dbb4da87e8cecedb685dfdb7528786b7b8267"
@@ -99,17 +87,17 @@
     jsonwebtoken "^8.5.1"
     ramda "^0.27.1"
 
-"@devprotocol/khaos-functions@0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.3.4.tgz#cfa69a63ae28560483b917e9fd0034957df50c86"
-  integrity sha512-bzXy27olO51HjqKdVskqxLcbx3albhSLsiD+EvKFfgmzxC1ozelRUXrrVXvgmtXqZSh8UeTjQNKZAezwgj8euw==
+"@devprotocol/khaos-functions@0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@devprotocol/khaos-functions/-/khaos-functions-0.3.5.tgz#9543e4c886346a6d012909a4b97c3a0d6eff7738"
+  integrity sha512-GaWo+tcf18yL1pTq3o11DIp0jeOV8XBpqCr9X2c/VrZB1Usq90R7pSoINzOqX7KOyWMrvO628wu6vYEnDWSebg==
   dependencies:
     "@azure/functions" "1.2.3"
-    "@devprotocol/khaos-core" "1.2.3"
+    "@devprotocol/khaos-core" "1.2.4"
     "@devprotocol/util-ts" "2.1.0"
     bent "7.3.12"
     ramda "0.27.1"
-    type-fest "0.20.2"
+    type-fest "0.21.3"
 
 "@devprotocol/util-ts@2.1.0":
   version "2.1.0"
@@ -8262,10 +8250,10 @@ type-detect@4.0.8, type-detect@^4.0.8:
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
   integrity sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g==
 
-type-fest@0.20.2:
-  version "0.20.2"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.20.2.tgz#1bf207f4b28f91583666cb5fbd327887301cd5f4"
-  integrity sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==
+type-fest@0.21.3:
+  version "0.21.3"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.21.3.tgz#d260a24b0198436e133fa26a524a6d65fa3b2e37"
+  integrity sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==
 
 type-fest@^0.13.1:
   version "0.13.1"
