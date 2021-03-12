@@ -23,7 +23,7 @@
 		"@azure/functions": "1.2.3",
 		"@devprotocol/khaos-core": "1.2.6",
 		"@devprotocol/khaos-functions": "0.3.6",
-		"@devprotocol/util-ts": "2.1.0",
+		"@devprotocol/util-ts": "2.2.1",
 		"bent": "7.3.12",
 		"discord-webhook-ts": "3.0.3",
 		"ethers": "5.0.32",
