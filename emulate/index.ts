@@ -1,4 +1,4 @@
-import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import { AzureFunction, HttpRequest } from '@azure/functions'
 import { whenDefined, whenDefinedAll } from '@devprotocol/util-ts'
 import { always } from 'ramda'
 import { compute } from '../oracle/compute/compute'
@@ -14,7 +14,7 @@ type Response = {
 }
 
 const emulate: AzureFunction = async (
-	context: Context,
+	_,
 	request: HttpRequest
 ): Promise<Response> => {
 	const { id = '' } = request.params
@@ -37,9 +37,6 @@ const emulate: AzureFunction = async (
 	const body = whenDefined(computed?.packed?.data, (packed) => ({
 		data: { ...packed, gasLimit },
 	})) || { data: undefined }
-
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info({body, computed, estimated})
 
 	return {
 		status,
