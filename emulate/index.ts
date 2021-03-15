@@ -1,7 +1,9 @@
 import { AzureFunction, HttpRequest } from '@azure/functions'
-import { whenDefined } from '@devprotocol/util-ts'
+import { whenDefined, whenDefinedAll } from '@devprotocol/util-ts'
 import { always } from 'ramda'
 import { compute } from '../oracle/compute/compute'
+import { createContract } from '../oracle/createContract/createContract'
+import { estimateTransaction } from '../oracle/estimateTransaction/estimateTransaction'
 
 type Response = {
 	readonly status: number
@@ -17,9 +19,24 @@ const emulate: AzureFunction = async (
 ): Promise<Response> => {
 	const { id = '' } = request.params
 	const { network = '', event } = request.body
-	const computed = await compute(id, network)(event).catch(always(undefined))
+	const undef = always(undefined)
+	const [computed, contract] = await Promise.all([
+		compute(id, network)(event).catch(undef),
+		createContract(id, network).catch(undef),
+	])
+	const estimated = await whenDefinedAll(
+		[computed?.packed?.data, contract?.[0]],
+		([packed, contractInterface]) =>
+			estimateTransaction(contractInterface)(packed.name, packed.args).catch(
+				undef
+			)
+	)
+	const gasLimit = whenDefined(estimated, (e) => e.toString())
 	const status = computed ? 200 : 400
-	const body = whenDefined(computed, (x) => x.packed) || { data: undefined }
+
+	const body = whenDefined(computed?.packed?.data, (packed) => ({
+		data: { ...packed, gasLimit },
+	})) || { data: undefined }
 
 	return {
 		status,

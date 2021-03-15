@@ -2,6 +2,7 @@
 import { FunctionPackResults } from '@devprotocol/khaos-core'
 import { whenDefinedAll } from '@devprotocol/util-ts'
 import { ethers } from 'ethers'
+import { estimateTransaction } from '../estimateTransaction/estimateTransaction'
 import { createFastestGasPriceFetcher, ethgas } from './../gas/gas'
 
 export const sendContractMethod = (marketBehavior: ethers.Contract) => async (
@@ -11,12 +12,13 @@ export const sendContractMethod = (marketBehavior: ethers.Contract) => async (
 	const fastest = createFastestGasPriceFetcher(
 		ethgas(process.env.KHAOS_EGS_TOKEN!)
 	)
-	const gas = Number(process.env.KHAOS_GAS_LIMIT || 1000000)
-	const overrides = {
-		gasLimit: gas,
-		gasPrice: await fastest(),
-	}
-	return whenDefinedAll([marketBehavior[name], args], ([callback, _args]) =>
-		callback(..._args, overrides)
+	const estimatedGasLimit = await estimateTransaction(marketBehavior)(
+		name,
+		args
+	)
+	return whenDefinedAll(
+		[estimatedGasLimit, marketBehavior[name], args],
+		async ([gasLimit, callback, _args]) =>
+			callback(..._args, { gasLimit, gasPrice: await fastest() })
 	)
 }
