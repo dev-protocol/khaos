@@ -38,6 +38,9 @@ const emulate: AzureFunction = async (
 		data: { ...packed, gasLimit },
 	})) || { data: undefined }
 
+	// eslint-disable-next-line functional/no-expression-statement
+	console.log({computed, estimated, status})
+
 	return {
 		status,
 		body,
