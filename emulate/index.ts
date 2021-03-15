@@ -1,5 +1,5 @@
 import { AzureFunction, HttpRequest } from '@azure/functions'
-import { whenDefinedAll } from '@devprotocol/util-ts'
+import { whenDefined, whenDefinedAll } from '@devprotocol/util-ts'
 import { always } from 'ramda'
 import { compute } from '../oracle/compute/compute'
 import { createContract } from '../oracle/createContract/createContract'
@@ -24,19 +24,19 @@ const emulate: AzureFunction = async (
 		compute(id, network)(event).catch(undef),
 		createContract(id, network).catch(undef),
 	])
-	const estimate = await whenDefinedAll(
+	const estimated = await whenDefinedAll(
 		[computed?.packed?.data, contract?.[0]],
 		([packed, contractInterface]) =>
-			estimateTransaction(contractInterface)(
-				packed.name,
-				packed.args
-			).then((x) => x?.toString())
+			estimateTransaction(contractInterface)(packed.name, packed.args).catch(
+				undef
+			)
 	)
-	const status = computed && estimate ? 200 : 400
-	const body = whenDefinedAll(
-		[computed?.packed?.data, estimate],
-		([packed, gasLimit]) => ({ data: { ...packed, gasLimit } })
-	) || { data: undefined }
+	const gasLimit = whenDefined(estimated, (e) => e.toString())
+	const status = computed ? 200 : 400
+
+	const body = whenDefined(computed?.packed?.data, (packed) => ({
+		data: { ...packed, gasLimit },
+	})) || { data: undefined }
 
 	return {
 		status,
