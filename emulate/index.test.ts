@@ -39,7 +39,12 @@ test.serial('Returns the results of the `compute` function', async (t) => {
 	t.deepEqual(res, {
 		status: 200,
 		body: {
-			data: { name: 'callback', args: [1, 2, 3], gasLimit: '123456' },
+			data: {
+				name: 'callback',
+				args: [1, 2, 3],
+				gasLimit: '123456',
+				expectedTransaction: { gasLimit: '123456', success: true },
+			},
 		},
 	})
 
@@ -75,7 +80,12 @@ test.serial(
 		] as any)
 		t.deepEqual(factoryEstimateTransactionStub.getCalls().length, 0)
 		t.deepEqual(estimateTransactionFake.getCalls().length, 0)
-		t.deepEqual(res, { status: 400, body: { data: undefined } })
+		t.deepEqual(res, {
+			status: 400,
+			body: {
+				data: { expectedTransaction: { gasLimit: undefined, success: false } },
+			},
+		})
 
 		factoryStub.restore()
 		createContractStub.restore()
@@ -119,7 +129,12 @@ test.serial(
 		t.deepEqual(res, {
 			status: 200,
 			body: {
-				data: { name: 'callback', args: [1, 2, 3], gasLimit: undefined },
+				data: {
+					name: 'callback',
+					args: [1, 2, 3],
+					gasLimit: undefined,
+					expectedTransaction: { gasLimit: undefined, success: false },
+				},
 			},
 		})
 
@@ -169,7 +184,12 @@ test.serial(
 		t.deepEqual(res, {
 			status: 200,
 			body: {
-				data: { name: 'callback', args: [1, 2, 3], gasLimit: undefined },
+				data: {
+					name: 'callback',
+					args: [1, 2, 3],
+					gasLimit: undefined,
+					expectedTransaction: { gasLimit: undefined, success: false },
+				},
 			},
 		})
 
@@ -217,7 +237,12 @@ test.serial(
 		t.deepEqual(res, {
 			status: 200,
 			body: {
-				data: { name: 'callback', args: [1, 2, 3], gasLimit: undefined },
+				data: {
+					name: 'callback',
+					args: [1, 2, 3],
+					gasLimit: undefined,
+					expectedTransaction: { gasLimit: undefined, success: false },
+				},
 			},
 		})
 

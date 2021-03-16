@@ -32,11 +32,13 @@ const emulate: AzureFunction = async (
 			)
 	)
 	const gasLimit = whenDefined(estimated, (e) => e.toString())
+	const success = Boolean(gasLimit)
+	const expectedTransaction = { gasLimit, success }
 	const status = computed ? 200 : 400
 
 	const body = whenDefined(computed?.packed?.data, (packed) => ({
-		data: { ...packed, gasLimit },
-	})) || { data: undefined }
+		data: { ...packed, gasLimit, expectedTransaction },
+	})) ?? { data: { expectedTransaction } }
 
 	return {
 		status,
