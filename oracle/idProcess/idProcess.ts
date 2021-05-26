@@ -40,9 +40,13 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		method: 'event',
 		options: { network },
 	})
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(
+		`id:${id} event name:${event?.data}`
+	)
 	const events = await whenDefinedAll(
 		[fromBlock, toBlockNumber, targetContract, event?.data],
-		([from, to, behavior, ev]) => getEvents(behavior, from, to, id, ev)
+		([from, to, behavior, ev]) => getEvents(context, behavior, from, to, id, ev)
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${id} event count:${events?.length}`)
