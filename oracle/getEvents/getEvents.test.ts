@@ -6,6 +6,7 @@ import { getEvents } from './getEvents'
 import { ethers } from 'ethers'
 import { stub } from 'sinon'
 import * as received from '../db/received-event'
+import { createContext } from '../../common/testutils'
 
 const tmp = async (): Promise<readonly ethers.Event[]> => {
 	return [
@@ -34,7 +35,9 @@ test.serial('event information is coming back.', async (t) => {
 		received,
 		'isAlreadyReceived'
 	).callsFake(() => async () => false)
+	const context = createContext()
 	const events = await getEvents(
+		context as any,
 		dummyConstract as any,
 		0,
 		100,
@@ -56,7 +59,9 @@ test.serial(
 			received,
 			'isAlreadyReceived'
 		).callsFake(() => async () => true)
+		const context = createContext()
 		const events = await getEvents(
+			context as any,
 			dummyConstract as any,
 			0,
 			100,
@@ -69,7 +74,9 @@ test.serial(
 )
 
 test.serial('Returns undefined when `Query` not found.', async (t) => {
+	const context = createContext()
 	const events = await getEvents(
+		context as any,
 		{
 			filters: {
 				query: () => {
