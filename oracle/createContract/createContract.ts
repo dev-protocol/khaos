@@ -26,11 +26,7 @@ export const createContract = async (
 		khaosFunctions({ id, method: 'abi' }),
 	])
 	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} address object:${address}`)
-	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${id} address data:${address?.data}`)
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} abi object:${abi}`)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${id} abi data:${abi?.data}`)
 
