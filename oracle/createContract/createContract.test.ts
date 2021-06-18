@@ -5,6 +5,7 @@ import { createContract } from './createContract'
 import { ethers } from 'ethers'
 import * as khaos from '@devprotocol/khaos-functions'
 import sinon from 'sinon'
+import { createContext } from '../../common/testutils'
 
 test.serial('returns [Contract, Provider, Wallet]', async (t) => {
 	const stub = sinon
@@ -23,8 +24,8 @@ test.serial('returns [Contract, Provider, Wallet]', async (t) => {
 	process.env.KHAOS_INFURA_ID = '8e44280aca0d4fbebad2f2849c39a83f'
 	process.env.KHAOS_MNEMONIC =
 		'size wish volume lecture dinner drastic easy assume pledge ribbon bunker stand drill grunt dutch'
-
-	const result = await createContract('test', 'ropsten')
+	const context = createContext()
+	const result = await createContract(context as any, 'test', 'ropsten')
 	t.is(result.length, 3)
 	t.true(result[0] instanceof ethers.Contract)
 	t.true(result[1] instanceof ethers.providers.InfuraProvider)
@@ -51,8 +52,8 @@ test.serial(
 		process.env.KHAOS_INFURA_ID = '8e44280aca0d4fbebad2f2849c39a83f'
 		process.env.KHAOS_MNEMONIC =
 			'size wish volume lecture dinner drastic easy assume pledge ribbon bunker stand drill grunt dutch'
-
-		const result = await createContract('test', 'mainnet')
+		const context = createContext()
+		const result = await createContract(context as any, 'test', 'mainnet')
 		t.is(result.length, 3)
 		t.is(result[0], undefined)
 		t.true(result[1] instanceof ethers.providers.InfuraProvider)
@@ -77,8 +78,8 @@ test.serial(
 				}
 			})
 		delete process.env.KHAOS_INFURA_ID
-
-		const result = await createContract('test', 'mainnet')
+		const context = createContext()
+		const result = await createContract(context as any, 'test', 'mainnet')
 		t.is(result.length, 3)
 		t.true(result[0] instanceof ethers.Contract)
 		t.is(result[1], undefined)
@@ -102,8 +103,8 @@ test.serial(
 						return undefined
 				}
 			})
-
-		const result = await createContract('test', 'mainnet')
+		const context = createContext()
+		const result = await createContract(context as any, 'test', 'mainnet')
 		t.is(result.length, 3)
 		t.is(result[0], undefined)
 		t.is(result[1], undefined)

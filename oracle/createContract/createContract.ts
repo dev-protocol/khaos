@@ -1,3 +1,4 @@
+import { Context } from '@azure/functions'
 import { NetworkName } from '@devprotocol/khaos-core'
 import { call } from '@devprotocol/khaos-functions'
 import { UndefinedOr, whenDefined, whenDefinedAll } from '@devprotocol/util-ts'
@@ -5,6 +6,7 @@ import { ethers } from 'ethers'
 import { always, tryCatch } from 'ramda'
 
 export const createContract = async (
+	context: Context,
 	id: string,
 	network?: NetworkName
 ): Promise<
@@ -23,6 +25,15 @@ export const createContract = async (
 		}),
 		khaosFunctions({ id, method: 'abi' }),
 	])
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`id:${id} address object:${address}`)
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`id:${id} address data:${address?.data}`)
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`id:${id} abi object:${abi}`)
+	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`id:${id} abi data:${abi?.data}`)
+
 	const provider = whenDefined(
 		process.env.KHAOS_INFURA_ID,
 		(infura) =>
