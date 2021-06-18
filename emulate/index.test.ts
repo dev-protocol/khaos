@@ -31,7 +31,7 @@ test.serial('Returns the results of the `compute` function', async (t) => {
 	})
 	t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
 	t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
-	t.deepEqual(createContractStub.getCall(0).args, ['test_id', 'testnet'] as any)
+	t.deepEqual(createContractStub.getCall(0).args, [{}, 'test_id', 'testnet'] as any)
 	t.deepEqual(factoryEstimateTransactionStub.getCall(0).args, [
 		'just a test instance',
 	] as any)
@@ -75,6 +75,7 @@ test.serial(
 		t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
 		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
 		t.deepEqual(createContractStub.getCall(0).args, [
+			{},
 			'test_id',
 			'testnet',
 		] as any)
@@ -121,6 +122,7 @@ test.serial(
 		t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
 		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
 		t.deepEqual(createContractStub.getCall(0).args, [
+			{},
 			'test_id',
 			'testnet',
 		] as any)
@@ -171,6 +173,7 @@ test.serial(
 		t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
 		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
 		t.deepEqual(createContractStub.getCall(0).args, [
+			{},
 			'test_id',
 			'testnet',
 		] as any)
@@ -224,6 +227,7 @@ test.serial(
 		t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
 		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
 		t.deepEqual(createContractStub.getCall(0).args, [
+			{},
 			'test_id',
 			'testnet',
 		] as any)

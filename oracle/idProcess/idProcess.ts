@@ -26,7 +26,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${id} network name:${network}`)
 	const khaosFunctions = call()
-	const [targetContract, provider] = await createContract(id, network)
+	const [targetContract, provider] = await createContract(context, id, network)
 	const toBlockNumber = await whenDefined(provider, (prov) =>
 		getToBlockNumber(prov)
 	)

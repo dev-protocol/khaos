@@ -14,7 +14,7 @@ type Response = {
 }
 
 const emulate: AzureFunction = async (
-	_,
+	context,
 	request: HttpRequest
 ): Promise<Response> => {
 	const { id = '' } = request.params
@@ -22,7 +22,7 @@ const emulate: AzureFunction = async (
 	const undef = always(undefined)
 	const [computed, contract] = await Promise.all([
 		compute(id, network)(event).catch(undef),
-		createContract(id, network).catch(undef),
+		createContract(context, id, network).catch(undef),
 	])
 	const estimated = await whenDefinedAll(
 		[computed?.packed?.data, contract?.[0]],
