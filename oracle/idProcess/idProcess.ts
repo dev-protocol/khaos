@@ -30,7 +30,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	const toBlockNumber = await whenDefined(provider, (prov) =>
 		getToBlockNumber(prov)
 	)
-	const fromBlock = getFromBlock(toBlockNumber)
+	const fromBlock = id === 'update-cap' ? 12739566 : getFromBlock(toBlockNumber)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(
 		`id:${id} block from:${fromBlock || 0} to ${toBlockNumber || 0}`
@@ -54,9 +54,36 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		Promise.all(x.map(compute(id, network)))
 	)
 	// eslint-disable-next-line functional/no-expression-statement
+	context.log.info(`id:${id} event count:${events?.length}`)
+	// eslint-disable-next-line functional/no-expression-statement
 	await whenDefined(computed, (c) =>
 		Promise.all(c.map((c) => c.query).map(saveReceivedEventHashe(id)))
 	)
+	// eslint-disable-next-line functional/no-conditional-statement
+	if (typeof computed !== 'undefined'){
+		// eslint-disable-next-line functional/no-conditional-statement
+		if (computed?.length > 0) {
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} :${computed[0].packed?.data}`)
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} :${computed[0].oraclized.khaosId}`)
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} :${computed[0].oraclized.result?.message}`)
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} :${computed[0].oraclized.result?.status}`)
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} :${computed[0].oraclized.result?.statusMessage}`)
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} :${computed[0].query.allData}`)
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} :${computed[0].query.publicSignature}`)
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} :${computed[0].query.transactionhash}`)
+		}
+	}
+
+
+
 	return whenDefinedAll(
 		[computed, targetContract],
 		([computedData, contractInterface]) =>
