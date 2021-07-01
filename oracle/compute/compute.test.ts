@@ -8,6 +8,7 @@ import * as getSecret from '../getSecret/getSecret'
 import { MarketQueryData } from '../../common/structs'
 import { compute } from './compute'
 import { NetworkName } from '@devprotocol/khaos-core'
+import { createContext } from '../../common/testutils'
 
 test.serial('Takes id and network name and runs the process', async (t) => {
 	const khaosFunctionsRetuns = { data: { name: 'test', args: [1, 2, 3] } }
@@ -30,7 +31,8 @@ test.serial('Takes id and network name and runs the process', async (t) => {
 		myParam: 1,
 		transactionHash: 'test_tx',
 	} as unknown) as ethers.Event
-	const res = await compute('TEST_ID', 'TEST_NET' as NetworkName)(event)
+	const context = createContext()
+	const res = await compute(context as any, 'TEST_ID', 'TEST_NET' as NetworkName)(event)
 	t.deepEqual(factoryCallStub.getCall(0).args, [])
 	t.deepEqual(factoryExecuteOraclizeStub.getCall(0).args, [
 		'TEST_ID',
@@ -79,7 +81,8 @@ test.serial('oracle function returns undefined', async (t) => {
 		myParam: 1,
 		transactionHash: 'test_tx',
 	} as unknown) as ethers.Event
-	const res = await compute('TEST_ID', 'TEST_NET' as NetworkName)(event)
+	const context = createContext()
+	const res = await compute(context as any, 'TEST_ID', 'TEST_NET' as NetworkName)(event)
 	t.deepEqual(factoryCallStub.getCall(0).args, [])
 	t.deepEqual(factoryExecuteOraclizeStub.getCall(0).args, [
 		'TEST_ID',

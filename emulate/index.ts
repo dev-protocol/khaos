@@ -21,7 +21,7 @@ const emulate: AzureFunction = async (
 	const { network = '', event } = request.body
 	const undef = always(undefined)
 	const [computed, contract] = await Promise.all([
-		compute(id, network)(event).catch(undef),
+		compute(context, id, network)(event).catch(undef),
 		createContract(context, id, network).catch(undef),
 	])
 	const estimated = await whenDefinedAll(
