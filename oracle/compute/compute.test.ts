@@ -35,6 +35,7 @@ test.serial('Takes id and network name and runs the process', async (t) => {
 	const res = await compute(context as any, 'TEST_ID', 'TEST_NET' as NetworkName)(event)
 	t.deepEqual(factoryCallStub.getCall(0).args, [])
 	t.deepEqual(factoryExecuteOraclizeStub.getCall(0).args, [
+		context as any,
 		'TEST_ID',
 		'TEST_NET',
 	])
@@ -85,6 +86,7 @@ test.serial('oracle function returns undefined', async (t) => {
 	const res = await compute(context as any, 'TEST_ID', 'TEST_NET' as NetworkName)(event)
 	t.deepEqual(factoryCallStub.getCall(0).args, [])
 	t.deepEqual(factoryExecuteOraclizeStub.getCall(0).args, [
+		context as any,
 		'TEST_ID',
 		'TEST_NET',
 	])
