@@ -22,29 +22,9 @@ export const compute = (context: Context, id: string, network: NetworkName): Com
 	const oracle = executeOraclize(context, id, network)
 	const khaosFunctions = call()
 	return async (event: ethers.Event): ReturnType<Compute> => {
-		// TODO 後でログを消す
 		const query = getData(event)
-
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} compute:query.publicSignature:${query.publicSignature}`)
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} compute:query.transactionhash:${query.transactionhash}`)
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} compute:query.allData:${query.allData}`)
 		const oracleArgs = await getSecret(query)
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} compute:oracleArgs.secret:${oracleArgs.secret}`)
 		const oraclized = await oracle(oracleArgs)
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} compute:oraclized.khaosId:${oraclized.khaosId}`)
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} compute:oraclized.result:${oraclized.result}`)
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} compute:oraclized.result?.message:${oraclized.result?.message}`)
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} compute:oraclized.result?.status:${oraclized.result?.status}`)
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} compute:oraclized.result?.statusMessage:${oraclized.result?.statusMessage}`)
 		const packed = typeof oraclized.result === 'undefined' ? undefined : await khaosFunctions({
 			id,
 			method: 'pack',

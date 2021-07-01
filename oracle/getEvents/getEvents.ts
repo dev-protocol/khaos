@@ -18,16 +18,6 @@ export const getEvents = async (
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${khaosId} event count before filtering:${queryEvents?.length}`)
-
-	// TODO 後で消す
-	// eslint-disable-next-line functional/no-conditional-statement
-	if (khaosId === 'update-cap') {
-		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${khaosId} nakanaka`)
-		return queryEvents
-	}
-
-
 	const validEvents = await whenDefined(queryEvents, (events) =>
 		filterAsync(events, isValid(khaosId))
 	)
