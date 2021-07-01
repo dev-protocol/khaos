@@ -22,30 +22,11 @@ export const executeOraclize = (context: Context, id: string, network: NetworkNa
 		({ id, address }) => recoverPublicSignature(id, address)
 	)
 	const signatureOptions = typeof tmp === 'undefined' ? {message: '', id: '', address: ''} : tmp
-	// TODO ログを消す
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} executeOraclize:signatureOptions:${signatureOptions}`)
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} executeOraclize:signatureOptions?.address:${signatureOptions?.address}`)
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} executeOraclize:signatureOptions?.id:${signatureOptions?.id}`)
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} executeOraclize:signatureOptions?.message:${signatureOptions?.message}`)
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} executeOraclize:network:${network}`)
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} executeOraclize:info.eventData.transactionhash:${info.eventData?.transactionhash}`)
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} executeOraclize:info.eventData.publicSignature:${info.eventData?.publicSignature}`)
 	const callBack = await oraclize({
 		id,
 		method: 'oraclize',
 		options: { signatureOptions, query: info.eventData, network },
 	})
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} executeOraclize:callBack:${callBack}`)
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${id} executeOraclize:callBack?.data:${callBack?.data}`)
 	return {
 		khaosId: id,
 		result: typeof callBack === 'undefined' ? undefined : callBack.data,
