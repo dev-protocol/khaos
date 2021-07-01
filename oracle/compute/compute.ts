@@ -28,7 +28,7 @@ export const compute = (id: string, network: NetworkName): Compute => {
 
 		const oraclized = await oracle(oracleArgs)
 
-		const packed = await khaosFunctions({
+		const packed = typeof oraclized.result === 'undefined' ? undefined : await khaosFunctions({
 			id,
 			method: 'pack',
 			options: { results: oraclized.result },
