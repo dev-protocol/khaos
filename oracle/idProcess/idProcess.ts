@@ -64,21 +64,23 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 		// eslint-disable-next-line functional/no-conditional-statement
 		if (computed?.length > 0) {
 			// eslint-disable-next-line functional/no-expression-statement
-			context.log.info(`id:${id} :${computed[0].packed?.data}`)
+			context.log.info(`id:${id} packed?.data?.name :${computed[0].packed?.data?.name}`)
 			// eslint-disable-next-line functional/no-expression-statement
-			context.log.info(`id:${id} :${computed[0].oraclized.khaosId}`)
+			context.log.info(`id:${id} packed?.data?.args :${computed[0].packed?.data?.args}`)
 			// eslint-disable-next-line functional/no-expression-statement
-			context.log.info(`id:${id} :${computed[0].oraclized.result?.message}`)
+			context.log.info(`id:${id} oraclized.khaosId :${computed[0].oraclized.khaosId}`)
 			// eslint-disable-next-line functional/no-expression-statement
-			context.log.info(`id:${id} :${computed[0].oraclized.result?.status}`)
+			context.log.info(`id:${id} oraclized.result?.message :${computed[0].oraclized.result?.message}`)
 			// eslint-disable-next-line functional/no-expression-statement
-			context.log.info(`id:${id} :${computed[0].oraclized.result?.statusMessage}`)
+			context.log.info(`id:${id} oraclized.result?.status :${computed[0].oraclized.result?.status}`)
 			// eslint-disable-next-line functional/no-expression-statement
-			context.log.info(`id:${id} :${computed[0].query.allData}`)
+			context.log.info(`id:${id} oraclized.result?.statusMessage :${computed[0].oraclized.result?.statusMessage}`)
 			// eslint-disable-next-line functional/no-expression-statement
-			context.log.info(`id:${id} :${computed[0].query.publicSignature}`)
+			context.log.info(`id:${id} query.allData :${computed[0].query.allData}`)
 			// eslint-disable-next-line functional/no-expression-statement
-			context.log.info(`id:${id} :${computed[0].query.transactionhash}`)
+			context.log.info(`id:${id} query.publicSignature :${computed[0].query.publicSignature}`)
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} query.transactionhash :${computed[0].query.transactionhash}`)
 		}
 	}
 	return whenDefinedAll(
