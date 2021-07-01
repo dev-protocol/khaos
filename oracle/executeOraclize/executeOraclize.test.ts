@@ -3,6 +3,7 @@ import { executeOraclize } from './executeOraclize'
 import { publicSignature } from '@devprotocol/khaos-core'
 import * as khaosFunctions from '@devprotocol/khaos-functions'
 import { stub } from 'sinon'
+import { createContext } from '../../common/testutils'
 
 test.serial(
 	'Execute the oraclize function if the khaos id exists.',
@@ -16,7 +17,9 @@ test.serial(
 		}))
 
 		const sig = publicSignature({ id: 'A', message: 'B', address: 'D' })
+		const context = createContext()
 		const result = await executeOraclize(
+			context as any,
 			'example',
 			'mainnet'
 		)({
@@ -48,7 +51,9 @@ test.serial(
 		const kStub = stub(khaosFunctions, 'call').callsFake(() => async () =>
 			undefined
 		)
+		const context = createContext()
 		const result = await executeOraclize(
+			context as any,
 			'example2',
 			'mainnet'
 		)({
@@ -67,7 +72,9 @@ test.serial(
 		const kStub = stub(khaosFunctions, 'call').callsFake(() => async () =>
 			undefined
 		)
+		const context = createContext()
 		const result = await executeOraclize(
+			context as any,
 			'example2',
 			'mainnet'
 		)({

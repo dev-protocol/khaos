@@ -19,7 +19,7 @@ type Compute = (
 }>
 
 export const compute = (context: Context, id: string, network: NetworkName): Compute => {
-	const oracle = executeOraclize(id, network)
+	const oracle = executeOraclize(context, id, network)
 	const khaosFunctions = call()
 	return async (event: ethers.Event): ReturnType<Compute> => {
 		// TODO 後でログを消す
@@ -37,6 +37,8 @@ export const compute = (context: Context, id: string, network: NetworkName): Com
 		const oraclized = await oracle(oracleArgs)
 		// eslint-disable-next-line functional/no-expression-statement
 		context.log.info(`id:${id} compute:oraclized.khaosId:${oraclized.khaosId}`)
+		// eslint-disable-next-line functional/no-expression-statement
+		context.log.info(`id:${id} compute:oraclized.result:${oraclized.result}`)
 		// eslint-disable-next-line functional/no-expression-statement
 		context.log.info(`id:${id} compute:oraclized.result?.message:${oraclized.result?.message}`)
 		// eslint-disable-next-line functional/no-expression-statement
