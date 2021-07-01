@@ -12,14 +12,22 @@ export const getEvents = async (
 	khaosId: string,
 	eventName: string
 ): Promise<readonly ethers.Event[] | undefined> => {
-	// eslint-disable-next-line functional/no-expression-statement
-	context.log.info(`id:${khaosId} event name:${eventName}`)
 	const filter = whenDefined(eventContract.filters[eventName], (ev) => ev())
 	const queryEvents = await whenDefined(filter, (filt) =>
 		eventContract.queryFilter(filt, firstBlock, lastBlock)
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${khaosId} event count before filtering:${queryEvents?.length}`)
+
+	// TODO 後で消す
+	// eslint-disable-next-line functional/no-conditional-statement
+	if (khaosId === 'update-cap') {
+		// eslint-disable-next-line functional/no-expression-statement
+		context.log.info(`id:${khaosId} nakanaka`)
+		return queryEvents
+	}
+
+
 	const validEvents = await whenDefined(queryEvents, (events) =>
 		filterAsync(events, isValid(khaosId))
 	)
