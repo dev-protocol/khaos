@@ -52,7 +52,7 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${id} event count:${events?.length}`)
 	const computed = await whenDefined(events, (x) =>
-		Promise.all(x.map(compute(id, network)))
+		Promise.all(x.map(compute(context, id, network)))
 	)
 	// eslint-disable-next-line functional/no-expression-statement
 	await whenDefined(computed, (c) =>
@@ -63,6 +63,10 @@ export const idProcess = (context: Context, network: NetworkName) => async (
 	if (typeof computed !== 'undefined'){
 		// eslint-disable-next-line functional/no-conditional-statement
 		if (computed?.length > 0) {
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} packed? :${computed[0].packed}`)
+			// eslint-disable-next-line functional/no-expression-statement
+			context.log.info(`id:${id} packed?.data? :${computed[0].packed?.data}`)
 			// eslint-disable-next-line functional/no-expression-statement
 			context.log.info(`id:${id} packed?.data?.name :${computed[0].packed?.data?.name}`)
 			// eslint-disable-next-line functional/no-expression-statement

@@ -29,7 +29,7 @@ test.serial('Returns the results of the `compute` function', async (t) => {
 		params: { id: 'test_id' },
 		body: { network: 'testnet', event: { myParam: 1 } },
 	})
-	t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
+	t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
 	t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
 	t.deepEqual(createContractStub.getCall(0).args, [{}, 'test_id', 'testnet'] as any)
 	t.deepEqual(factoryEstimateTransactionStub.getCall(0).args, [
@@ -72,7 +72,7 @@ test.serial(
 			params: { id: 'test_id' },
 			body: { network: 'testnet', event: { myParam: 1 } },
 		})
-		t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
+		t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
 		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
 		t.deepEqual(createContractStub.getCall(0).args, [
 			{},
@@ -119,7 +119,7 @@ test.serial(
 			params: { id: 'test_id' },
 			body: { network: 'testnet', event: { myParam: 1 } },
 		})
-		t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
+		t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
 		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
 		t.deepEqual(createContractStub.getCall(0).args, [
 			{},
@@ -170,7 +170,7 @@ test.serial(
 			params: { id: 'test_id' },
 			body: { network: 'testnet', event: { myParam: 1 } },
 		})
-		t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
+		t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
 		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
 		t.deepEqual(createContractStub.getCall(0).args, [
 			{},
@@ -224,7 +224,7 @@ test.serial(
 			params: { id: 'test_id' },
 			body: { network: 'testnet', event: { myParam: 1 } },
 		})
-		t.deepEqual(factoryStub.getCall(0).args, ['test_id', 'testnet'])
+		t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
 		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
 		t.deepEqual(createContractStub.getCall(0).args, [
 			{},
