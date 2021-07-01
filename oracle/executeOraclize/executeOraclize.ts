@@ -17,10 +17,11 @@ export const executeOraclize = (context: Context, id: string, network: NetworkNa
 	info: oracleArgInfo
 ): Promise<sendInfo> => {
 	const oraclize = call()
-	const signatureOptions = whenDefined(
+	const tmp = whenDefined(
 		info.secret?.resource,
 		({ id, address }) => recoverPublicSignature(id, address)
 	)
+	const signatureOptions = typeof tmp === 'undefined' ? {message: '', id: '', address: ''} : tmp
 	// TODO ログを消す
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${id} executeOraclize:signatureOptions:${signatureOptions}`)
