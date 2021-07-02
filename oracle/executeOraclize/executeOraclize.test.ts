@@ -46,6 +46,37 @@ test.serial(
 )
 
 test.serial(
+	'Oraclize succeeds even when there is no connection to the DB.',
+	async (t) => {
+		const kStub = stub(khaosFunctions, 'call').callsFake(() => async () => ({
+			data: {
+				message: 'C',
+				status: 0,
+				statusMessage: 'message2',
+			} as any,
+		}))
+
+		const context = createContext()
+		const result = await executeOraclize(
+			context as any,
+			'example2',
+			'mainnet'
+		)({
+			json: { i: 'example2' },
+			secret: undefined,
+			eventData: {},
+		} as any)
+		t.is(result.khaosId, 'example2')
+		t.deepEqual(result.result, {
+			message: 'C',
+			status: 0,
+			statusMessage: 'message2',
+		})
+		kStub.restore()
+	}
+)
+
+test.serial(
 	'If the khaos id does not exist, the oraclize function is not executed and undefined is returned.',
 	async (t) => {
 		const kStub = stub(khaosFunctions, 'call').callsFake(() => async () =>
