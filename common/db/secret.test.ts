@@ -95,7 +95,7 @@ const createStub = (
 test('write; insert new data to `Authentication.Secrets`', async (t) => {
 	t.plan(4)
 	const res = await writer(
-		(createStub(() => t.pass()) as unknown) as typeof CosmosClient
+		createStub(() => t.pass()) as unknown as typeof CosmosClient
 	)({
 		id: 'test',
 		secret: 'data',
@@ -120,15 +120,15 @@ test('write; override the data when passed data already exists', async (t) => {
 		}
 		store.set(opts.id, opts)
 	}
-	await writer((createStub(fake) as unknown) as typeof CosmosClient)({
+	await writer(createStub(fake) as unknown as typeof CosmosClient)({
 		id: 'test',
 		secret: 'data',
 		address: 'account',
 	})
 	const res = await writer(
-		(createStub(fake, undefined, () =>
+		createStub(fake, undefined, () =>
 			t.pass()
-		) as unknown) as typeof CosmosClient
+		) as unknown as typeof CosmosClient
 	)({
 		id: 'test',
 		secret: 'data-replaced',
@@ -148,7 +148,7 @@ test('write; override the data when passed data already exists', async (t) => {
 test('read; get data from `Authentication.Secrets`', async (t) => {
 	t.plan(9)
 	const res = await reader(
-		(createStub(undefined, () => t.pass()) as unknown) as typeof CosmosClient
+		createStub(undefined, () => t.pass()) as unknown as typeof CosmosClient
 	)('test')
 	t.is(res.item.container.database.id, 'Authentication')
 	t.is(res.item.container.id, 'Secrets')

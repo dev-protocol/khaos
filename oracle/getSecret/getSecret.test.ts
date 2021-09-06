@@ -8,11 +8,12 @@ import { MarketQueryData } from './../../common/structs'
 test.serial(
 	'If the record exists, it returns with the argument json object.',
 	async (t) => {
-		const stubbedReader = stub(secret, 'reader').callsFake(() => async () =>
-			({
-				statusCode: 200,
-				resource: { secret: 'dummy-secret' },
-			} as any)
+		const stubbedReader = stub(secret, 'reader').callsFake(
+			() => async () =>
+				({
+					statusCode: 200,
+					resource: { secret: 'dummy-secret' },
+				} as any)
 		)
 		const data: MarketQueryData = {
 			allData: { repo: 'hugahuga/hogihogi' } as any,
@@ -29,11 +30,12 @@ test.serial(
 test.serial(
 	'If the record does not exist, it comes back with undefined.',
 	async (t) => {
-		const stubbedReader = stub(secret, 'reader').callsFake(() => async () =>
-			({
-				statusCode: 200,
-				resource: undefined,
-			} as any)
+		const stubbedReader = stub(secret, 'reader').callsFake(
+			() => async () =>
+				({
+					statusCode: 200,
+					resource: undefined,
+				} as any)
 		)
 		const data: MarketQueryData = {
 			allData: { repo: 'hugahuga/hogihogi' } as any,

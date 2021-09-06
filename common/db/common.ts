@@ -8,10 +8,8 @@ export const createDBInstance = async (
 	},
 	env: NodeJS.ProcessEnv
 ): Promise<Container> => {
-	const {
-		KHAOS_COSMOS_ENDPOINT: endpoint = '',
-		KHAOS_COSMOS_KEY: key = '',
-	} = env
+	const { KHAOS_COSMOS_ENDPOINT: endpoint = '', KHAOS_COSMOS_KEY: key = '' } =
+		env
 	const client = new Client({ endpoint, key })
 	const { database } = await client.databases.createIfNotExists({
 		id: opts.database,

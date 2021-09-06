@@ -31,10 +31,9 @@ const dummyConstract = {
 }
 
 test.serial('event information is coming back.', async (t) => {
-	const stubbedReader = stub(
-		received,
-		'isAlreadyReceived'
-	).callsFake(() => async () => false)
+	const stubbedReader = stub(received, 'isAlreadyReceived').callsFake(
+		() => async () => false
+	)
 	const context = createContext()
 	const events = await getEvents(
 		context as any,
@@ -43,7 +42,7 @@ test.serial('event information is coming back.', async (t) => {
 		100,
 		'example',
 		'Query'
-	).then((res) => (res as unknown) as readonly ethers.Event[])
+	).then((res) => res as unknown as readonly ethers.Event[])
 	t.is(events.length, 2)
 	t.is(events[0].blockNumber, 1)
 	t.is(events[0].blockHash, 'dummy-value1')
@@ -55,10 +54,9 @@ test.serial('event information is coming back.', async (t) => {
 test.serial(
 	'already received event information is not coming back.',
 	async (t) => {
-		const stubbedReader = stub(
-			received,
-			'isAlreadyReceived'
-		).callsFake(() => async () => true)
+		const stubbedReader = stub(received, 'isAlreadyReceived').callsFake(
+			() => async () => true
+		)
 		const context = createContext()
 		const events = await getEvents(
 			context as any,
@@ -67,7 +65,7 @@ test.serial(
 			100,
 			'example',
 			'Query'
-		).then((res) => (res as unknown) as readonly ethers.Event[])
+		).then((res) => res as unknown as readonly ethers.Event[])
 		t.is(events.length, 0)
 		stubbedReader.restore()
 	}

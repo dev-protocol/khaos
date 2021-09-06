@@ -31,7 +31,11 @@ test.serial('Returns the results of the `compute` function', async (t) => {
 	})
 	t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
 	t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
-	t.deepEqual(createContractStub.getCall(0).args, [{}, 'test_id', 'testnet'] as any)
+	t.deepEqual(createContractStub.getCall(0).args, [
+		{},
+		'test_id',
+		'testnet',
+	] as any)
 	t.deepEqual(factoryEstimateTransactionStub.getCall(0).args, [
 		'just a test instance',
 	] as any)
@@ -107,10 +111,9 @@ test.serial(
 			Promise.resolve(BigNumber.from('123456'))
 		)
 		const factoryStub = stub(compute, 'compute').callsFake(() => computeFake)
-		const createContractStub = stub(
-			createContract,
-			'createContract'
-		).callsFake(() => Promise.reject('test'))
+		const createContractStub = stub(createContract, 'createContract').callsFake(
+			() => Promise.reject('test')
+		)
 		const factoryEstimateTransactionStub = stub(
 			estimateTransaction,
 			'estimateTransaction'

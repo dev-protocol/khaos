@@ -79,8 +79,8 @@ test.serial(
 test.serial(
 	'If the khaos id does not exist, the oraclize function is not executed and undefined is returned.',
 	async (t) => {
-		const kStub = stub(khaosFunctions, 'call').callsFake(() => async () =>
-			undefined
+		const kStub = stub(khaosFunctions, 'call').callsFake(
+			() => async () => undefined
 		)
 		const context = createContext()
 		const result = await executeOraclize(
@@ -100,8 +100,8 @@ test.serial(
 test.serial(
 	'If the ItemResponce isn undefined, return result is undefiend.',
 	async (t) => {
-		const kStub = stub(khaosFunctions, 'call').callsFake(() => async () =>
-			undefined
+		const kStub = stub(khaosFunctions, 'call').callsFake(
+			() => async () => undefined
 		)
 		const context = createContext()
 		const result = await executeOraclize(
