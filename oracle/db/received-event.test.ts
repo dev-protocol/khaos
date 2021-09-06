@@ -54,7 +54,7 @@ test('write; insert new data to `Oraclization.ReceivedEvent`', async (t) => {
 				}),
 			}
 		}
-	const res = await writer((createStub() as unknown) as typeof CosmosClient)(
+	const res = await writer(createStub() as unknown as typeof CosmosClient)(
 		{
 			id: '0x1234567890abcdef',
 		},
@@ -112,7 +112,7 @@ test('write; already exist data at `Oraclization.ReceivedEvent`', async (t) => {
 				}),
 			}
 		}
-	const res = await writer((createStub() as unknown) as typeof CosmosClient)(
+	const res = await writer(createStub() as unknown as typeof CosmosClient)(
 		{
 			id: '0x1234567890abcdef',
 		},
@@ -158,7 +158,7 @@ test('isAlreadyReceived; data is not exist', async (t) => {
 			}
 		}
 	const res = await isAlreadyReceived(
-		(createStub() as unknown) as typeof CosmosClient
+		createStub() as unknown as typeof CosmosClient
 	)('0x1234567890abcdef', 'example')
 	t.false(res)
 })
@@ -208,7 +208,7 @@ test('isAlreadyReceived; data is exist', async (t) => {
 			}
 		}
 	const res = await isAlreadyReceived(
-		(createStub() as unknown) as typeof CosmosClient
+		createStub() as unknown as typeof CosmosClient
 	)('0x1234567890abcdef', 'example')
 	t.true(res)
 })

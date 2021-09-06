@@ -13,22 +13,22 @@ export type sendInfo = {
 	readonly result?: FunctionOraclizeResults
 }
 
-export const executeOraclize = (context: Context, id: string, network: NetworkName) => async (
-	info: oracleArgInfo
-): Promise<sendInfo> => {
-	const oraclize = call()
-	const tmp = whenDefined(
-		info.secret?.resource,
-		({ id, address }) => recoverPublicSignature(id, address)
-	)
-	const signatureOptions = typeof tmp === 'undefined' ? {message: '', id: '', address: ''} : tmp
-	const callBack = await oraclize({
-		id,
-		method: 'oraclize',
-		options: { signatureOptions, query: info.eventData, network },
-	})
-	return {
-		khaosId: id,
-		result: typeof callBack === 'undefined' ? undefined : callBack.data,
+export const executeOraclize =
+	(context: Context, id: string, network: NetworkName) =>
+	async (info: oracleArgInfo): Promise<sendInfo> => {
+		const oraclize = call()
+		const tmp = whenDefined(info.secret?.resource, ({ id, address }) =>
+			recoverPublicSignature(id, address)
+		)
+		const signatureOptions =
+			typeof tmp === 'undefined' ? { message: '', id: '', address: '' } : tmp
+		const callBack = await oraclize({
+			id,
+			method: 'oraclize',
+			options: { signatureOptions, query: info.eventData, network },
+		})
+		return {
+			khaosId: id,
+			result: typeof callBack === 'undefined' ? undefined : callBack.data,
+		}
 	}
-}

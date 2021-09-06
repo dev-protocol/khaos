@@ -47,7 +47,7 @@ const createStub = (createCallback?: (options?: any) => void) =>
 
 test('An instance of the database is created (albeit a dummy)', async (t) => {
 	const instance = await createDBInstance(
-		(createStub(() => t.pass()) as unknown) as typeof CosmosClient,
+		createStub(() => t.pass()) as unknown as typeof CosmosClient,
 		{
 			database: 'dummy-database',
 			container: 'dummy-container',
