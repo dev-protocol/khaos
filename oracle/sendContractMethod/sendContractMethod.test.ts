@@ -17,9 +17,10 @@ test.serial('returns event information', async (t) => {
 	const stub = sinon
 		.stub(estimateTransaction, 'estimateTransaction')
 		.callsFake(() => async () => Promise.resolve('123456'))
-	const result = await sendContractMethod(
-		dummyConstract as any
-	)('khaosCallback', ['test', 0])
+	const result = await sendContractMethod(dummyConstract as any)(
+		'khaosCallback',
+		['test', 0]
+	)
 	t.deepEqual(result, {
 		hash: '0xdummy',
 	} as any)
@@ -30,9 +31,10 @@ test.serial('returns undefined when estimatation is failed', async (t) => {
 	const stub = sinon
 		.stub(estimateTransaction, 'estimateTransaction')
 		.callsFake(() => async () => Promise.resolve(undefined))
-	const result = await sendContractMethod(
-		dummyConstract as any
-	)('khaosCallback', ['test', 0])
+	const result = await sendContractMethod(dummyConstract as any)(
+		'khaosCallback',
+		['test', 0]
+	)
 	t.deepEqual(result, undefined)
 	stub.restore()
 })
