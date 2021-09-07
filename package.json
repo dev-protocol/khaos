@@ -32,7 +32,7 @@
 		"web3": "1.5.2"
 	},
 	"devDependencies": {
-		"@ava/typescript": "1.1.1",
+		"@ava/typescript": "2.0.0",
 		"@types/bent": "7.3.2",
 		"@types/dotenv": "8.2.0",
 		"@types/jsonwebtoken": "8.5.5",
@@ -59,7 +59,8 @@
 		"typescript": {
 			"rewritePaths": {
 				"/": "dist/"
-			}
+			},
+			"compile": false
 		}
 	},
 	"repository": {
