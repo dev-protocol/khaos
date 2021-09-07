@@ -12,11 +12,12 @@ import { ethers } from 'ethers'
 import { createContext } from '../../common/testutils'
 
 test.serial('The process is executed successfully.', async (t) => {
-	const stubbedSecretReader = stub(secret, 'reader').callsFake(() => async () =>
-		({
-			statusCode: 200,
-			resource: { secret: 'dummy-secret' },
-		} as any)
+	const stubbedSecretReader = stub(secret, 'reader').callsFake(
+		() => async () =>
+			({
+				statusCode: 200,
+				resource: { secret: 'dummy-secret' },
+			} as any)
 	)
 	const stubbedGetEvents = stub(getEvents, 'getEvents').callsFake(
 		async () => [] as readonly ethers.Event[]

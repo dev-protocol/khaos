@@ -15,16 +15,16 @@ const fakeImportAuthorizer = () => async () => ({ data: true } as any)
 const fakeRecover = (message: string, signature: string): string | undefined =>
 	`${message}-${signature}`
 const createContext = (): Context =>
-	(({
+	({
 		res: {},
-	} as unknown) as Context)
+	} as unknown as Context)
 const createReq = (
 	id?: string,
 	message?: string,
 	secret?: string,
 	signature?: string
 ): HttpRequest =>
-	(({
+	({
 		params: {
 			id,
 		},
@@ -33,7 +33,7 @@ const createReq = (
 			secret,
 			signature,
 		},
-	} as unknown) as HttpRequest)
+	} as unknown as HttpRequest)
 const returnFakeWriter = new Map([
 	[
 		'default',
@@ -147,10 +147,11 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(fakeRecover),
-			stub(khaosFunctions, 'call').callsFake(() => async () =>
-				({
-					data: false,
-				} as any)
+			stub(khaosFunctions, 'call').callsFake(
+				() => async () =>
+					({
+						data: false,
+					} as any)
 			),
 		]
 		returnFakeWriter.set('default', { statusCode: 200 })
@@ -214,10 +215,11 @@ test.serial(
 	async (t) => {
 		const stubs = [
 			stub(recover, 'recover').callsFake(fakeRecover),
-			stub(khaosFunctions, 'call').callsFake(() => async () =>
-				({
-					data: false,
-				} as any)
+			stub(khaosFunctions, 'call').callsFake(
+				() => async () =>
+					({
+						data: false,
+					} as any)
 			),
 		]
 		const id = 'xxx'

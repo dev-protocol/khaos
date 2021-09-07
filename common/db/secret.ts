@@ -20,23 +20,23 @@ const SECRETS = {
 
 const createPartitionValue = (id: string): string => id.substr(id.length - 1)
 
-export const writer = (client: typeof CosmosClient) => async (
-	data: Secret
-): Promise<ItemResponse<SecretWithPartition>> => {
-	const partition = createPartitionValue(data.id)
-	const container = await createDBInstance(client, SECRETS, process.env)
-	const item: SecretWithPartition = withPartitionKey(data, partition)
-	return container.items
-		.create(item)
-		.catch(
-			always(((id) => container.item(id, partition).replace(item))(item.id))
-		)
-}
+export const writer =
+	(client: typeof CosmosClient) =>
+	async (data: Secret): Promise<ItemResponse<SecretWithPartition>> => {
+		const partition = createPartitionValue(data.id)
+		const container = await createDBInstance(client, SECRETS, process.env)
+		const item: SecretWithPartition = withPartitionKey(data, partition)
+		return container.items
+			.create(item)
+			.catch(
+				always(((id) => container.item(id, partition).replace(item))(item.id))
+			)
+	}
 
-export const reader = (client: typeof CosmosClient) => async (
-	id: string
-): Promise<ItemResponse<SecretWithPartition>> => {
-	const partition = createPartitionValue(id)
-	const container = await createDBInstance(client, SECRETS, process.env)
-	return container.item(id, partition).read()
-}
+export const reader =
+	(client: typeof CosmosClient) =>
+	async (id: string): Promise<ItemResponse<SecretWithPartition>> => {
+		const partition = createPartitionValue(id)
+		const container = await createDBInstance(client, SECRETS, process.env)
+		return container.item(id, partition).read()
+	}

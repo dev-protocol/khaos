@@ -27,12 +27,16 @@ test.serial('Takes id and network name and runs the process', async (t) => {
 		Promise.resolve({ secret: { test: 'test' } as any, eventData })
 	)
 	const getSecretStub = stub(getSecret, 'getSecret').callsFake(getSecretFake)
-	const event = ({
+	const event = {
 		myParam: 1,
 		transactionHash: 'test_tx',
-	} as unknown) as ethers.Event
+	} as unknown as ethers.Event
 	const context = createContext()
-	const res = await compute(context as any, 'TEST_ID', 'TEST_NET' as NetworkName)(event)
+	const res = await compute(
+		context as any,
+		'TEST_ID',
+		'TEST_NET' as NetworkName
+	)(event)
 	t.deepEqual(factoryCallStub.getCall(0).args, [])
 	t.deepEqual(factoryExecuteOraclizeStub.getCall(0).args, [
 		context as any,
@@ -78,12 +82,16 @@ test.serial('oracle function returns undefined', async (t) => {
 		Promise.resolve({ secret: { test: 'test' } as any, eventData })
 	)
 	const getSecretStub = stub(getSecret, 'getSecret').callsFake(getSecretFake)
-	const event = ({
+	const event = {
 		myParam: 1,
 		transactionHash: 'test_tx',
-	} as unknown) as ethers.Event
+	} as unknown as ethers.Event
 	const context = createContext()
-	const res = await compute(context as any, 'TEST_ID', 'TEST_NET' as NetworkName)(event)
+	const res = await compute(
+		context as any,
+		'TEST_ID',
+		'TEST_NET' as NetworkName
+	)(event)
 	t.deepEqual(factoryCallStub.getCall(0).args, [])
 	t.deepEqual(factoryExecuteOraclizeStub.getCall(0).args, [
 		context as any,
