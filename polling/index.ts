@@ -19,7 +19,13 @@ const handleTimer: AzureFunction = async function (
 	const dirs = await ids()
 	const oraclizer = idProcess(
 		context,
-		process.env.KHAOS_NETWORK === 'mainnet' ? 'mainnet' : 'ropsten'
+		((x?: string) =>
+			x === 'mainnet' ||
+			x === 'ropsten' ||
+			x === 'arbitrum-one' ||
+			x === 'arbitrum-rinkeby'
+				? x
+				: 'mainnet')(process.env.KHAOS_NETWORK)
 	)
 	const results = await Promise.all(dirs.map((x) => x.id).map(oraclizer))
 	// eslint-disable-next-line functional/no-expression-statement

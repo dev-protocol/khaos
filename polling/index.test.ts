@@ -23,7 +23,7 @@ test.after(() => {
 })
 
 test.serial(
-	'Returns a function for the Azure functions that pass "mainnet" to `idProcess`',
+	'Returns a function for the Azure functions that pass "mainnet" to `idProcess` when the process.env.KHAOS_NETWORK is mainnet',
 	async (t) => {
 		const context = createContext()
 		process.env.KHAOS_NETWORK = 'mainnet'
@@ -35,7 +35,7 @@ test.serial(
 )
 
 test.serial(
-	'Returns a function for the Azure functions that pass "ropsten" to `idProcess`',
+	'Returns a function for the Azure functions that pass "ropsten" to `idProcess` when the process.env.KHAOS_NETWORK is ropsten',
 	async (t) => {
 		const context = createContext()
 		process.env.KHAOS_NETWORK = 'ropsten'
@@ -43,6 +43,42 @@ test.serial(
 			IsPastDue: false,
 		})
 		t.is(passedNetwork, 'ropsten')
+	}
+)
+
+test.serial(
+	'Returns a function for the Azure functions that pass "arbitrum-one" to `idProcess` when the process.env.KHAOS_NETWORK is arbitrum-one',
+	async (t) => {
+		const context = createContext()
+		process.env.KHAOS_NETWORK = 'arbitrum-one'
+		await handleTimer(context as any, {
+			IsPastDue: false,
+		})
+		t.is(passedNetwork, 'arbitrum-one')
+	}
+)
+
+test.serial(
+	'Returns a function for the Azure functions that pass "arbitrum-rinkeby" to `idProcess` when the process.env.KHAOS_NETWORK is arbitrum-rinkeby',
+	async (t) => {
+		const context = createContext()
+		process.env.KHAOS_NETWORK = 'arbitrum-rinkeby'
+		await handleTimer(context as any, {
+			IsPastDue: false,
+		})
+		t.is(passedNetwork, 'arbitrum-rinkeby')
+	}
+)
+
+test.serial(
+	'Returns a function for the Azure functions that pass "mainnet" to `idProcess` when the process.env.KHAOS_NETWORK is not set',
+	async (t) => {
+		const context = createContext()
+		delete process.env.KHAOS_NETWORK
+		await handleTimer(context as any, {
+			IsPastDue: false,
+		})
+		t.is(passedNetwork, 'mainnet')
 	}
 )
 
