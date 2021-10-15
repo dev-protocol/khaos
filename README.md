@@ -23,7 +23,7 @@ When Khaos receives an authentication request from a user, it executes an authen
 
 ## How Khaos's oraclize interface works
 
-Khaos monitors some contract events in batches. The target of the monitoring can be any address that a user deploys to. The user-deployed contract makes an oraclize request to Khaos by emitting a `Query` event according to the interface; when Khaos receives the oraclize request, it fetches some data from the Internet according to the event messages. The data is fetched into blockchains by calling the contract's callback method according to the event messages. The data fetching method executed by the oraclize request is freely extendable by the user. An authentication method executed by an authentication request is freely extendable by the user.
+Khaos monitors some contract events in batches. The target of the monitoring can be any address that a user deploys to. The user-deployed contract makes an oraclize request to Khaos by emitting a specified event (i.e., `Query`) according to the interface; when Khaos receives the oraclize request, it fetches some data from the Internet according to the event messages. The data is fetched into blockchains by calling the contract's callback method according to the event messages. The data fetching method executed by the oraclize request is freely extendable by the user. An authentication method executed by an authentication request is freely extendable by the user.
 
 ![How Khaos Oraclizes](/images/how-khaos-oraclizes.png)
 
