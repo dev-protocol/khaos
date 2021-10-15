@@ -1,9 +1,18 @@
 import { Context } from '@azure/functions'
 import { NetworkName } from '@devprotocol/khaos-core'
 import { call } from '@devprotocol/khaos-functions'
-import { UndefinedOr, whenDefined, whenDefinedAll } from '@devprotocol/util-ts'
+import { UndefinedOr, whenDefinedAll } from '@devprotocol/util-ts'
 import { ethers } from 'ethers'
 import { always, tryCatch } from 'ramda'
+
+const endpoint = (network: NetworkName, infuraId: string): string =>
+	network === 'mainnet'
+		? `https://mainnet.infura.io/v3/${infuraId}`
+		: network === 'ropsten'
+		? `https://ropsten.infura.io/v3/${infuraId}`
+		: network === 'arbitrum-one-mainnet'
+		? `https://arbitrum-mainnet.infura.io/v3/${infuraId}`
+		: `https://arbitrum-rinkeby.infura.io/v3/${infuraId}`
 
 export const createContract = async (
 	context: Context,
@@ -12,7 +21,7 @@ export const createContract = async (
 ): Promise<
 	readonly [
 		UndefinedOr<ethers.Contract>,
-		UndefinedOr<ethers.providers.InfuraProvider>,
+		UndefinedOr<ethers.providers.JsonRpcProvider>,
 		UndefinedOr<ethers.Wallet>
 	]
 > => {
@@ -30,13 +39,10 @@ export const createContract = async (
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${id} abi data:${abi?.data}`)
 
-	const provider = whenDefined(
-		process.env.KHAOS_INFURA_ID,
-		(infura) =>
-			new ethers.providers.InfuraProvider(
-				network === 'mainnet' ? 'homestead' : network,
-				infura
-			)
+	const provider = whenDefinedAll(
+		[network, process.env.KHAOS_INFURA_ID],
+		([net, infura]) =>
+			new ethers.providers.JsonRpcProvider(endpoint(net, infura))
 	)
 	const wallet = whenDefinedAll(
 		[provider, process.env.KHAOS_MNEMONIC],

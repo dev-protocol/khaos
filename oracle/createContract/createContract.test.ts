@@ -28,7 +28,7 @@ test.serial('returns [Contract, Provider, Wallet]', async (t) => {
 	const result = await createContract(context as any, 'test', 'ropsten')
 	t.is(result.length, 3)
 	t.true(result[0] instanceof ethers.Contract)
-	t.true(result[1] instanceof ethers.providers.InfuraProvider)
+	t.true(result[1] instanceof ethers.providers.JsonRpcProvider)
 	t.true(result[2] instanceof ethers.Wallet)
 	t.is(result[0]?.address, '0x3cb902625a2b38929f807f9c841f7aecbbce7702')
 	stub.restore()
@@ -56,7 +56,7 @@ test.serial(
 		const result = await createContract(context as any, 'test', 'mainnet')
 		t.is(result.length, 3)
 		t.is(result[0], undefined)
-		t.true(result[1] instanceof ethers.providers.InfuraProvider)
+		t.true(result[1] instanceof ethers.providers.JsonRpcProvider)
 		t.true(result[2] instanceof ethers.Wallet)
 		stub.restore()
 	}
