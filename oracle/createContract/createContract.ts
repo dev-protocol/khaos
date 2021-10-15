@@ -10,7 +10,7 @@ const endpoint = (network: NetworkName, infuraId: string): string =>
 		? `https://mainnet.infura.io/v3/${infuraId}`
 		: network === 'ropsten'
 		? `https://ropsten.infura.io/v3/${infuraId}`
-		: network === 'arbitrum-one-mainnet'
+		: network === 'arbitrum-one'
 		? `https://arbitrum-mainnet.infura.io/v3/${infuraId}`
 		: `https://arbitrum-rinkeby.infura.io/v3/${infuraId}`
 
