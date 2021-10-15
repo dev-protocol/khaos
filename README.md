@@ -1,7 +1,9 @@
-| Pipeline         | Status                                                                                                                                                                                                  |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ethereum Mainnet | [![Build Status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-eth-mainnet?branchName=main)](https://dev.azure.com/dev-protocol/Khaos/_build/latest?definitionId=7&branchName=main) |
-| Ethereum Ropsten | [![Build Status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-eth-ropsten?branchName=main)](https://dev.azure.com/dev-protocol/Khaos/_build/latest?definitionId=6&branchName=main) |
+| Pipeline             | Status                                                                                                                                                                                                  |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ethereum Mainnet     | [![Build Status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-eth-mainnet?branchName=main)](https://dev.azure.com/dev-protocol/Khaos/_build/latest?definitionId=7&branchName=main) |
+| Ethereum Ropsten     | [![Build Status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-eth-ropsten?branchName=main)](https://dev.azure.com/dev-protocol/Khaos/_build/latest?definitionId=6&branchName=main) |
+| Arbitrum One Mainnet | [![Build status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-arb-one-mainnet)](https://dev.azure.com/dev-protocol/Khaos/_build/latest?definitionId=12)                            |
+| Arbitrum One Rinkeby | [![Build status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-arb-one-rinkeby)](https://dev.azure.com/dev-protocol/Khaos/_build/latest?definitionId=11)                            |
 
 # What's Khaos?
 
