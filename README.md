@@ -11,8 +11,8 @@
 | --------------------- | -------------------------------------------- |
 | Ethereum Mainnet      | `0x1c969CD76818769205F52BC25b93e2aFE05B386E` |
 | Ethereum Ropsten      | `0x7654a20D1502471230a6C454c908c73cF040e22C` |
-| Arbitrum One Mainnet  | `0xc9f64eC1AADdD00ddf68fcDe85397d5C29197C95` |
-| Arbitrum One Rinkeby  | `0x913404b5d02E9F685D793f23FD8774312668CE1B` |
+| Arbitrum One          | `0xc9f64eC1AADdD00ddf68fcDe85397d5C29197C95` |
+| Arbitrum Rinkeby      | `0x913404b5d02E9F685D793f23FD8774312668CE1B` |
 
 _**Keep in mind that these addresses are subject to change in the future. If you use these addresses in your smart contract, you will also need to implement a mechanism to change their values.**_
 
