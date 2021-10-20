@@ -26,7 +26,7 @@
 		"@devprotocol/util-ts": "2.2.1",
 		"bent": "7.3.12",
 		"discord-webhook-ts": "3.0.3",
-		"ethers": "5.4.7",
+		"ethers": "5.5.1",
 		"jsonwebtoken": "8.5.1",
 		"ramda": "0.27.1",
 		"web3": "1.6.0"
