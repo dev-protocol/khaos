@@ -1,7 +1,7 @@
 import { Context } from '@azure/functions'
 import { NetworkName } from '@devprotocol/khaos-core'
 import { call } from '@devprotocol/khaos-functions'
-import { UndefinedOr, whenDefinedAll } from '@devprotocol/util-ts'
+import { UndefinedOr, whenDefined, whenDefinedAll } from '@devprotocol/util-ts'
 import { ethers } from 'ethers'
 import { always, tryCatch } from 'ramda'
 
@@ -39,11 +39,17 @@ export const createContract = async (
 	// eslint-disable-next-line functional/no-expression-statement
 	context.log.info(`id:${id} abi data:${abi?.data}`)
 
-	const provider = whenDefinedAll(
-		[network, process.env.KHAOS_INFURA_ID],
-		([net, infura]) =>
-			new ethers.providers.JsonRpcProvider(endpoint(net, infura))
-	)
+	const provider =
+		whenDefinedAll(
+			[network, process.env.KHAOS_INFURA_ID],
+			([net, infura]) =>
+				new ethers.providers.JsonRpcProvider(endpoint(net, infura))
+		) ??
+		// Fallback
+		whenDefined(
+			process.env.KHAOS_JSON_RPC,
+			(rpc) => new ethers.providers.JsonRpcProvider(rpc)
+		)
 	const wallet = whenDefinedAll(
 		[provider, process.env.KHAOS_MNEMONIC],
 		([prov, mnemonic]) => ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
