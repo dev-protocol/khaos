@@ -49,15 +49,21 @@ export const createContract = async (
 		([prov, mnemonic]) => ethers.Wallet.fromMnemonic(mnemonic).connect(prov)
 	)
 	const contract = await whenDefinedAll(
-		[address?.data, abi?.data],
-		([adr, i]) =>
+		[address?.data, abi?.data, wallet],
+		([adr, i, walt]) =>
 			tryCatch(
 				(intf) =>
 					((c) => c.resolvedAddress.then(always(c)).catch(always(undefined)))(
-						new ethers.Contract(adr, intf, wallet)
+						new ethers.Contract(adr, intf, walt)
 					),
 				always(undefined)
 			)(i)
 	)
-	return [contract, provider, wallet]
+	return (
+		whenDefinedAll([contract, provider, wallet], (x) => x) ?? [
+			undefined,
+			undefined,
+			undefined,
+		]
+	)
 }
