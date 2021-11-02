@@ -13,17 +13,12 @@ import { whenDefinedAll } from '@devprotocol/util-ts'
 import { call } from '@devprotocol/khaos-functions'
 import { compute } from '../compute/compute'
 import { createContract } from '../createContract/createContract'
-import { ethers } from 'ethers'
 
 export type Results = {
 	readonly sent: boolean
 	readonly address: string
 	readonly results: readonly sendInfo[]
 }
-
-const fallbackArb1 = new ethers.providers.JsonRpcProvider(
-	'https://arb-mainnet.g.alchemy.com/v2/6WK7NFoaPB1SStyLufEEVu7Gee7plgxd'
-)
 
 export const idProcess =
 	(context: Context, network: NetworkName) =>
@@ -40,11 +35,7 @@ export const idProcess =
 		context.log.info(
 			`id:${id} targetContract.address:${targetContract?.address}`
 		)
-		const toBlockNumber = await whenDefined(
-			// TODO: FIX
-			network === 'arbitrum-one' ? fallbackArb1 : provider,
-			getToBlockNumber
-		)
+		const toBlockNumber = await whenDefined(provider, getToBlockNumber)
 		// eslint-disable-next-line functional/no-expression-statement
 		context.log.info(`id:${id} toBlockNumber:${toBlockNumber}`)
 		const fromBlock = getFromBlock(toBlockNumber)
