@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-expression-statement */
 import { Context } from '@azure/functions'
 import { FunctionPackResults, NetworkName } from '@devprotocol/khaos-core'
 import { ethers } from 'ethers'
@@ -25,7 +26,10 @@ export const compute = (
 	const khaosFunctions = call()
 	return async (event: ethers.Event): ReturnType<Compute> => {
 		const query = getData(event)
+		context.log.info(`id:${id} query publicSignature:${query.publicSignature}`)
+		context.log.info(`id:${id} query transactionhash:${query.transactionhash}`)
 		const oracleArgs = await getSecret(query)
+		context.log.info(`id:${id} oracleArgs secret:${oracleArgs.secret}`)
 		const oraclized = await oracle(oracleArgs)
 		const packed =
 			typeof oraclized.result === 'undefined'

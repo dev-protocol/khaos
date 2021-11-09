@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-expression-statement */
 import { Context } from '@azure/functions'
 import { oracleArgInfo } from './../getSecret/getSecret'
 import {
@@ -22,6 +23,13 @@ export const executeOraclize =
 		)
 		const signatureOptions =
 			typeof tmp === 'undefined' ? { message: '', id: '', address: '' } : tmp
+		context.log.info(`id:${id} executeOraclize network:${network}`)
+		context.log.info(
+			`id:${id} executeOraclize info.eventData.publicSignature:${info.eventData.publicSignature}`
+		)
+		context.log.info(
+			`id:${id} executeOraclize info.eventData.transactionhash:${info.eventData.transactionhash}`
+		)
 		const callBack = await oraclize({
 			id,
 			method: 'oraclize',
