@@ -25,10 +25,10 @@ export const executeOraclize =
 			typeof tmp === 'undefined' ? { message: '', id: '', address: '' } : tmp
 		context.log.info(`id:${id} executeOraclize network:${network}`)
 		context.log.info(
-			`id:${id} executeOraclize info.eventData.publicSignature:${info.eventData.publicSignature}`
+			`id:${id} executeOraclize info.eventData.publicSignature:${info.eventData?.publicSignature}`
 		)
 		context.log.info(
-			`id:${id} executeOraclize info.eventData.transactionhash:${info.eventData.transactionhash}`
+			`id:${id} executeOraclize info.eventData.transactionhash:${info.eventData?.transactionhash}`
 		)
 		const callBack = await oraclize({
 			id,
