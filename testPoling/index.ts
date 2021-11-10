@@ -10,7 +10,7 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<void> {
 	const sBlock = req.body.startBlock
 	const eBlock = req.body.endBlock
-	await idProcessTest(context, 'arbitrum-one')('youtube-market', sBlock, eBlock)
+	await idProcessTest(context, 'arbitrum-one')('update-cap-v2', sBlock, eBlock)
 
 	context.res = {
 		status: 0,
