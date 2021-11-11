@@ -70,6 +70,11 @@
   resolved "https://registry.yarnpkg.com/@azure/functions/-/functions-1.2.3.tgz#65765837e7319eedffbf8a971cb2f78d4e043d54"
   integrity sha512-dZITbYPNg6ay6ngcCOjRUh1wDhlFITS0zIkqplyH5KfKEAVPooaoaye5mUFnR+WP9WdGRjlNXyl/y2tgWKHcRg==
 
+"@azure/functions@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@azure/functions/-/functions-2.0.0.tgz#7fa416bb4b826f190336e59a4ac088b84774537e"
+  integrity sha512-FUd0bdmM6LtApr9LNQi1BFpNchrk1FwkzieTSw0XzA9dCr83jI62MxWsM5YIFrDnJS3i2Ry81D78PecukGCL/w==
+
 "@azure/logger@^1.0.0":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@azure/logger/-/logger-1.0.2.tgz#ad2d06478eeda7835f53def7e4566981b47d9787"
