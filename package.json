@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"description": "Template repository for using TypeScript",
 	"scripts": {
-		"test": "ava",
+		"test": "ava --experimental-modules",
 		"build": "tsc",
 		"watch": "tsc -w",
 		"prestart": "yarn build",
