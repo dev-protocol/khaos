@@ -1,5 +1,6 @@
 import test from 'ava'
-import { HttpRequest, Context } from '@azure/functions'
+import { HttpRequest } from '@azure/functions'
+import { createContext } from '../common/testutils'
 import { stub } from 'sinon'
 import * as recover from './recover/recover'
 import * as db from './../common/db/secret'
@@ -14,10 +15,6 @@ const random = (): string => Math.random().toString()
 const fakeImportAuthorizer = () => async () => ({ data: true } as any)
 const fakeRecover = (message: string, signature: string): string | undefined =>
 	`${message}-${signature}`
-const createContext = (): Context =>
-	({
-		res: {},
-	} as unknown as Context)
 const createReq = (
 	id?: string,
 	message?: string,
@@ -59,7 +56,10 @@ test.serial('Returns the signed account', async (t) => {
 	const secret = random()
 	const message = random()
 	const address = fakeRecover(message, signature)
-	const res = await sign(context, createReq(id, message, secret, signature))
+	const res = await sign(
+		context as any,
+		createReq(id, message, secret, signature)
+	)
 	stubs.map((s) => s.restore())
 	t.is(res?.body?.address, address)
 })
@@ -77,7 +77,10 @@ test.serial('Returns a new public signature', async (t) => {
 	const message = random()
 	const address: any = fakeRecover(message, signature)
 	const sig = publicSignature({ id, message, address })
-	const res = await sign(context, createReq(id, message, secret, signature))
+	const res = await sign(
+		context as any,
+		createReq(id, message, secret, signature)
+	)
 	stubs.map((s) => s.restore())
 	t.is(res?.body?.publicSignature, sig)
 })
@@ -95,7 +98,10 @@ test.serial(
 		const signature = fakeSignature(random(), id)
 		const secret = random()
 		const message = random()
-		const res = await sign(context, createReq(id, message, secret, signature))
+		const res = await sign(
+			context as any,
+			createReq(id, message, secret, signature)
+		)
 		stubs.map((s) => s.restore())
 		t.is(res?.body?.address, undefined)
 	}
@@ -115,7 +121,7 @@ test.serial(
 		const secret = random()
 		const message = random()
 		const res = await sign(
-			context,
+			context as any,
 			createReq(id, message, secret, `0${signature}`)
 		)
 		stubs.map((s) => s.restore())
@@ -136,7 +142,10 @@ test.serial(
 		const signature = fakeSignature(random(), id)
 		const secret = random()
 		const message = random()
-		const res = await sign(context, createReq(id, message, secret, signature))
+		const res = await sign(
+			context as any,
+			createReq(id, message, secret, signature)
+		)
 		stubs.map((s) => s.restore())
 		t.is(res.status, 200)
 	}
@@ -160,7 +169,10 @@ test.serial(
 		const signature = fakeSignature(random(), id)
 		const secret = random()
 		const message = random()
-		const res = await sign(context, createReq(id, message, secret, signature))
+		const res = await sign(
+			context as any,
+			createReq(id, message, secret, signature)
+		)
 		stubs.map((s) => s.restore())
 		t.is(res.status, 400)
 	}
@@ -179,7 +191,10 @@ test.serial(
 		const signature = fakeSignature(random(), id)
 		const secret = random()
 		const message = random()
-		const res = await sign(context, createReq(id, message, secret, signature))
+		const res = await sign(
+			context as any,
+			createReq(id, message, secret, signature)
+		)
 		stubs.map((s) => s.restore())
 		t.is(res.status, 500)
 	}
@@ -197,7 +212,10 @@ test.serial(
 		const signature = fakeSignature(random(), id)
 		const secret = random()
 		const message = random()
-		await sign(createContext(), createReq(id, message, secret, signature))
+		await sign(
+			createContext() as any,
+			createReq(id, message, secret, signature)
+		)
 		const fakeAccount: any = fakeRecover(message, signature)
 		const expectedPubSig = publicSignature({
 			message,
@@ -226,7 +244,10 @@ test.serial(
 		const signature = fakeSignature(random(), id)
 		const secret = random()
 		const message = random()
-		await sign(createContext(), createReq(id, message, secret, signature))
+		await sign(
+			createContext() as any,
+			createReq(id, message, secret, signature)
+		)
 		const fakeAccount: any = fakeRecover(message, signature)
 		const expectedPubSig = publicSignature({
 			message,
