@@ -35,7 +35,7 @@ test.serial('returns [Contract, Provider, Wallet]', async (t) => {
 })
 
 test.serial(
-	'returns [undefined, Provider, Wallet] when the result of khaosFunctions is undefined',
+	'returns [undefined, undefined, undefined] when the result of khaosFunctions is undefined',
 	async (t) => {
 		const stub = sinon
 			.stub(khaos, 'call')
@@ -56,14 +56,14 @@ test.serial(
 		const result = await createContract(context as any, 'test', 'mainnet')
 		t.is(result.length, 3)
 		t.is(result[0], undefined)
-		t.true(result[1] instanceof ethers.providers.JsonRpcProvider)
-		t.true(result[2] instanceof ethers.Wallet)
+		t.is(result[1], undefined)
+		t.is(result[2], undefined)
 		stub.restore()
 	}
 )
 
 test.serial(
-	'returns [Contract, undefined, undefined] when the required environment variables is undefined',
+	'returns [undefined, undefined, undefined] when the required environment variables is undefined',
 	async (t) => {
 		const stub = sinon
 			.stub(khaos, 'call')
@@ -81,7 +81,7 @@ test.serial(
 		const context = createContext()
 		const result = await createContract(context as any, 'test', 'mainnet')
 		t.is(result.length, 3)
-		t.true(result[0] instanceof ethers.Contract)
+		t.is(result[0], undefined)
 		t.is(result[1], undefined)
 		t.is(result[2], undefined)
 		stub.restore()

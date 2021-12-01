@@ -31,7 +31,13 @@ export const idProcess =
 			id,
 			network
 		)
+		// eslint-disable-next-line functional/no-expression-statement
+		context.log.info(
+			`id:${id} targetContract.address:${targetContract?.address}`
+		)
 		const toBlockNumber = await whenDefined(provider, getToBlockNumber)
+		// eslint-disable-next-line functional/no-expression-statement
+		context.log.info(`id:${id} toBlockNumber:${toBlockNumber}`)
 		const fromBlock = getFromBlock(toBlockNumber)
 		// eslint-disable-next-line functional/no-expression-statement
 		context.log.info(
