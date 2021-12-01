@@ -6,9 +6,7 @@ import { always } from 'ramda'
 
 export const notification = async (
 	results: readonly Results[] | undefined
-): Promise<
-	ReadonlyArray<ReturnType<DiscordWebhook['execute']> | undefined> | undefined
-> => {
+): Promise<readonly (any | undefined)[] | readonly Results[] | undefined> => {
 	const errors = whenDefined(results, (res) =>
 		res.filter((r) => r.sent === false)
 	)
