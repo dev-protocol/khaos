@@ -1,4 +1,4 @@
-/* eslint-disable functional/no-return-void*/
+/* eslint-disable functional/no-return-void */
 import test from 'ava'
 import { withPartitionKey } from './withPartitionKey'
 

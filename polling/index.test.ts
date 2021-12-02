@@ -2,7 +2,7 @@
 /* eslint-disable functional/no-let */
 /* eslint-disable functional/immutable-data */
 /* eslint-disable functional/prefer-readonly-type */
-/* eslint-disable functional/no-return-void*/
+/* eslint-disable functional/no-return-void */
 import test from 'ava'
 import { stub } from 'sinon'
 import handleTimer from '.'
