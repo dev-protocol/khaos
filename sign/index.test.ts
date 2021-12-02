@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-return-void*/
 import test from 'ava'
 import { HttpRequest } from '@azure/functions'
 import { createContext } from '../common/testutils'
