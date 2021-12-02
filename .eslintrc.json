@@ -16,7 +16,8 @@
 		"prettier"
 	],
 	"rules": {
-		"@typescript-eslint/no-explicit-any": 0
+		"@typescript-eslint/no-explicit-any": 0,
+		"functional/no-return-void": "off"
 	},
 	"overrides": [
 		{
