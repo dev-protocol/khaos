@@ -5,6 +5,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable functional/functional-parameters */
 /* eslint-disable functional/no-expression-statement */
+/* eslint-disable functional/no-return-void */
 
 export const createContext = () => {
 	const warn: string[] = []

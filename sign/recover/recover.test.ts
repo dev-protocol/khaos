@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-return-void */
 import test from 'ava'
 import { recover } from './recover'
 import Web3 from 'web3'
