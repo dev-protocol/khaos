@@ -1,20 +1,15 @@
-| Pipeline         | Status                                                                                                                                                                           |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ethereum Mainnet | [![Build Status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-eth-mainnet?branchName=main)](https://dev.azure.com/dev-protocol/Khaos/_build?definitionId=7) |
-| Ethereum Ropsten | [![Build Status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-eth-ropsten?branchName=main)](https://dev.azure.com/dev-protocol/Khaos/_build?definitionId=6) |
-| Arbitrum One     | [![Build status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-arb-one)](https://dev.azure.com/dev-protocol/Khaos/_build?definitionId=12)                    |
-| Arbitrum Rinkeby | [![Build status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos-arb-rinkeby)](https://dev.azure.com/dev-protocol/Khaos/_build?definitionId=11)                |
+[![Build status](https://dev.azure.com/dev-protocol/Khaos/_apis/build/status/khaos)](https://dev.azure.com/dev-protocol/Khaos/_build/latest?definitionId=15)
 
 # Important addresses
 
-| Khaos callback sender | Address                                      |
-| --------------------- | -------------------------------------------- |
-| Ethereum Mainnet      | `0x1c969CD76818769205F52BC25b93e2aFE05B386E` |
-| Ethereum Ropsten      | `0x7654a20D1502471230a6C454c908c73cF040e22C` |
-| Arbitrum One          | `0xc9f64eC1AADdD00ddf68fcDe85397d5C29197C95` |
-| Arbitrum Rinkeby      | `0x913404b5d02E9F685D793f23FD8774312668CE1B` |
-| Polygon Mainnet       | `0xBc3DeffcC9916EAd1585999697cBD2A3361165fC` |
-| Polygon Mumbai      　　　　| `0x2A655dd352c98260639726E60a04Ed804A0B790A` |
+| Khaos callback sender   | Address                                      |
+| ----------------------- | -------------------------------------------- |
+| Ethereum Mainnet        | `0x1c969CD76818769205F52BC25b93e2aFE05B386E` |
+| Ethereum Ropsten        | `0x7654a20D1502471230a6C454c908c73cF040e22C` |
+| Arbitrum One            | `0xc9f64eC1AADdD00ddf68fcDe85397d5C29197C95` |
+| Arbitrum Rinkeby        | `0x913404b5d02E9F685D793f23FD8774312668CE1B` |
+| Polygon Mainnet         | `0xBc3DeffcC9916EAd1585999697cBD2A3361165fC` |
+| Polygon Mumbai 　　　　 | `0x2A655dd352c98260639726E60a04Ed804A0B790A` |
 
 _**Keep in mind that these addresses are subject to change in the future. If you use these addresses in your smart contract, you will also need to implement a mechanism to change their values.**_
 
