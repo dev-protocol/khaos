@@ -23,7 +23,9 @@ const handleTimer: AzureFunction = async function (
 			x === 'mainnet' ||
 			x === 'ropsten' ||
 			x === 'arbitrum-one' ||
-			x === 'arbitrum-rinkeby'
+			x === 'arbitrum-rinkeby' ||
+			x === 'polygon-mainnet' ||
+			x === 'polygon-mumbai'
 				? x
 				: 'mainnet')(process.env.KHAOS_NETWORK)
 	)
