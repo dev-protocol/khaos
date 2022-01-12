@@ -37,7 +37,7 @@
 		"@types/dotenv": "8.2.0",
 		"@types/jsonwebtoken": "8.5.6",
 		"@types/node": "16.11.19",
-		"@types/ramda": "0.27.62",
+		"@types/ramda": "0.27.63",
 		"@types/sinon": "10.0.6",
 		"@typescript-eslint/eslint-plugin": "5.9.1",
 		"@typescript-eslint/parser": "5.9.1",
