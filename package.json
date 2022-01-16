@@ -28,7 +28,7 @@
 		"discord-webhook-ts": "3.0.3",
 		"ethers": "5.5.3",
 		"jsonwebtoken": "8.5.1",
-		"ramda": "0.27.2",
+		"ramda": "0.28.0",
 		"web3": "1.6.1"
 	},
 	"devDependencies": {
@@ -37,7 +37,7 @@
 		"@types/dotenv": "8.2.0",
 		"@types/jsonwebtoken": "8.5.7",
 		"@types/node": "16.11.19",
-		"@types/ramda": "0.27.63",
+		"@types/ramda": "0.27.64",
 		"@types/sinon": "10.0.6",
 		"@typescript-eslint/eslint-plugin": "5.9.1",
 		"@typescript-eslint/parser": "5.9.1",
