@@ -29,7 +29,7 @@
 		"ethers": "5.5.3",
 		"jsonwebtoken": "8.5.1",
 		"ramda": "0.28.0",
-		"web3": "1.6.1"
+		"web3": "1.7.0"
 	},
 	"devDependencies": {
 		"@ava/typescript": "2.0.0",
