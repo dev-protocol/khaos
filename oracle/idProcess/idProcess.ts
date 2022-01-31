@@ -61,6 +61,8 @@ export const idProcess =
 			Promise.all(x.map(compute(context, id, network)))
 		)
 		// eslint-disable-next-line functional/no-expression-statement
+		context.log.info(`id:${id} computed count:${computed?.length}`)
+		// eslint-disable-next-line functional/no-expression-statement
 		await whenDefined(computed, (c) =>
 			Promise.all(c.map((c) => c.query).map(saveReceivedEventHashe(id)))
 		)
