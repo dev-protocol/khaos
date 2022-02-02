@@ -1,5 +1,5 @@
 import { whenDefined } from '@devprotocol/util-ts'
-import DiscordWebhook, { Webhook } from 'discord-webhook-ts'
+import DiscordWebhook from 'discord-webhook-ts'
 import { Results } from './../idProcess/idProcess'
 import { sendInfo } from '../executeOraclize/executeOraclize'
 import { always } from 'ramda'
@@ -17,7 +17,7 @@ const sendMessage = async function (
 	result: Results
 ): Promise<ReturnType<DiscordWebhook['execute']> | undefined> {
 	const tmp = result.results.map(convertSendInfoToStr)
-	const requestBody: Webhook.input.POST = {
+	const requestBody = {
 		embeds: [
 			{
 				title: 'khaos',
