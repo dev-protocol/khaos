@@ -21,7 +21,9 @@ export const executeOraclize =
 		// eslint-disable-next-line functional/no-expression-statement
 		context.log.info(`id:${id} oracle id:${info.secret?.resource?.id}`)
 		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} oracle address:${info.secret?.resource?.address}`)
+		context.log.info(
+			`id:${id} oracle address:${info.secret?.resource?.address}`
+		)
 
 		const tmp = whenDefined(info.secret?.resource, ({ id, address }) =>
 			recoverPublicSignature(id, address)
@@ -30,11 +32,17 @@ export const executeOraclize =
 			typeof tmp === 'undefined' ? { message: '', id: '', address: '' } : tmp
 
 		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} oracle signatureOptions id:${signatureOptions?.id}`)
+		context.log.info(
+			`id:${id} oracle signatureOptions id:${signatureOptions?.id}`
+		)
 		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} oracle signatureOptions message:${signatureOptions?.message}`)
+		context.log.info(
+			`id:${id} oracle signatureOptions message:${signatureOptions?.message}`
+		)
 		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} oracle signatureOptions address:${signatureOptions?.address}`)
+		context.log.info(
+			`id:${id} oracle signatureOptions address:${signatureOptions?.address}`
+		)
 
 		const callBack = await oraclize({
 			id,
@@ -43,11 +51,17 @@ export const executeOraclize =
 		})
 
 		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} oracle callBack message:${callBack?.data?.message}`)
+		context.log.info(
+			`id:${id} oracle callBack message:${callBack?.data?.message}`
+		)
 		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} oracle callBack status:${callBack?.data?.status}`)
+		context.log.info(
+			`id:${id} oracle callBack status:${callBack?.data?.status}`
+		)
 		// eslint-disable-next-line functional/no-expression-statement
-		context.log.info(`id:${id} oracle callBack statusMessage:${callBack?.data?.statusMessage}`)
+		context.log.info(
+			`id:${id} oracle callBack statusMessage:${callBack?.data?.statusMessage}`
+		)
 
 		return {
 			khaosId: id,

@@ -1,6 +1,6 @@
 import test from 'ava'
 import { ethers } from 'ethers'
-import { fake, spy, stub } from 'sinon'
+import Sinon, { fake, spy, stub } from 'sinon'
 import * as executeOraclize from '../executeOraclize/executeOraclize'
 import * as khaosFunctions from '@devprotocol/khaos-functions'
 import * as getData from '../getData/getData'
@@ -12,7 +12,9 @@ import { createContext } from '../../common/testutils'
 
 test.serial('Takes id and network name and runs the process', async (t) => {
 	const khaosFunctionsRetuns = { data: { name: 'test', args: [1, 2, 3] } }
-	const khaosFunctionsStub = fake(() => Promise.resolve(khaosFunctionsRetuns))
+	const khaosFunctionsStub = fake(() =>
+		Promise.resolve(khaosFunctionsRetuns)
+	) as Sinon.SinonSpy<any>
 	const factoryCallStub = stub(khaosFunctions, 'call').callsFake(
 		() => khaosFunctionsStub
 	)
@@ -67,7 +69,9 @@ test.serial('Takes id and network name and runs the process', async (t) => {
 })
 
 test.serial('oracle function returns undefined', async (t) => {
-	const khaosFunctionsStub = fake(() => Promise.resolve({}))
+	const khaosFunctionsStub = fake(() =>
+		Promise.resolve({})
+	) as Sinon.SinonSpy<any>
 	const factoryCallStub = stub(khaosFunctions, 'call').callsFake(
 		() => khaosFunctionsStub
 	)
