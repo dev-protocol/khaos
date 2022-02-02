@@ -1,4 +1,5 @@
 /* eslint-disable functional/no-promise-reject */
+import { NetworkName } from '@devprotocol/khaos-core'
 import test from 'ava'
 import { BigNumber } from 'ethers'
 import { fake, stub } from 'sinon'
@@ -29,8 +30,12 @@ test.serial('Returns the results of the `compute` function', async (t) => {
 		params: { id: 'test_id' },
 		body: { network: 'testnet', event: { myParam: 1 } },
 	})
-	t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
-	t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
+	t.deepEqual(factoryStub.getCall(0).args, [
+		{} as any,
+		'test_id',
+		'testnet' as NetworkName,
+	])
+	t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }] as any)
 	t.deepEqual(createContractStub.getCall(0).args, [
 		{},
 		'test_id',
@@ -39,7 +44,10 @@ test.serial('Returns the results of the `compute` function', async (t) => {
 	t.deepEqual(factoryEstimateTransactionStub.getCall(0).args, [
 		'just a test instance',
 	] as any)
-	t.deepEqual(estimateTransactionFake.getCall(0).args, ['callback', [1, 2, 3]])
+	t.deepEqual(estimateTransactionFake.getCall(0).args, [
+		'callback',
+		[1, 2, 3],
+	] as any)
 	t.deepEqual(res, {
 		status: 200,
 		body: {
@@ -76,8 +84,12 @@ test.serial(
 			params: { id: 'test_id' },
 			body: { network: 'testnet', event: { myParam: 1 } },
 		})
-		t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
-		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
+		t.deepEqual(factoryStub.getCall(0).args, [
+			{} as any,
+			'test_id',
+			'testnet' as NetworkName,
+		])
+		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }] as any)
 		t.deepEqual(createContractStub.getCall(0).args, [
 			{},
 			'test_id',
@@ -122,8 +134,12 @@ test.serial(
 			params: { id: 'test_id' },
 			body: { network: 'testnet', event: { myParam: 1 } },
 		})
-		t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
-		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
+		t.deepEqual(factoryStub.getCall(0).args, [
+			{} as any,
+			'test_id',
+			'testnet' as NetworkName,
+		])
+		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }] as any)
 		t.deepEqual(createContractStub.getCall(0).args, [
 			{},
 			'test_id',
@@ -173,8 +189,12 @@ test.serial(
 			params: { id: 'test_id' },
 			body: { network: 'testnet', event: { myParam: 1 } },
 		})
-		t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
-		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
+		t.deepEqual(factoryStub.getCall(0).args, [
+			{} as any,
+			'test_id',
+			'testnet' as NetworkName,
+		])
+		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }] as any)
 		t.deepEqual(createContractStub.getCall(0).args, [
 			{},
 			'test_id',
@@ -186,7 +206,7 @@ test.serial(
 		t.deepEqual(estimateTransactionFake.getCall(0).args, [
 			'callback',
 			[1, 2, 3],
-		])
+		] as any)
 		t.deepEqual(res, {
 			status: 200,
 			body: {
@@ -227,8 +247,12 @@ test.serial(
 			params: { id: 'test_id' },
 			body: { network: 'testnet', event: { myParam: 1 } },
 		})
-		t.deepEqual(factoryStub.getCall(0).args, [{} as any, 'test_id', 'testnet'])
-		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }])
+		t.deepEqual(factoryStub.getCall(0).args, [
+			{} as any,
+			'test_id',
+			'testnet',
+		] as any)
+		t.deepEqual(computeFake.getCall(0).args, [{ myParam: 1 }] as any)
 		t.deepEqual(createContractStub.getCall(0).args, [
 			{},
 			'test_id',
@@ -240,7 +264,7 @@ test.serial(
 		t.deepEqual(estimateTransactionFake.getCall(0).args, [
 			'callback',
 			[1, 2, 3],
-		])
+		] as any)
 		t.deepEqual(res, {
 			status: 200,
 			body: {

@@ -43,13 +43,13 @@ test.serial('Takes id and network name and runs the process', async (t) => {
 	t.deepEqual(factoryExecuteOraclizeStub.getCall(0).args, [
 		context as any,
 		'TEST_ID',
-		'TEST_NET',
+		'TEST_NET' as NetworkName,
 	])
 	t.deepEqual(getDataSpy.getCall(0).args, [event])
 	t.deepEqual(getSecretStub.getCall(0).args, [getData.getData(event)])
 	t.deepEqual(oracleStub.getCall(0).args, [
 		await getSecretFake(getData.getData(event)),
-	])
+	] as any)
 	t.deepEqual(khaosFunctionsStub.getCall(0).args, [
 		{
 			id: 'TEST_ID',
@@ -100,13 +100,13 @@ test.serial('oracle function returns undefined', async (t) => {
 	t.deepEqual(factoryExecuteOraclizeStub.getCall(0).args, [
 		context as any,
 		'TEST_ID',
-		'TEST_NET',
+		'TEST_NET' as NetworkName,
 	])
 	t.deepEqual(getDataSpy.getCall(0).args, [event])
 	t.deepEqual(getSecretStub.getCall(0).args, [getData.getData(event)])
 	t.deepEqual(oracleStub.getCall(0).args, [
 		await getSecretFake(getData.getData(event)),
-	])
+	] as any)
 	t.deepEqual(res, {
 		oraclized: oracleReturns,
 		packed: undefined,

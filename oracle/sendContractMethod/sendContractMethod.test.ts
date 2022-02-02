@@ -3,6 +3,7 @@ import sinon from 'sinon'
 import * as estimateTransaction from '../estimateTransaction/estimateTransaction'
 import { sendContractMethod } from './sendContractMethod'
 import * as gas from './../gas/gas'
+import { Transaction } from 'ethers'
 
 const tmp = async (): Promise<any> => {
 	return {
@@ -86,10 +87,10 @@ test.serial('returns undefined when estimatation is failed', async (t) => {
 	const stub = sinon
 		.stub(estimateTransaction, 'estimateTransaction')
 		.callsFake(() => async () => Promise.resolve(undefined))
-	const result = await sendContractMethod(dummyConstract as any)(
+	const result = (await sendContractMethod(dummyConstract as any)(
 		'khaosCallback',
 		['test', 0]
-	)
+	)) as Transaction | undefined
 	t.deepEqual(result, undefined)
 	stub.restore()
 })
