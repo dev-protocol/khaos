@@ -20,7 +20,7 @@
 	"license": "MPL-2.0",
 	"dependencies": {
 		"@azure/cosmos": "3.15.1",
-		"@azure/functions": "3.0.0",
+		"@azure/functions": "3.2.0",
 		"@devprotocol/khaos-core": "1.6.0",
 		"@devprotocol/khaos-functions": "0.4.2",
 		"@devprotocol/util-ts": "2.2.1",
