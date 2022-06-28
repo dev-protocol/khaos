@@ -38,7 +38,7 @@
 		"@types/jsonwebtoken": "8.5.8",
 		"@types/node": "16.11.41",
 		"@types/ramda": "0.28.14",
-		"@types/sinon": "10.0.11",
+		"@types/sinon": "10.0.12",
 		"@typescript-eslint/eslint-plugin": "5.30.0",
 		"@typescript-eslint/parser": "5.30.0",
 		"ava": "4.3.0",
