@@ -36,7 +36,7 @@
 		"@types/bent": "7.3.2",
 		"@types/dotenv": "8.2.0",
 		"@types/jsonwebtoken": "8.5.8",
-		"@types/node": "16.11.43",
+		"@types/node": "16.11.44",
 		"@types/ramda": "0.28.15",
 		"@types/sinon": "10.0.12",
 		"@typescript-eslint/eslint-plugin": "5.30.6",
