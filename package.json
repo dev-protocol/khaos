@@ -43,7 +43,7 @@
 		"@typescript-eslint/parser": "5.35.1",
 		"ava": "4.3.3",
 		"dotenv": "16.0.1",
-		"eslint": "8.22.0",
+		"eslint": "8.23.0",
 		"eslint-config-prettier": "8.5.0",
 		"eslint-plugin-functional": "4.2.2",
 		"husky": "8.0.1",
