@@ -33,7 +33,7 @@
 	},
 	"devDependencies": {
 		"@ava/typescript": "3.0.1",
-		"@types/bent": "7.3.2",
+		"@types/bent": "7.3.3",
 		"@types/dotenv": "8.2.0",
 		"@types/jsonwebtoken": "9.0.0",
 		"@types/node": "18.11.18",
