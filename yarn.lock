@@ -129,6 +129,14 @@
     sinon "9.2.4"
     url-join "4.0.1"
 
+"@devprotocol/util-ts@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@devprotocol/util-ts/-/util-ts-3.0.0.tgz#031b251d59dfd9199a4beee421d8b28c0d2ee7aa"
+  integrity sha512-oDg7IeJCeAajGGG79C+UXJE7pKrGsDui3yn9yxSx5SpGFejlAJ3E3af9CpF+uK71NNropglbf/W4KCs2unpGaA==
+  dependencies:
+    ethers "^5.7.2"
+    ramda "^0.28.0"
+
 "@ensdomains/ens@^0.4.4":
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/@ensdomains/ens/-/ens-0.4.5.tgz#e0aebc005afdc066447c6e22feb4eda89a5edbfc"
@@ -4353,7 +4361,7 @@ ethereumjs-wallet@0.6.5:
     utf8 "^3.0.0"
     uuid "^3.3.2"
 
-ethers@5.7.2:
+ethers@5.7.2, ethers@^5.7.2:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.7.2.tgz#3a7deeabbb8c030d4126b24f84e525466145872e"
   integrity sha512-wswUsmWo1aOK8rR7DIKiWSw9DbLWe6x98Jrn8wcTflTVvaXhAMaB5zGAXy0GYQEQp9iO1iSHWVyARQm11zUtyg==
@@ -7633,7 +7641,7 @@ ramda@0.27.1, ramda@^0.27.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.1.tgz#66fc2df3ef873874ffc2da6aa8984658abacf5c9"
   integrity sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==
 
-ramda@0.28.0:
+ramda@0.28.0, ramda@^0.28.0:
   version "0.28.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.28.0.tgz#acd785690100337e8b063cab3470019be427cc97"
   integrity sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==
