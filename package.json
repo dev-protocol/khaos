@@ -47,7 +47,7 @@
 		"eslint-config-prettier": "8.8.0",
 		"eslint-plugin-functional": "4.4.1",
 		"husky": "8.0.3",
-		"prettier": "2.8.5",
+		"prettier": "2.8.6",
 		"rimraf": "4.4.1",
 		"sinon": "15.0.2",
 		"typescript": "5.0.2"
