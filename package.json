@@ -28,7 +28,7 @@
 		"discord-webhook-ts": "5.0.0",
 		"ethers": "5.7.2",
 		"jsonwebtoken": "9.0.0",
-		"ramda": "0.28.0",
+		"ramda": "0.29.0",
 		"web3": "1.9.0"
 	},
 	"devDependencies": {
