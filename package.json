@@ -27,7 +27,7 @@
 		"bent": "7.3.12",
 		"discord-webhook-ts": "5.0.0",
 		"ethers": "5.7.2",
-		"jsonwebtoken": "9.0.0",
+		"jsonwebtoken": "9.0.1",
 		"ramda": "0.29.0",
 		"web3": "1.10.0"
 	},
