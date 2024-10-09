@@ -50,7 +50,7 @@
 		"prettier": "2.8.8",
 		"rimraf": "5.0.1",
 		"sinon": "15.2.0",
-		"typescript": "5.0.2"
+		"typescript": "5.6.3"
 	},
 	"ava": {
 		"files": [
