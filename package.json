@@ -32,7 +32,7 @@
 		"web3": "1.10.0"
 	},
 	"devDependencies": {
-		"@ava/typescript": "4.0.0",
+		"@ava/typescript": "4.1.0",
 		"@types/bent": "7.3.3",
 		"@types/dotenv": "8.2.0",
 		"@types/jsonwebtoken": "9.0.2",
